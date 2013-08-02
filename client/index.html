@@ -361,16 +361,8 @@
         <div class="control-group">
             
             <div class="controls">
-                <label>First name</label>
-                <input id="firstName" class="col-lg-12" name="firstName" type="text" value="{{profile.firstName}}" placeholder="first name">
-            </div>
-        </div>
-
-        <div class="control-group">
-            
-            <div class="controls">
-                <label>Last name</label>
-                <input id="lastName" class="col-lg-12" name="lastName" type="text" value="{{profile.lastName}}">
+                <label>Name</label>
+                <input id="name" class="col-lg-12" name="name" type="text" value="{{profile.name}}" placeholder="full name">
             </div>
         </div>
 
@@ -396,30 +388,38 @@
 
 <!-- Login -->
 <template name="login">
-    <br>
+    <div class="text-center" style="">
+
     <h3>
-        Login to your account
-        <p class="pull-right"><small>New user? <a href="/signup">Sign up now!</a></small></p>
+        <p class=""><small>New user? <a href="/signup">Sign up now!</a></small></p>
     </h3>
+    <br>
+    <br>
 
-    <hr>
-    
-    <form id="loginForm" name="loginForm" method="post">
-        <div class="control-group">
-            <div class="controls">
-                <input class="col-lg-12" id="usernameLogin" name="usernameLogin" type="text" placeholder="username">
+        <div class="panel col-lg-5">
 
-            </div>
+            <div class="panel-heading"><h3 class="panel-title">login to your account</h3></div>
+            <p>
+                <form id="loginForm" name="loginForm" method="post">
+                <div class="row">
+                    <div class="col-lg-12">    
+                        <div class="input-group">
+                          <span class="input-group-addon">email</span>
+                          <input type="text" class="form-control" id="usernameLogin" name="usernameLogin" placeholder="something@something.com">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                          <span class="input-group-addon">password</span>
+                          <input type="text" class="form-control" id="passwordLogin" name="passwordLogin" type="password">
+                        </div>
+                    <br>
+                        <button id="login" class="btn btn-success btn-large pull-right" type="submit" data-loading-text="Signing In">Sign In</button>
+                    </div>
+                </div>
+                </form>
+            </p>
         </div>
-        <div class="control-group">
-            <div class="controls">
-                <input class="col-lg-12" id="passwordLogin" name="passwordLogin" type="password" placeholder="password">
-            </div>
-        </div>
-
-        <button id="login" class="btn btn-success btn-large pull-right" type="submit" data-loading-text="Signing In">Sign In</button>
-    </form>
-
+    </div>
 </template>
 
 
