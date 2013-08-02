@@ -1,7 +1,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RedisNode - Redis Hosting - Get your free redis node today!</title>
+    <title>FeedVenue - real-time event feedback</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/app/base.css">
     <meta name="fragment" content="!">
 </head>
 
@@ -15,7 +17,7 @@
             <div id="wrap">
                 <div class="container-fluid">
                     <div class="row-fluid">
-                        <div id="main" class="span12">
+                        <div id="main" class="col-lg-12">
                             {{renderPage}}
                         </div>
                     </div>
@@ -26,40 +28,10 @@
 
             <div id="footer">
                 <footer>
-                    <div class="container span12">
-                        <div class="row">
-                            <div class="span2">
-                                <h6>Product</h6>
-                                <a href="/page/what/">What is it?</a><br>                                
-                                <a href="/page/plans/">Plans</a><br>
-                            </div>
-                            <div class="span2">
-                                <h6> &nbsp;</h6>
-                                <a href="/page/features/">Features</a> <br>
-                                <a href="http://redisnode.statuspage.io/" target="_blank">Site Status</a>
-                            </div>
-                            <div class="span2">
-                              <h6>Company</h6>
-                              <a href="/page/privacy/">Privacy</a> <br>
-                              <a href="/page/terms/">Terms</a> <br>
-                            </div>
-                            <div class="span2">
-                              <h6>Community</h6>
-                              <a href="http://blog.redisnode.com/" target="_blank">Blog</a> <br>
-                              <a href="https://twitter.com/redisnode/" target="_blank">Twitter</a> <br>
-                            </div>
-                            <div class="span2">
-                              <h6> &nbsp;</h6>
-                              <a href="http://redisnode.uservoice.com" target="_blank">Support</a> <br>
-                              <a href="mailto:support@redisnode.com" target="_blank">Contact Us</a>
-                            </div>
-                            <div class="span2">
-                              <h6> &nbsp;</h6>
-                                <p class="muted credit">
-                                    &copy; <strong>RedisNode LLC</strong> 2013.
-                                </p>
-                            </div>
-                        </div>
+                    <div class="container">
+                        <p class="muted credit">
+                            &copy; <strong>feedvenue LLC</strong> 2013
+                        </p>
                     </div>
                 </footer>
 
@@ -73,186 +45,189 @@
 
 
 <template name="header">
+
     <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container-fluid">
-                <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="nav-collapse collapse">
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <col-lg- class="icon-bar"></col-lg->
+          <col-lg- class="icon-bar"></col-lg->
+          <col-lg- class="icon-bar"></col-lg->
+        </button>
+        <a class="navbar-brand" href="/"><img src="/img/head.png" style="height: 36px"></a>
+        <div class="nav-collapse collapse">
+          <ul class="nav navbar-nav">
 
-                    {{#if currentUser }}
+            {{#if currentUser }}
 
-                    <ul class="nav">
-                        <li class=""><a href="/users/{{_id}}"><img src="/img/head.png" style="height: 36px"></a></li>
-                        <li class="{{ TabActive 'dashboard'}}"><a href="/users/{{_id}}">Dashboard</a></li>
-                    </ul>
+            <li class="{{ TabActive 'dashboard'}}"><a href="/users/{{_id}}">Dashboard</a></li>
 
-                    {{else}}
+            {{else}}
 
-                    <ul class="nav">
-                        <li class=""><a href="/"><img src="/img/head.png" style="height: 36px"></a></li>
-                        <li class="{{ TabActive 'what'}}"><a href="/page/what">What?</a></li>
-                        <li class="{{ TabActive 'features'}}"><a href="/page/features">Features</a></li>
-                        <li class="{{ TabActive 'plans'}}"><a href="/page/plans">Plans</a></li>
-                        <!--<li class="{{ TabActive 'documentation'}}"><a href="/s/terms">Documentation</a></li>-->
-                    </ul>
+            <li class="{{ TabActive 'what'}}"><a href="/page/what">what</a></li>
+            <li class="{{ TabActive 'features'}}"><a href="/page/features">features</a></li>
+            <li class="{{ TabActive 'plans'}}"><a href="/page/plans">plans</a></li>
 
-                    {{/if}}
+            {{/if}}
+
+          </ul>
 
 
-                    {{#if currentUser }}
+            {{#if currentUser }}
 
-                    {{> loggedin_header}}
+            {{> loggedin_header}}
 
-                    {{else}}
-                    <ul class="nav pull-right">
-                        <li class="{{ TabActive 'login'}}"><a href="/login">Login</a></li>
-                        <li class="{{ TabActive 'signup'}}"><a href="/signup">Signup</a></li>
-                    </ul>
-                    {{/if}}
-
-                </div>
-
-            </div>
-        </div>
+            {{else}}
+            <ul class="nav navbar-nav pull-right">
+                <li class="{{ TabActive 'login'}}"><a href="/login">login</a></li>
+                <li class="{{ TabActive 'signup'}}"><a href="/signup">signup</a></li>
+            </ul>
+            {{/if}}
+        </div><!--/.nav-collapse -->
+      </div>
     </div>
+
 </template>
 
 
 <template name="plans">
-    <h2>Hosting Plans. You want them, we have them</h2><br>
-    <div class="row">
-        <div class="span10">
-            
-            <table class="table table-condensed table-hover">
-                <thead>
-                    <tr>
-                        <th> </th>
-                        <th>32 MB</th>
-                        <th>512 MB</th>
-                        <th>1 GB</th>
-                        <th>2 GB</th>
-                        <th>4 GB</th>
-                        <th>up to 32 GB</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Ram</td>
-                        <td>32 MB</td>
-                        <td>512 MB</td>
-                        <td>1024 MB</td>
-                        <td>2048 MB</td>
-                        <td>4096 MB</td>
-                        <td>32768 MB</td>
-                    </tr>
-                    <tr>
-                        <td>Connections</td>
-                        <td>1024</td>
-                        <td>2048</td>
-                        <td>4096</td>
-                        <td>8192</td>
-                        <td>16384</td>
-                        <td>131072</td>
-                    </tr>
-                    <tr>
-                        <td>Databases</td>
-                        <td>8</td>
-                        <td>16</td>
-                        <td>32</td>
-                        <td>64</td>
-                        <td>128</td>
-                        <td>1024</td>
-                    </tr>
-                    <tr>
-                        <td>Replication</td>
-                        <td>No</td>
-                        <td>No</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Backup</td>
-                        <td>Hourly</td>
-                        <td>Hourly</td>
-                        <td>Hourly</td>
-                        <td>Hourly</td>
-                        <td>Hourly</td>
-                        <td>Hourly + On-demand</td>
-                    </tr>
-                    <tr>
-                        <td>Monthly</td>
-                        <td>free</td>
-                        <td>$5/month</td>
-                        <td>$10/month</td>
-                        <td>$20/month</td>
-                        <td>$32/month</td>
-                        <td>$256/month</td>
-                    </tr>
-                    <tr>
-                        <td> </td>
-                        <td><a class="btn btn-success" href="/signup">Order</td>
-                        <td><a class="btn btn-success" href="/signup/1">Order</td>
-                        <td><a class="btn btn-success" href="/signup/2">Order</td>
-                        <td><a class="btn btn-success" href="/signup/3">Order</td>
-                        <td><a class="btn btn-success" href="/signup/4">Order</td>
-                        <td><a class="btn btn-success" href="/signup/7">Order</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p>
-                <center>Additional space at $8/GB</center>
-            </p>
-        </div>
-    </div>
+<div class="content">
+    <h2>plans. we have one just for you</h2><br>
+    <div class="row col-lg-12">
+        <center>
+            <div class="col-lg-4 pro ">
+                <div class="pricing-table-header-pro">
+                    <h2>free</h2>
+                    <h3>Starter</h3>
+                </div>
+                <div class="pricing-table-features">
+                    <p><strong>Unlimited</strong> Questions</p>
+                    <p><strong>5</strong> Events</p>
+                    <p><strong>Web</strong> Enabled</p>
+                    <p><strong>Mobile</strong> Enabled</p>
+                </div>
+                <div class="pricing-table-signup-pro">
+                  <p><a href="/signup">Sign Up</a></p>
+                </div>
+            </div>
+ <div class="col-lg-4 small">
+                <div class="pricing-table-header-small">
+                    <h2>$25/mo</h2>
+                    <h3>Growth</h3>
+                </div><div class="pricing-table-features">
+                    <p><strong>Unlimited</strong> Questions</p>
+                    <p><strong>25</strong> Events</p>
+                    <p><strong>Web</strong> Enabled</p>
+                    <p><strong>Mobile</strong> Enabled</p>
+                    <p><strong>Phone & SMS</strong> Enabled</p>
+                    <p><strong>Twitter</strong> Sync</p>
+                    <p><strong>Topic</strong> Analytics</p>
+                    <p><strong>Custom</strong> Branding</p>
+                </div>
+                <div class="pricing-table-signup-small">
+                  <p><a href="/signup/1">Sign Up</a></p>
+                </div>
+            </div>
 
+
+            <div class="col-lg-4 medium">
+                <div class="pricing-table-header-medium">
+                    <h2>$100/mo</h2>
+                    <h3>Enterprise</h3>
+                </div><div class="pricing-table-features">
+                    <p><strong>Unlimited</strong> Questions</p>
+                    <p><strong>Unlimited</strong> Events</p>
+                    <p><strong>Web</strong> Enabled</p>
+                    <p><strong>Mobile</strong> Enabled</p>
+                    <p><strong>Phone & SMS</strong> Enabled</p>
+                    <p><strong>Email</strong> Enabled</p>
+                    <p><strong>Twitter</strong> Sync</p>
+                    <p><strong>Topic</strong> Analytics</p>
+                    <p><strong>Sentiment</strong> Analytics</p>
+                    <p><strong>Custom</strong> Branding</p>
+                    <p><strong>Premium</strong> Support</p>
+                </div>
+                <div class="pricing-table-signup-medium">
+                    <p><a href="/signup/2">Sign Up</a></p>
+                </div>
+            </div>
+
+        </center>
+        <p>
+            <center>Need more features? Contact us</center>
+        </p>
+    </div>
+</div>
 </template>
 
 <!-- Static Pages -->
 <template name="home">
-    <div class="jumbotron">
-        <br>
-        <h1>redis hosting</h1>
-        <p class="lead">Pay as you go pricing. No commitment.</p>
-        <p class="lead">Now offering the largest free redis plan on the web.</p>
-        <a class="btn btn-large btn-success" href="/signup">Get your free redis node</a>
-        <br>
-      </div>
-      <br />
-<hr>
-
-      <div class="row-fluid">
-        <div class="span4">
-          <h3> never fail</h3>
-          <p>Cluster replication & failover handled automatically.<br>Nothing to manage on your end.</p>
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1>the <span class="label">real-time</span> <span class="label label-danger">feedback</span> platform</h1>
+                <br><br>
+                <h1><span class="label label-success">social</span> &
+                    <span class="label label-warning">anonymous</span> on the  
+                    web and mobile.
+                </h1>
+            </div>
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-2 pull-right">
+                <a class="btn btn-large btn-success" href="/signup">sign up for free</a>
+            </div>
         </div>
-        <div class="span4">
-          <h3> cloud scale</h3>
-          <p>Performance not dependent on instance size.<br> One-click upgrade without any downtime.</p>
-        </div>        
-        <div class="span4">
-          <h3> backup</h3>
-          <p>Hourly backups to S3 storage, free on all plans. <br>On-demand backups available.</p>
-        </div>
-      </div>
 
-    <div class="jumbotron">        
-        <p class="lead"><a href="/page/features/">and much more..</a></center></p>
     </div>
+    
+    <br />
+    <br />
+    <br />
+    <br />
+    
+      <div class="row">
+        <div class="col-lg-3">
+            <div class="panel">
+                <div class="panel-heading">
+                <h3 class="panel-title">social</h3>
+                </div>
+                <p>We watch social networks for your event questions and let peers vote.</p>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel">
+                <div class="panel-heading">
+                <h3 class="panel-title">anonymous</h3>
+                </div>
+                  <p>Let people ask anonymously, via phone, sms, web and mobile apps.</p>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel">
+                <div class="panel-heading">
+                <h3 class="panel-title">real-time</h3>
+                </div>
+                  <p>You get instant feedback and insights.<br> No more waiting, more deciding.</p>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel">
+                <div class="panel-heading">
+                <h3 class="panel-title">analytic</h3>
+                </div>
+                  <p>Understand event sentiment and question topics. Address the things that matter.</p>
+            </div>
+        </div>
+      </div>
+
+    <center>        <p class="lead"><a href="/page/features/">and more</a></center></p>
 <hr>
 </template>
 
 <template name="what">
     <div class="content">
-        <h2>What is RedisNode?</h2>
-        <p>RedisNode is all about kickass redis hosting for a fraction of the cost of doing it yourself and without the headaches that come with scaling and making your installation awesome.</p>
-        <h2>How is RedisNode different?</h2>
-        <p>We offer the most competitive prices/GB and all the features that you'd expect from a production redis platform. <br>We won't nickle and dime you or throttle your connections. And all instances are on blazingly fast dedicated hardware with 10GB uplinks. Redis FTW!</p>
+        <h2>What is feedvenue?</h2>
+        <p>FeedVenue is a real-time feedback platform. We're providing the best social feedback platform that helps you address event questions and helps people express themselves.</p>
         <h2>Is my credit card secure on your site?</h2>
         <p>Yes. We do not store your credit card information on our servers at any point. We use a third party credit card processing service (stripe.com) that is fully PCI compliant. </p>
     </div>
@@ -260,50 +235,50 @@
 
 <template name="features">
   <div class="content">
-       <h1>Features. Lots of them. On every plan.</h1>
+       <h2>features. see all the things we can do for you</h2>
 
-      <div class="row-fluid">
-        <div class="span6">
-          <h2><i class="icon-refresh"></i> Replication & Failover</h2>
-          <p>Cluster replication & failover handled automatically.<br>Nothing to manage on your end.</p>
-        </div>
-        <div class="span6">
-          <h2><i class="icon-th-large"></i> Performance & Scale</h2>
-          <p>Performance not dependent on instance size.<br> One-click upgrade without any downtime.</p>
-        </div>        
-      </div>
 
-      <div class="row-fluid">
-        <div class="span6">
-          <h2><i class="icon-random"></i> Import & Export</h2>
-          <p>Migrate data to and from our service with one click.<br> Import all data from another redis hosting service by simply giving us the credentials to that instance, and we'll do all the heavy lifting. No fees or bandwidth fees.</p>
-        </div>        
-        <div class="span6">
-          <h2><i class="icon-hdd"></i> Backups & Restores</h2>
-          <p>Hourly backups to S3 storage, free on all plans. <br>On-demand backups available at $0.25/GB.</p>
+      <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                <h2 class="panel-title">social</h2>
+                </div>
+                <p>We watch Facebook and Twitter for your event questions and help peers decide how valid questions are, in real-time.</p>
+            </div>
         </div>
       </div>
-
-      <div class="row-fluid">
-        <div class="span6">
-          <h2><i class="icon-info-sign"></i> Log Access</h2>
-          <p>View full logs for your instance in the browser. Optionally export logs to your S3 bucket.</p>
+      <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                <h3 class="panel-title">anonymous</h3>
+                </div>
+                  <p>Let people ask anonymously, via phone, sms, web and mobile apps.</p>
+            </div>
         </div>
-        <div class="span6">
-          <h2><i class="icon-wrench"></i> Configuration</h2>
-          <p>Get full configuration file access. No artificial limits from our side.</p>
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                <h3 class="panel-title">real-time</h3>
+                </div>
+                  <p>You get instant feedback and insights. No more waiting, more deciding.</p>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                <h3 class="panel-title">analytic</h3>
+                </div>
+                  <p>Understand event sentiment and question topics. Address the things that matter.</p>
+            </div>
         </div>
       </div>
 
-
-      <div class="row-fluid">
-        <div class="span6">
-          <h2><i class="icon-tasks"></i> API</h2>
-          <p>Automate instance provisioning and configuration. In beta.</p>
-        </div>
-        <div class="span6">
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -313,7 +288,7 @@
     <p class="pull-right"><strong>Logging In!</strong></p>
     {{else}}
     <ul class="nav pull-right">
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, {{ fullName }} <b class="caret"></b></a>
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, {{ name }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="/users/{{ id }}/edit"><i class="icon-cog"></i> Edit Contact Info</a></li>
                 <li class="divider"></li>
@@ -333,8 +308,9 @@
     <h3>Instances</h3>
     <br>
 
-    <div class="hero-unit span6">
-
+    <div class="hero-unit col-lg-6">
+        coming soon
+        <!--
     <table class="table">
         <tr>
             <th>Plan: </th>
@@ -342,7 +318,7 @@
         </tr>
         <tr>
             <th>Hostname: </th>
-            <td>master.redisnode.com</td>
+            <td>master.feedvenue.com</td>
         </tr>
 
         <tr>
@@ -355,6 +331,7 @@
             <td>{{ instance.password }}</td>
         </tr>
     </table>
+-->
     </div>
 
     {{/with}}
@@ -366,10 +343,10 @@
     {{#with user}}
 
     <div class="row-fluid">
-        <div class="span10">
+        <div class="col-lg-10">
             <h3>Edit Contact Info</h3>
         </div>
-        <div class="span2 pull-right action">
+        <div class="col-lg-2 pull-right action">
             <a href="/users/{{_id}}" class='btn btn-primary btn-block'>Back to Dashboard</a>
         </div>
     </div>
@@ -383,7 +360,7 @@
             
             <div class="controls">
                 <label>First name</label>
-                <input id="firstName" class="span12" name="firstName" type="text" value="{{profile.firstName}}" placeholder="first name">
+                <input id="firstName" class="col-lg-12" name="firstName" type="text" value="{{profile.firstName}}" placeholder="first name">
             </div>
         </div>
 
@@ -391,14 +368,14 @@
             
             <div class="controls">
                 <label>Last name</label>
-                <input id="lastName" class="span12" name="lastName" type="text" value="{{profile.lastName}}">
+                <input id="lastName" class="col-lg-12" name="lastName" type="text" value="{{profile.lastName}}">
             </div>
         </div>
 
         <div class="control-group">
             <div class="controls">
                 <label>Plan</label>
-                <input disabled class="span12" id="bio" name="bio" placeholder="plan name" value="{{planName}}">
+                <input disabled class="col-lg-12" id="bio" name="bio" placeholder="plan name" value="{{planName}}">
                 You cannot upgrade or downgrade at this time.
             </div>
         </div>
@@ -428,13 +405,13 @@
     <form id="loginForm" name="loginForm" method="post">
         <div class="control-group">
             <div class="controls">
-                <input class="span12" id="usernameLogin" name="usernameLogin" type="text" placeholder="username">
+                <input class="col-lg-12" id="usernameLogin" name="usernameLogin" type="text" placeholder="username">
 
             </div>
         </div>
         <div class="control-group">
             <div class="controls">
-                <input class="span12" id="passwordLogin" name="passwordLogin" type="password" placeholder="password">
+                <input class="col-lg-12" id="passwordLogin" name="passwordLogin" type="password" placeholder="password">
             </div>
         </div>
 
@@ -447,6 +424,8 @@
 
 <!-- Signup -->
 <template name="signup">
+<div class="col-lg-10">
+
     <br>
     <h3>
         Signup for a new account
@@ -455,55 +434,94 @@
     
     <hr>
 
-    <form id="signupForm" name="signupForm" method="post">        
-        <h3>Personal Information</h3>
-        <div class="control-group">
-            <div class="controls span12">
-                <input id="firstName" name="firstName" class="span3" type="text" placeholder="First Name" style="width: 23.0%">
-                <input id="lastName" name="lastName" class="span3" type="text" placeholder="Last Name" style="width: 23.3%">
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="controls span12">
-                <input class="span6" id="email" name="email" type="email" placeholder="Email Address" style="width: 46.5%">
-            </div>
-        </div>   
-        <div class="control-group">
-            <div class="controls span12">
-                <input id="passwordSignup" name="passwordSignup" class="span3" type="password" placeholder="Password" style="width: 23.0%">
-                <input id="password_againSignup" name="password_againSignup" class="span3" type="password" placeholder="Confirm Password" style="width: 23.3%">
-            </div>
-        </div>   
-        <h3>Select your Plan</h3>
-        <div class="control-group">
-            <div class="controls span12">
-                <select name="plan" id="plan" class="span3">
-                  <option value="0" {{ signup_plan "0"}}>32MB - free</option>
-                  <option value="1" {{ signup_plan "1"}}>512MB - $5/month</option>
-                  <option value="2" {{ signup_plan "2"}}>1GB - $10/months</option>
-                  <option value="3" {{ signup_plan "3"}}>2GB - $20/month</option>
-                  <option value="4" {{ signup_plan "4"}}>4GB - $32/month</option>
-                  <option value="5" {{ signup_plan "5"}}>8GB - $64/month</option>
-                  <option value="6" {{ signup_plan "6"}}>16GB - $128/month</option>
-                  <option value="7" {{ signup_plan "7"}}>32GB - $256/month</option>
-                </select>
-            </div>
-        </div>
-        <div id="paymentInfo" class="{{ show_signup_plan_payment_section }}">
-        <h3>Payment Information</h3>
-        <div class="control-group">
-            <div class="controls span12">
-                <input id="creditCardNumber" name="creditCardNumber" class="span4" type="text" placeholder="Credit Card Number" maxlength="20" size="20" style="width: 33.0%">
-                <input id="ccMonth" name="ccMonth" class="span1" type="text" placeholder="MM" maxlength="2" size="2" style="width: 4.2%">
-                <input id="ccYear" name="ccYear" class="span1" type="text" placeholder="YY" maxlength="2" size="2" style="width: 3.5%">
-                <input id="zipCode" name="zipCode" class="span1" type="text" placeholder="Zip" maxlength="5" size="5" style="width: 5.3%">
-            </div>
-        </div>
-        </div>
+    <form id="signupForm" name="signupForm" method="post">
 
-        <button class="btn btn-success btn-large pull-right" type="submit" id="createUser" data-loading-text="Creating your account">Create Account</button>
+    <div class="panel">
+        <div class="panel-heading"><h3 class="panel-title">Personal Information</h3></div>
+        <p>
+            <div class="input-group">
+              <span class="input-group-addon">name</span>
+              <input type="text" class="form-control" placeholder="" id="name" name="name">
+            </div>
+            <br>
+
+            <div class="input-group">
+              <span class="input-group-addon">email</span>
+              <input type="text" class="form-control" placeholder="" id="email" name="email">
+            </div>
+            <br>
+
+            <div class="input-group">
+              <span class="input-group-addon ">password</span>
+              <input type="text" class="form-control" placeholder="password" id="passwordSignup" name="passwordSignup">
+            </div>
+            <br>
+
+            <div class="input-group">
+              <span class="input-group-addon ">confirm</span>
+              <input type="text" class="form-control" placeholder="confirm password" id="password_againSignup" name="password_againSignup" type="password">
+            </div>
+    </p>
+    </div>
+
+    <div class="panel">
+        <div class="panel-heading"><h3 class="panel-title">Select your Plan</h3></div>
+        <p>
+            <select class="form-control" name="plan" id="plan" class="col-lg-3">
+              <option value="0" {{ signup_plan "0"}}>free</option>
+              <option value="1" {{ signup_plan "1"}}>growth</option>
+              <option value="2" {{ signup_plan "2"}}>enterprise</option>
+            </select>
+        </p>
+    </div>
+
+
+
+    <div class="panel {{ show_signup_plan_payment_section }}" id="paymentInfo">
+        <div class="panel-heading"><h3 class="panel-title">Payment Information</h3></div>
+        <p>
+            <div class="row">
+            <div class="col-lg-6">
+                        
+                        <div class="input-group">
+                          <span class="input-group-addon ">Credit Card</span>
+                          <input type="text" class="form-control" id="creditCardNumber" name="creditCardNumber" maxlength="20" size="20" placeholder="Number" style="">
+                        </div>
+
+            </div>
+            <div class="col-lg-2">
+
+                        <div class="input-group">
+                          <span class="input-group-addon ">MM</span>
+                          <input type="text" class="form-control" id="ccMonth" name="ccMonth" type="text" placeholder="MM" maxlength="2" size="2" style="width: 100%">
+                        </div>
+                        
+            </div>
+            <div class="col-lg-2">
+
+                        <div class="input-group">
+                          <span class="input-group-addon ">YY</span>
+                          <input type="text" class="form-control" id="ccYear" name="ccYear" type="text" placeholder="YY" maxlength="2" size="2" style="width: 100%">
+                        </div>
+
+            </div>
+            <div class="col-lg-2">
+
+                        <div class="input-group">
+                          <span class="input-group-addon ">Zip</span>
+                          <input type="text" class="form-control" id="zipCode" name="zipCode" type="text" placeholder="Code" maxlength="5" size="5" style="width: 100%">
+                        </div>
+                        
+            </div>
+            </div>
+
+        </p>
+    </div>
+
+    <button class="btn btn-success btn-large pull-right" type="submit" id="createUser" data-loading-text="Creating your account">create account</button>
     </form>
 
+</div>
 </template>
 
 
@@ -516,14 +534,14 @@
     <form id="passwordUpdateForm">
         <div class="control-group">
             <div class="controls">
-                <input class="span12" id="passwordUpdate" name="passwordUpdate" type="password" placeholder="Your new password">
+                <input class="col-lg-12" id="passwordUpdate" name="passwordUpdate" type="password" placeholder="Your new password">
                 <div class="help-block muted">Enter your new password.</div>
             </div>
         </div>
 
         <div class="control-group">
             <div class="controls">
-                <input class="span12" id="password_againUpdate" name="password_againUpdate" type="password" placeholder="Your password again">
+                <input class="col-lg-12" id="password_againUpdate" name="password_againUpdate" type="password" placeholder="Your password again">
                 <div class="help-block muted">Enter your new password again.</div>
             </div>
         </div>
@@ -543,7 +561,7 @@
         
         <div class="control-group">
             <div class="controls">
-                <input class="span12" id="email" name="email" type="email" placeholder="Your email">
+                <input class="col-lg-12" id="email" name="email" type="email" placeholder="Your email">
                 <div class="help-block muted">An email confirmation will be sent</div>
             </div>
         </div>

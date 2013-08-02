@@ -25,15 +25,10 @@ App.signupRules = {
 			minlength: 6,
 			maxlength: 50
 		},
-		firstName: {
+		name: {
 			required: true,
-			minlength: 3,
-			maxlength: 50
-		},
-		lastName: {
-			required: true,
-			minlength: 3,
-			maxlength: 50
+			minlength: 5,
+			maxlength: 100
 		},
 		creditCardNumber: {
 			required: true,
@@ -57,7 +52,7 @@ App.signupMessages = {
 			minlength: "must be at least 2 chars"
 		},
 		email: {
-			required: "We need your email adress to contact you",
+			required: "Please enter your email adress",
 			email: "Your email must be in the format of name@domain.com"
 		},
 		password_againSignup: {
@@ -66,14 +61,9 @@ App.signupMessages = {
 			minlength: "At least 3 chars!",
 			maxlength: "No longer then 12 chars!"
 		},
-		firstName: {
-			required: "What is your first name?",
-			minlength: "At least 3 chars!",
-			maxlength: "no longer then 50 chars!"
-		},
-		lastName: {
-			required: "What is your last name?",
-			minlength: "At least 3 chars!",
+		name: {
+			required: "What is your name?",
+			minlength: "At least 2 chars!",
 			maxlength: "no longer then 50 chars!"
 		},
 		creditCardNumber: {
@@ -85,14 +75,13 @@ App.signupMessages = {
 	}
 };
 
-App.createNewUserAccount = function (username, email, password, firstName, lastName, planId, customer_id ) {
+App.createNewUserAccount = function (username, email, password, name, planId, customer_id ) {
 	Accounts.createUser({
 		username: username, 
 		password: password, 
 		email: email, 
 		profile: {
-			firstName: firstName, 
-			lastName: lastName,
+			name: name,
 			plan: planId
 		}
 	}, function(error, other) {		
@@ -115,16 +104,16 @@ App.createNewUserAccount = function (username, email, password, firstName, lastN
 
 			var planName = plan[0].mb+"MB for $"+plan[0].cost+"/month";
 		    Meteor.call('provision', dataBlob, function(err, res) {
-				Instances.insert({plan: planId, port: port, password: password, owner: Meteor.user()._id});
+				//Instances.insert({plan: planId, port: port, password: password, owner: Meteor.user()._id});
 
 				if (customer_id != null) {
-					Customers.insert({plan: planId, owner: Meteor.user()._id, customer_id: customer_id});
+				//	Customers.insert({plan: planId, owner: Meteor.user()._id, customer_id: customer_id});
 				}
 
 				Meteor.call('sendEmail',
 				            Meteor.user().username,
-				            'Welcome to RedisNode!',
-				            'Hi '+Meteor.user().profile.firstName+" "+Meteor.user().profile.lastName+",\n\n"+"Thank you for signing up for a hosted redis account from redisnode.com.\n\nHere's your instance connection details:\nplan: "+planName+"\nhost: master.redisnode.com\nport: "+port+"\npassword: "+password+"\n\nThanks,\nthe redisnode team\n"
+				            'Welcome to FeedVenue!',
+				            'Hi '+Meteor.user().profile.name+",\n\n"+"Thank you for signing up for a FeedVenue account.\n\nThanks,\nthe feedvenue team\n"
 				            );
 
 				Meteor.Router.to("/users/"+Meteor.user()._id+"");
@@ -137,8 +126,7 @@ App.createNewUserAccount = function (username, email, password, firstName, lastN
 App.createUserAccount = function () {	
 	email = $("#email").val().toLowerCase();	
 	username = $("#email").val().toLowerCase();
-	firstName = $("#firstName").val();	
-	lastName = $("#lastName").val();	
+	name = $("#name").val();	
 	password = $("#passwordSignup").val();	
 	planId = $("#plan").val();
 	ccnum = $("#creditCardNumber").val();	
@@ -160,7 +148,7 @@ App.createUserAccount = function () {
 	    Meteor.call('createCustomerFromCard', dataBlob, function(error, stripe_response) {
 	    	if (!stripe_response.error) {
 				Session.set('cardchargesuccess', 1);
-	    		App.createNewUserAccount(username, email, password, firstName, lastName, planId, stripe_response._id);
+	    		App.createNewUserAccount(username, email, password, name, planId, stripe_response._id);
 	    	} else {
 				$('.alert.alert-error').first().remove();
 				$("#createUser").button('reset');
@@ -170,7 +158,7 @@ App.createUserAccount = function () {
     	}
 	    );
 	} else {
-		App.createNewUserAccount(username, email, password, firstName, lastName, planId, null );
+		App.createNewUserAccount(username, email, password, name, planId, null );
 	}
 };
 
@@ -293,11 +281,10 @@ App.loginHandleSubmit = {
 /*==========  EDIT PROFILE  ==========*/
 
 App.editUserAccount = function () {
-	var firstName = $("#firstName").val();	
-	var lastName = $("#lastName").val();	
+	var name = $("#name").val();	
 	var bio = $("#bio").val();	
 
-	Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.firstName": firstName, "profile.lastName": lastName, "profile.bio": bio}});
+	Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.name": name, "profile.bio": bio}});
 	$("#editProfileForm div.alert").remove();
 	$("#saveEdit").button('reset');
 	
@@ -308,15 +295,10 @@ App.editUserAccount = function () {
 
 App.editProfileRules = {
 	rules: {
-		firstName: {
+		name: {
 			required: true,
-			minlength: 3,
-			maxlength: 50
-		},
-		lastName: {
-			required: true,
-			minlength: 3,
-			maxlength: 50
+			minlength: 5,
+			maxlength: 100
 		},
 	}
 };
@@ -324,15 +306,10 @@ App.editProfileRules = {
 
 App.editProfileMessages = {
 	messages: {
-		firstName: {
-			required: "What is your first name?",
-			minlength: "Your name must be least 3 characters long!",
-			maxlength: "Your name can be no longer than 50 chars!"
-		},
-		lastName: {
-			required: "What is your last name?",
-			minlength: "Your name must be least 3 characters long!",
-			maxlength: "Your name can be no longer than 50 chars!"
+		name: {
+			required: "What is your name?",
+			minlength: "Your name must be least 5 characters long!",
+			maxlength: "Your name can be no longer than 100 chars!"
 		}
 	}
 };
@@ -387,8 +364,8 @@ App.recoverEmailRules = {
 App.recoverEmailMessages = {
 	messages: {
 		email: {
-			required: "We need your email adress",
-			email: "Your email must be of the format name@domain.com"
+			required: "Please enter your email adress!",
+			email: "Your email must look like name@domain.com"
 		}
 	}
 };

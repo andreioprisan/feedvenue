@@ -1,20 +1,16 @@
 Meteor.startup(function () {
-	process.env.MAIL_URL = "smtp://postmaster@redisnode.com:402ma3iic7n8@smtp.mailgun.org:465";
+	process.env.MAIL_URL = "smtp://postmaster@feedvenue.com:562jnvpdtdj9@smtp.mailgun.org:465";
 
 	Plans = new Meteor.Collection("Plans");
 	Instances = new Meteor.Collection("Instances");
 	Customers = new Meteor.Collection("Customers");
 	Keys = new Meteor.Collection("Keys");
 
-	if (Plans.find().count() === 0) {
-		Plans.insert({name: "32MB", cost: 0, mb: 32, dbs: 8, conn: 1024, id: 0});
-		Plans.insert({name: "512MB", cost: 5, mb: 512, dbs: 16, conn: 2048, id: 1});
-		Plans.insert({name: "1GB", cost: 10, mb: 1024, dbs: 32, conn: 4096, id: 2});
-		Plans.insert({name: "2GB", cost: 20, mb: 2048, dbs: 64, conn: 8192, id: 3});
-		Plans.insert({name: "4GB", cost: 32, mb: 4096, dbs: 128, conn: 16384, id: 4});
-		Plans.insert({name: "8GB", cost: 64, mb: 8192, dbs: 256, conn: 32768, id: 5});
-		Plans.insert({name: "16GB", cost: 128, mb: 16384, dbs: 512, conn: 65536, id: 6});
-		Plans.insert({name: "32GB", cost: 256, mb: 32768, dbs: 1024, conn: 131072, id: 7});
+	if (Plans.find().count() == 0) {
+		Plans.insert({name: "free", id: 0, questions: -1, events: 5, voicemail: 0, sms: 0, twitter: 0, topics: 0, sentiment: 0, email: 0, branding: 0, support: 0});
+		Plans.insert({name: "growth", id: 1, questions: -1, events: 25, voicemail: 1, sms: 1, twitter: 1, topics: 0, sentiment: 0, email: 0, branding: 1, support: 0});
+		Plans.insert({name: "enterprise", id: 2, questions: -1, events: -1, voicemail: 1, sms: 1, twitter: 1, topics: 1, sentiment: 1, email: 1, branding: 1, support: 1});
+		Plans.insert({name: "custom", id: 2, questions: -1, events: -1, voicemail: 1, sms: 1, twitter: 1, topics: 1, sentiment: 1, email: 1, branding: 1, support: 1});
 	}
 
 	Meteor.publish("Plans", function () {
@@ -34,8 +30,8 @@ Meteor.startup(function () {
 	});
 
 	var os = Npm.require("os");
-	if (os.hostname() == "master.redisnode.com" ||
-		os.hostname() == "slave.redisnode.com") {
+	if (os.hostname() == "direct.feedvenue.com" ||
+		os.hostname() == "feedvenue.com") {
 		isProd = 1;
 	} else {
 		isProd = 0;

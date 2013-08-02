@@ -34,10 +34,11 @@ Template.signup.rendered = function() {
 
 Template.signup.events({
     "change #plan": function(event){
-        if(event.srcElement.value != 0) {
-            $('#paymentInfo').show();
+        var plan = event.srcElement.value;
+        if (plan != 0) {
+            showPaymentFields();
         } else {
-            $('#paymentInfo').hide();
+            hidePaymentFields();
         }
     }
 });
@@ -48,8 +49,10 @@ Template.signup.plan = function() {
         plan = 0;
     }
 
-    if (plan > 0) {
-        $('#paymentInfo').show();
+    if (plan) {
+        showPaymentFields();
+    } else {
+        hidePaymentFields();
     }
 };
 
@@ -59,19 +62,37 @@ Handlebars.registerHelper('signup_plan', function (route) {
         plan = 0;
     }
 
+    if (plan) {
+        showPaymentFields();
+    } else {
+        hidePaymentFields();
+    }
+
     return (route == plan) ? "selected" : "";
 });
 
 Handlebars.registerHelper('show_signup_plan_payment_section', function (route) {
     var plan = Session.get("signup_plan");
+
     if (plan == undefined) {
         plan = 0;
     }
 
+    if (plan) {
+        showPaymentFields();
+    } else {
+        hidePaymentFields();
+    }
+
     return (plan) ? "" : "hide";
 });
+
+function hidePaymentFields() {
+    $('#paymentInfo').hide().addClass('hide');    
+}
+
 function showPaymentFields() {
-    $('#paymentInfo').show();
+    $('#paymentInfo').show().removeClass('hide');
 }
 
 // Logged in views
@@ -102,16 +123,16 @@ Template.dashboard.planName = function() {
 function getPlanName(id) {
     var plan = Plans.find({id: parseInt(id)}).fetch();
     if (plan.length == 0) {
-        return "32MB for free";
+        return "free";
     } else {
         return plan[0].name+" at $"+plan[0].cost+"/month";
     }
 }
 
 Template.loggedin_header.helpers({
-    fullName: function() {
+    name: function() {
         var profile = Meteor.user().profile;
-        return profile.firstName + ' ' + profile.lastName;
+        return profile.name;
     },
 
     id: function() {
@@ -120,9 +141,9 @@ Template.loggedin_header.helpers({
 });
 
 Template.header.helpers({
-    fullName: function() {
+    name: function() {
         var profile = Meteor.user().profile;
-        return profile.firstName + ' ' + profile.lastName;
+        return profile.name;
     },
 
     _id: function() {

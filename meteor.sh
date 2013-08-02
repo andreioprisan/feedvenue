@@ -1,17 +1,17 @@
 #!/bin/bash
 
 # IP or URL of the server you want to deploy to
-export APP_HOST=198.199.123.233
+export APP_HOST=direct.feedvenue.com
 
 # Uncomment this if your host is an EC2 instance
 # export EC2_PEM_FILE=path/to/your/file.pem
 
 # You usually don't need to change anything below this line
 
-export APP_NAME=redisnode.com
+export APP_NAME=feedvenue.com
 export ROOT_URL=http://$APP_HOST
 export APP_DIR=/var/www/$APP_NAME
-export MONGO_URL=mongodb://redisnode:j2847hogi37bewqrugyeuaiqr@zoe.mongohq.com:10005/redisnode
+export MONGO_URL=feedvenue:e8b19da37825a3056e84c522f05efce0@ana.mongohq.com:10097/feedvenue
 if [ -z "$EC2_PEM_FILE" ]; then
     export SSH_HOST="root@$APP_HOST" SSH_OPT=""
   else
@@ -32,7 +32,6 @@ apt-get update
 apt-get install -y python-software-properties
 add-apt-repository ppa:chris-lea/node.js-legacy
 apt-get update
-apt-get install -y build-essential nodejs npm mongodb
 npm install -g forever
 ENDSSH
 echo Done. You can now deploy your app.
