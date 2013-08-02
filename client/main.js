@@ -24,10 +24,6 @@ Template.login.rendered = function() {
     App.myValidation (App.loginRules, App.loginMessages, App.loginForm, App.messagePlacement, App.loginHandleSubmit);
 };
 
-
-
-
-// Signup
 Template.signup.rendered = function() {
     App.myValidation (App.signupRules, App.signupMessages, App.signupForm, App.messagePlacement, App.signupHandleSubmit);
 };
@@ -153,15 +149,10 @@ Template.header.helpers({
 
 Template.password_update.rendered = function() {
     if(Session.get("resetPassword")) {
-        // update password
         App.myValidation (App.passwordUpdateRules, App.passwordUpdateMessages, App.passwordUpdateForm, App.messagePlacement, App.passwordUpdateHandleSubmit);    
     } 
 };
 
 Template.recover_email.rendered = function() {
-    
-        // password reset email form
         App.myValidation (App.recoverEmailRules, App.recoverEmailMessages, App.recoverEmailForm, App.messagePlacement, App.recoverEmailHandleSubmit);    
-    
-    
 };

@@ -62,3 +62,7 @@ text-align: center;
 .navbar .nav > li > a:hover, .navbar .nav > li > a:focus {
   color: red;
 }
+
+#uc-first-char{
+    text-transform:capitalize;
+}
