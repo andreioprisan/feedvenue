@@ -1,0 +1,580 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RedisNode - Redis Hosting - Get your free redis node today!</title>
+    <meta name="fragment" content="!">
+</head>
+
+
+<body>
+    <div class="container">
+        <div class="row-fluid">
+
+            {{> header}}
+
+            <div id="wrap">
+                <div class="container-fluid">
+                    <div class="row-fluid">
+                        <div id="main" class="span12">
+                            {{renderPage}}
+                        </div>
+                    </div>
+                </div>
+                <div id="spacer"></div>
+            </div>
+
+
+            <div id="footer">
+                <footer>
+                    <div class="container span12">
+                        <div class="row">
+                            <div class="span2">
+                                <h6>Product</h6>
+                                <a href="/page/what/">What is it?</a><br>                                
+                                <a href="/page/plans/">Plans</a><br>
+                            </div>
+                            <div class="span2">
+                                <h6> &nbsp;</h6>
+                                <a href="/page/features/">Features</a> <br>
+                                <a href="http://redisnode.statuspage.io/" target="_blank">Site Status</a>
+                            </div>
+                            <div class="span2">
+                              <h6>Company</h6>
+                              <a href="/page/privacy/">Privacy</a> <br>
+                              <a href="/page/terms/">Terms</a> <br>
+                            </div>
+                            <div class="span2">
+                              <h6>Community</h6>
+                              <a href="http://blog.redisnode.com/" target="_blank">Blog</a> <br>
+                              <a href="https://twitter.com/redisnode/" target="_blank">Twitter</a> <br>
+                            </div>
+                            <div class="span2">
+                              <h6> &nbsp;</h6>
+                              <a href="http://redisnode.uservoice.com" target="_blank">Support</a> <br>
+                              <a href="mailto:support@redisnode.com" target="_blank">Contact Us</a>
+                            </div>
+                            <div class="span2">
+                              <h6> &nbsp;</h6>
+                                <p class="muted credit">
+                                    &copy; <strong>RedisNode LLC</strong> 2013.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+
+        </div>
+    </div>
+    
+</body>
+
+
+
+<template name="header">
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="nav-collapse collapse">
+
+                    {{#if currentUser }}
+
+                    <ul class="nav">
+                        <li class=""><a href="/users/{{_id}}"><img src="/img/head.png" style="height: 36px"></a></li>
+                        <li class="{{ TabActive 'dashboard'}}"><a href="/users/{{_id}}">Dashboard</a></li>
+                    </ul>
+
+                    {{else}}
+
+                    <ul class="nav">
+                        <li class=""><a href="/"><img src="/img/head.png" style="height: 36px"></a></li>
+                        <li class="{{ TabActive 'what'}}"><a href="/page/what">What?</a></li>
+                        <li class="{{ TabActive 'features'}}"><a href="/page/features">Features</a></li>
+                        <li class="{{ TabActive 'plans'}}"><a href="/page/plans">Plans</a></li>
+                        <!--<li class="{{ TabActive 'documentation'}}"><a href="/s/terms">Documentation</a></li>-->
+                    </ul>
+
+                    {{/if}}
+
+
+                    {{#if currentUser }}
+
+                    {{> loggedin_header}}
+
+                    {{else}}
+                    <ul class="nav pull-right">
+                        <li class="{{ TabActive 'login'}}"><a href="/login">Login</a></li>
+                        <li class="{{ TabActive 'signup'}}"><a href="/signup">Signup</a></li>
+                    </ul>
+                    {{/if}}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<template name="plans">
+    <h2>Hosting Plans. You want them, we have them</h2><br>
+    <div class="row">
+        <div class="span10">
+            
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th>32 MB</th>
+                        <th>512 MB</th>
+                        <th>1 GB</th>
+                        <th>2 GB</th>
+                        <th>4 GB</th>
+                        <th>up to 32 GB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ram</td>
+                        <td>32 MB</td>
+                        <td>512 MB</td>
+                        <td>1024 MB</td>
+                        <td>2048 MB</td>
+                        <td>4096 MB</td>
+                        <td>32768 MB</td>
+                    </tr>
+                    <tr>
+                        <td>Connections</td>
+                        <td>1024</td>
+                        <td>2048</td>
+                        <td>4096</td>
+                        <td>8192</td>
+                        <td>16384</td>
+                        <td>131072</td>
+                    </tr>
+                    <tr>
+                        <td>Databases</td>
+                        <td>8</td>
+                        <td>16</td>
+                        <td>32</td>
+                        <td>64</td>
+                        <td>128</td>
+                        <td>1024</td>
+                    </tr>
+                    <tr>
+                        <td>Replication</td>
+                        <td>No</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Backup</td>
+                        <td>Hourly</td>
+                        <td>Hourly</td>
+                        <td>Hourly</td>
+                        <td>Hourly</td>
+                        <td>Hourly</td>
+                        <td>Hourly + On-demand</td>
+                    </tr>
+                    <tr>
+                        <td>Monthly</td>
+                        <td>free</td>
+                        <td>$5/month</td>
+                        <td>$10/month</td>
+                        <td>$20/month</td>
+                        <td>$32/month</td>
+                        <td>$256/month</td>
+                    </tr>
+                    <tr>
+                        <td> </td>
+                        <td><a class="btn btn-success" href="/signup">Order</td>
+                        <td><a class="btn btn-success" href="/signup/1">Order</td>
+                        <td><a class="btn btn-success" href="/signup/2">Order</td>
+                        <td><a class="btn btn-success" href="/signup/3">Order</td>
+                        <td><a class="btn btn-success" href="/signup/4">Order</td>
+                        <td><a class="btn btn-success" href="/signup/7">Order</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                <center>Additional space at $8/GB</center>
+            </p>
+        </div>
+    </div>
+
+</template>
+
+<!-- Static Pages -->
+<template name="home">
+    <div class="jumbotron">
+        <br>
+        <h1>redis hosting</h1>
+        <p class="lead">Pay as you go pricing. No commitment.</p>
+        <p class="lead">Now offering the largest free redis plan on the web.</p>
+        <a class="btn btn-large btn-success" href="/signup">Get your free redis node</a>
+        <br>
+      </div>
+      <br />
+<hr>
+
+      <div class="row-fluid">
+        <div class="span4">
+          <h3> never fail</h3>
+          <p>Cluster replication & failover handled automatically.<br>Nothing to manage on your end.</p>
+        </div>
+        <div class="span4">
+          <h3> cloud scale</h3>
+          <p>Performance not dependent on instance size.<br> One-click upgrade without any downtime.</p>
+        </div>        
+        <div class="span4">
+          <h3> backup</h3>
+          <p>Hourly backups to S3 storage, free on all plans. <br>On-demand backups available.</p>
+        </div>
+      </div>
+
+    <div class="jumbotron">        
+        <p class="lead"><a href="/page/features/">and much more..</a></center></p>
+    </div>
+<hr>
+</template>
+
+<template name="what">
+    <div class="content">
+        <h2>What is RedisNode?</h2>
+        <p>RedisNode is all about kickass redis hosting for a fraction of the cost of doing it yourself and without the headaches that come with scaling and making your installation awesome.</p>
+        <h2>How is RedisNode different?</h2>
+        <p>We offer the most competitive prices/GB and all the features that you'd expect from a production redis platform. <br>We won't nickle and dime you or throttle your connections. And all instances are on blazingly fast dedicated hardware with 10GB uplinks. Redis FTW!</p>
+        <h2>Is my credit card secure on your site?</h2>
+        <p>Yes. We do not store your credit card information on our servers at any point. We use a third party credit card processing service (stripe.com) that is fully PCI compliant. </p>
+    </div>
+</template>
+
+<template name="features">
+  <div class="content">
+       <h1>Features. Lots of them. On every plan.</h1>
+
+      <div class="row-fluid">
+        <div class="span6">
+          <h2><i class="icon-refresh"></i> Replication & Failover</h2>
+          <p>Cluster replication & failover handled automatically.<br>Nothing to manage on your end.</p>
+        </div>
+        <div class="span6">
+          <h2><i class="icon-th-large"></i> Performance & Scale</h2>
+          <p>Performance not dependent on instance size.<br> One-click upgrade without any downtime.</p>
+        </div>        
+      </div>
+
+      <div class="row-fluid">
+        <div class="span6">
+          <h2><i class="icon-random"></i> Import & Export</h2>
+          <p>Migrate data to and from our service with one click.<br> Import all data from another redis hosting service by simply giving us the credentials to that instance, and we'll do all the heavy lifting. No fees or bandwidth fees.</p>
+        </div>        
+        <div class="span6">
+          <h2><i class="icon-hdd"></i> Backups & Restores</h2>
+          <p>Hourly backups to S3 storage, free on all plans. <br>On-demand backups available at $0.25/GB.</p>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <div class="span6">
+          <h2><i class="icon-info-sign"></i> Log Access</h2>
+          <p>View full logs for your instance in the browser. Optionally export logs to your S3 bucket.</p>
+        </div>
+        <div class="span6">
+          <h2><i class="icon-wrench"></i> Configuration</h2>
+          <p>Get full configuration file access. No artificial limits from our side.</p>
+        </div>
+      </div>
+
+
+      <div class="row-fluid">
+        <div class="span6">
+          <h2><i class="icon-tasks"></i> API</h2>
+          <p>Automate instance provisioning and configuration. In beta.</p>
+        </div>
+        <div class="span6">
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="loggedin_header">
+    {{#if loggingIn}}
+    <p class="pull-right"><strong>Logging In!</strong></p>
+    {{else}}
+    <ul class="nav pull-right">
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, {{ fullName }} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="/users/{{ id }}/edit"><i class="icon-cog"></i> Edit Contact Info</a></li>
+                <li class="divider"></li>
+                <li><a href="/logout"><i class="icon-off"></i> Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+    {{/if}}
+
+</template>
+
+
+<template name="dashboard">
+    <br>
+    {{#with user}}
+
+    <h3>Instances</h3>
+    <br>
+
+    <div class="hero-unit span6">
+
+    <table class="table">
+        <tr>
+            <th>Plan: </th>
+            <td>{{ planName }}</td>
+        </tr>
+        <tr>
+            <th>Hostname: </th>
+            <td>master.redisnode.com</td>
+        </tr>
+
+        <tr>
+            <th>Port: </th>
+            <td>{{ instance.port }}</td>
+        </tr>
+
+        <tr>
+            <th>Password: </th>
+            <td>{{ instance.password }}</td>
+        </tr>
+    </table>
+    </div>
+
+    {{/with}}
+</template>
+
+
+<template name="editProfile">
+    <br>
+    {{#with user}}
+
+    <div class="row-fluid">
+        <div class="span10">
+            <h3>Edit Contact Info</h3>
+        </div>
+        <div class="span2 pull-right action">
+            <a href="/users/{{_id}}" class='btn btn-primary btn-block'>Back to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="spacer"></div>
+    <hr>
+
+
+    <form id="editProfileForm" name="editProfileForm">
+        <div class="control-group">
+            
+            <div class="controls">
+                <label>First name</label>
+                <input id="firstName" class="span12" name="firstName" type="text" value="{{profile.firstName}}" placeholder="first name">
+            </div>
+        </div>
+
+        <div class="control-group">
+            
+            <div class="controls">
+                <label>Last name</label>
+                <input id="lastName" class="span12" name="lastName" type="text" value="{{profile.lastName}}">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <label>Plan</label>
+                <input disabled class="span12" id="bio" name="bio" placeholder="plan name" value="{{planName}}">
+                You cannot upgrade or downgrade at this time.
+            </div>
+        </div>
+
+
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" id="saveEdit" data-loading-text="Updating" class="btn btn-success btn-large">Save</button>
+            </div>
+        </div>
+    </form>
+
+    {{/with}}
+
+</template>
+
+<!-- Login -->
+<template name="login">
+    <br>
+    <h3>
+        Login to your account
+        <p class="pull-right"><small>New user? <a href="/signup">Sign up now!</a></small></p>
+    </h3>
+
+    <hr>
+    
+    <form id="loginForm" name="loginForm" method="post">
+        <div class="control-group">
+            <div class="controls">
+                <input class="span12" id="usernameLogin" name="usernameLogin" type="text" placeholder="username">
+
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input class="span12" id="passwordLogin" name="passwordLogin" type="password" placeholder="password">
+            </div>
+        </div>
+
+        <button id="login" class="btn btn-success btn-large pull-right" type="submit" data-loading-text="Signing In">Sign In</button>
+    </form>
+
+</template>
+
+
+
+<!-- Signup -->
+<template name="signup">
+    <br>
+    <h3>
+        Signup for a new account
+        <p class="pull-right"><small>Already have an account? <a href="/login">Login</a></small></p>
+    </h3>
+    
+    <hr>
+
+    <form id="signupForm" name="signupForm" method="post">        
+        <h3>Personal Information</h3>
+        <div class="control-group">
+            <div class="controls span12">
+                <input id="firstName" name="firstName" class="span3" type="text" placeholder="First Name" style="width: 23.0%">
+                <input id="lastName" name="lastName" class="span3" type="text" placeholder="Last Name" style="width: 23.3%">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls span12">
+                <input class="span6" id="email" name="email" type="email" placeholder="Email Address" style="width: 46.5%">
+            </div>
+        </div>   
+        <div class="control-group">
+            <div class="controls span12">
+                <input id="passwordSignup" name="passwordSignup" class="span3" type="password" placeholder="Password" style="width: 23.0%">
+                <input id="password_againSignup" name="password_againSignup" class="span3" type="password" placeholder="Confirm Password" style="width: 23.3%">
+            </div>
+        </div>   
+        <h3>Select your Plan</h3>
+        <div class="control-group">
+            <div class="controls span12">
+                <select name="plan" id="plan" class="span3">
+                  <option value="0" {{ signup_plan "0"}}>32MB - free</option>
+                  <option value="1" {{ signup_plan "1"}}>512MB - $5/month</option>
+                  <option value="2" {{ signup_plan "2"}}>1GB - $10/months</option>
+                  <option value="3" {{ signup_plan "3"}}>2GB - $20/month</option>
+                  <option value="4" {{ signup_plan "4"}}>4GB - $32/month</option>
+                  <option value="5" {{ signup_plan "5"}}>8GB - $64/month</option>
+                  <option value="6" {{ signup_plan "6"}}>16GB - $128/month</option>
+                  <option value="7" {{ signup_plan "7"}}>32GB - $256/month</option>
+                </select>
+            </div>
+        </div>
+        <div id="paymentInfo" class="{{ show_signup_plan_payment_section }}">
+        <h3>Payment Information</h3>
+        <div class="control-group">
+            <div class="controls span12">
+                <input id="creditCardNumber" name="creditCardNumber" class="span4" type="text" placeholder="Credit Card Number" maxlength="20" size="20" style="width: 33.0%">
+                <input id="ccMonth" name="ccMonth" class="span1" type="text" placeholder="MM" maxlength="2" size="2" style="width: 4.2%">
+                <input id="ccYear" name="ccYear" class="span1" type="text" placeholder="YY" maxlength="2" size="2" style="width: 3.5%">
+                <input id="zipCode" name="zipCode" class="span1" type="text" placeholder="Zip" maxlength="5" size="5" style="width: 5.3%">
+            </div>
+        </div>
+        </div>
+
+        <button class="btn btn-success btn-large pull-right" type="submit" id="createUser" data-loading-text="Creating your account">Create Account</button>
+    </form>
+
+</template>
+
+
+<template name="password_update">
+    <h3>
+        Choose a new password
+    </h3>
+    <hr>
+
+    <form id="passwordUpdateForm">
+        <div class="control-group">
+            <div class="controls">
+                <input class="span12" id="passwordUpdate" name="passwordUpdate" type="password" placeholder="Your new password">
+                <div class="help-block muted">Enter your new password.</div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <input class="span12" id="password_againUpdate" name="password_againUpdate" type="password" placeholder="Your password again">
+                <div class="help-block muted">Enter your new password again.</div>
+            </div>
+        </div>
+
+        <button class="btn btn-success btn-large pull-right" type="submit" id="passwordUpdateBtn" data-loading-text="Updating password...">Update password</button>
+        
+    </form>
+</template>
+
+<template name="recover_email">
+    <form id="recoverEmailForm">
+
+        <h3>
+            Enter your email
+        </h3>
+        <hr>
+        
+        <div class="control-group">
+            <div class="controls">
+                <input class="span12" id="email" name="email" type="email" placeholder="Your email">
+                <div class="help-block muted">An email confirmation will be sent</div>
+            </div>
+        </div>
+
+        <button class="btn btn-success btn-large pull-right" type="submit" id="recoverEmail" data-loading-text="Sending email..">Send Recovery Email</button>
+
+        
+    </form>
+    
+</template>
+
+
+<template name="terms">
+    <div class="content">
+        <h1>Terms of Service</h1><br>
+        <p>
+            You own your data, at all times. You may always export all data and close your account. If you do close your account, all data and customer information will be deleted from our system.<br>
+            You may only have one free node per account.<br>
+            You may not reverse engineer our technology stack or hacking our platform. Attempting to do so will result in your access being banned.<br>
+        </p>
+    </div>
+</template>
+
+<template name="privacy">
+    <div class="content">
+        <h1>Privacy</h1><br>
+        <p>
+            We use Google Analytics to understand where our users come from and how effective our marketing campaigns are.<br>
+            We do not use other tracking technologies or cookies for user tracking.<br>
+            We will never share your email with another third party service.<br>
+            If you give us your contact informatio, we will not sell that information to third party marketing sources. We will only use that information to send you updates on our product offerings.
+        </p>
+    </div>
+</template>
