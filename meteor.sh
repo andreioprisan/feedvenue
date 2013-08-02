@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 
 # IP or URL of the server you want to deploy to
 export APP_HOST=direct.feedvenue.com
@@ -11,7 +11,8 @@ export APP_HOST=direct.feedvenue.com
 export APP_NAME=feedvenue.com
 export ROOT_URL=http://$APP_HOST
 export APP_DIR=/var/www/$APP_NAME
-export MONGO_URL=feedvenue:e8b19da37825a3056e84c522f05efce0@ana.mongohq.com:10097/feedvenue
+export PORT=80
+export MONGO_URL='mongodb://feedvenue:e8b19da37825a3056e84c522f05efce0@ana.mongohq.com:10097/feedvenue'
 if [ -z "$EC2_PEM_FILE" ]; then
     export SSH_HOST="root@$APP_HOST" SSH_OPT=""
   else
@@ -37,9 +38,10 @@ ENDSSH
 echo Done. You can now deploy your app.
 ;;
 deploy )
-echo Deploying...
-$METEOR_CMD bundle bundle.tgz > /dev/null 2>&1 &&
-scp $SSH_OPT bundle.tgz $SSH_HOST:/tmp/ > /dev/null 2>&1 &&
+echo Deploying with $METEOR_CMD
+
+$METEOR_CMD bundle bundle.tgz &&
+scp $SSH_OPT bundle.tgz $SSH_HOST:/tmp/  &&
 rm bundle.tgz > /dev/null 2>&1 &&
 ssh $SSH_OPT $SSH_HOST MONGO_URL=$MONGO_URL ROOT_URL=$ROOT_URL APP_DIR=$APP_DIR 'sudo -E bash -s' > /dev/null 2>&1 <<'ENDSSH'
 if [ ! -d "$APP_DIR" ]; then
@@ -67,7 +69,7 @@ patch -u bundle/server/server.js <<'ENDPATCH'
  
    }).run();
 ENDPATCH
-forever start bundle/main.js
+MONGO_URL=$MONGO_URL ROOT_URL=$ROOT_URL APP_DIR=$APP_DIR PORT=$PORT forever start bundle/main.js
 popd
 ENDSSH
 echo Your app is deployed and serving on: $ROOT_URL
