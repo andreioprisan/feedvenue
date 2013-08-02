@@ -32,7 +32,7 @@
                 <footer>
                     <div class="container">
                         <p class="muted credit">
-                            &copy; <strong>feedvenue LLC</strong> 2013
+                            &copy; <strong>feedvenue LLC</strong> 2013 <a href="mailto:contact@feedvenue.com">contact us</a>
                         </p>
                     </div>
                 </footer>
@@ -441,28 +441,38 @@
     <div class="panel">
         <div class="panel-heading"><h3 class="panel-title">Personal Information</h3></div>
         <p>
-            <div class="input-group">
-              <span class="input-group-addon">name</span>
-              <input type="text" class="form-control" placeholder="" id="name" name="name">
+            <div class="row">
+                <div class="col-lg-6">    
+                    <div class="input-group">
+                      <span class="input-group-addon">name</span>
+                      <input type="text" class="form-control" placeholder="" id="name" name="name" placeholder="full name">
+                    </div>
+                    <br>
+                </div>
+                <div class="col-lg-6">
+                    <div class="input-group">
+                      <span class="input-group-addon">email</span>
+                      <input type="text" class="form-control" placeholder="" id="email" name="email" placeholder="yourname@something.com">
+                    </div>
+                </div>
             </div>
-            <br>
 
-            <div class="input-group">
-              <span class="input-group-addon">email</span>
-              <input type="text" class="form-control" placeholder="" id="email" name="email">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                      <span class="input-group-addon ">password</span>
+                      <input class="form-control" type="password" placeholder="password" id="passwordSignup" name="passwordSignup">
+                    </div>
+                    <br>
+                </div>
+                <div class="col-lg-6">
+                    <div class="input-group">
+                      <span class="input-group-addon ">confirm</span>
+                      <input class="form-control" type="password" placeholder="confirm password" id="password_againSignup" name="password_againSignup" type="password">
+                    </div>
+                </div>
             </div>
-            <br>
 
-            <div class="input-group">
-              <span class="input-group-addon ">password</span>
-              <input type="text" class="form-control" placeholder="password" id="passwordSignup" name="passwordSignup">
-            </div>
-            <br>
-
-            <div class="input-group">
-              <span class="input-group-addon ">confirm</span>
-              <input type="text" class="form-control" placeholder="confirm password" id="password_againSignup" name="password_againSignup" type="password">
-            </div>
     </p>
     </div>
 
@@ -486,8 +496,8 @@
             <div class="col-lg-6">
                         
                         <div class="input-group">
-                          <span class="input-group-addon ">Credit Card</span>
-                          <input type="text" class="form-control" id="creditCardNumber" name="creditCardNumber" maxlength="20" size="20" placeholder="Number" style="">
+                          <span class="input-group-addon ">card number</span>
+                          <input type="text" class="form-control" id="creditCardNumber" name="creditCardNumber" maxlength="20" size="20" placeholder="" style="">
                         </div>
 
             </div>
@@ -495,7 +505,7 @@
 
                         <div class="input-group">
                           <span class="input-group-addon ">MM</span>
-                          <input type="text" class="form-control" id="ccMonth" name="ccMonth" type="text" placeholder="MM" maxlength="2" size="2" style="width: 100%">
+                          <input type="text" class="form-control" id="ccMonth" name="ccMonth" type="text" placeholder="MM" maxlength="2" size="2" style="width: 50%">
                         </div>
                         
             </div>
@@ -503,7 +513,7 @@
 
                         <div class="input-group">
                           <span class="input-group-addon ">YY</span>
-                          <input type="text" class="form-control" id="ccYear" name="ccYear" type="text" placeholder="YY" maxlength="2" size="2" style="width: 100%">
+                          <input type="text" class="form-control" id="ccYear" name="ccYear" type="text" placeholder="YY" maxlength="2" size="2" style="width: 50%">
                         </div>
 
             </div>
@@ -511,7 +521,7 @@
 
                         <div class="input-group">
                           <span class="input-group-addon ">Zip</span>
-                          <input type="text" class="form-control" id="zipCode" name="zipCode" type="text" placeholder="Code" maxlength="5" size="5" style="width: 100%">
+                          <input type="text" class="form-control" id="zipCode" name="zipCode" type="text" placeholder="Code" maxlength="5" size="5" style="width: 70%">
                         </div>
                         
             </div>

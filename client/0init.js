@@ -7,16 +7,18 @@ Meteor.subscribe("Instances");
 Customers = new Meteor.Collection("Customers");
 Meteor.subscribe("Customers");
 
-if (window.location.hostname == "redisnode.com" || window.location.hostname == "www.redisnode.com") {
+if (window.location.hostname == "feedvenue.com" || 
+	window.location.hostname == "www.feedvenue.com" ||
+	window.location.hostname == "direct.feedvenue.com") {
     isProd = 1;
 } else {
     isProd = 0;
 }
 
 if (!isProd) {
-    stripe_public = "pk_test_ujzLsEV3pNMBj9KIv5qkknUC";     
+    stripe_public = "pk_test_8oBtvHF4IGcTJ2W9zxd4GFTD";     
 } else {
-    stripe_public = "pk_live_voZnzGKwR0aIZ3TjXd0vQhof";
+    stripe_public = "pk_live_BDPlE4g3nPfOqIYjt5F27Kfu";
 }
 Stripe.setPublishableKey(stripe_public);
 
