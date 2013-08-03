@@ -3,6 +3,86 @@ Meteor.Router.add('/robots.txt', 'GET', function(id) {
   return [200, 'User-agent: *'];
 });
 
+Meteor.Router.add('/api/email', 'POST', function(id) {
+	console.log(this.request.query);
+	console.log(this.request.body);
+	
+	if (this.request.query != undefined &&
+		this.request.query.user != undefined &&
+		this.request.query.domain == "feedvenue.com") {
+
+//		var rawIn = decodeURIComponent(this.request.body);
+		var rawIn = this.request.body;
+		var parsedMessage = {};
+
+/*		
+		_.each(rawIn.split("&"), function(p) {
+			var piece = p.split("=");
+
+			if (piece[0] == "message-headers" ||
+				piece[0] == "signature" ||
+				piece[0] == "X-Mailgun-Incoming" ||
+				piece[0] == "X-Gm-Message-State" ||
+				piece[0] == "Content-Type" ||
+				piece[0] == "X-Envelope-From" ||
+				piece[0] == "X-Google-Dkim-Signature" ||
+				piece[0] == "Mime-Version" ||
+				piece[0] == "X-Received" ||
+				piece[0] == "Date" ||
+				piece[0] == "Message-Id" ||
+				piece[0] == "Received" ||
+				piece[0] == "X-Originating-Ip" ||
+				piece[0] == "Subject" ||
+				piece[0] == "From" ||
+				piece[0] == "Subject") {
+				return p;
+			}
+
+			if (piece[1] != undefined) {
+				parsedMessage[piece[0]] = piece[1].replace(/\+/g, ' ');
+			}
+		});
+
+*/
+
+		_.each(rawIn, function(piece, key) {
+			if (key == "message-headers" ||
+				key == "signature" ||
+				key == "stripped-signature" ||
+				key == "X-Mailgun-Incoming" ||
+				key == "X-Gm-Message-State" ||
+				key == "Content-Type" ||
+				key == "X-Envelope-From" ||
+				key == "X-Google-Dkim-Signature" ||
+				key == "Mime-Version" ||
+				key == "X-Received" ||
+				key == "Date" ||
+				key == "Message-Id" ||
+				key == "Received" ||
+				key == "X-Originating-Ip" ||
+				key == "Subject" ||
+				key == "From" ||
+				key == "Subject") {
+				return piece;
+			}
+
+			if (piece != undefined) {
+				parsedMessage[key] = piece.replace(/\+/g, ' ');
+			}
+		});		
+		
+		parsedMessage.receivedAt = moment(parseInt(parsedMessage.timestamp)*1000).format()
+		parsedMessage.raw = rawIn;
+		parsedMessage.mailbox = this.request.query.user;
+		parsedMessage.domain = this.request.query.domain;
+
+		EmailIn.insert(parsedMessage);
+	}
+
+  	return [200, 'ok'];
+});
+
+
 Meteor.Router.add('/api/provision', 'POST', function(id) {
   return [200, 'ok'];
 });

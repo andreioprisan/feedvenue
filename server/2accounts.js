@@ -20,38 +20,37 @@ Accounts.onCreateUser(function (options, user) {
 });
 
 Meteor.methods({
-    provision: function (data) {
-    	var password = data.password;
-    	var connections = data.connections;
-    	var memory = data.memory;
-    	var databases = data.databases;
-    	var port = data.port;
-    	var planId = data.planId;
+	email: function (data) {
+	    this.unblock();
+	    if (data.data.email != undefined) {
+	    	var emailPayload = {};
+	    	if (data.type == "welcome") {
+				var emailPayload = {
+					to: data.data.email,
+				    subject: 'Welcome to FeedVenue!',
+				    text: 	'Hi '+data.user.profile.name+",\n\n"+
+				    		"Thank you for signing up for the "+data.planName+" FeedVenue account!\n\n"+
+				    		"Thanks,\nThe FeedVenue Team\nfeedvenue.com | @feedvenue"
+				    }
 
-		if (planId === null ||
-			port == null ||
-			databases == null || 
-			memory == null ||
-			connections == null ||
-			password == null) {
-			return {_id: null};
-		}
+	    	}
+			  
+			console.log(emailPayload);
 
-		var sys = Npm.require('sys');
-		var exec = Npm.require('child_process').exec;
-		var provCommand = "ssh root@master.redisnode.com '/etc/init.d/redis -p "+port+" -d "+databases+" -m "+memory+"mb -c "+connections+" -x "+password+" -a create && /etc/init.d/redis -p "+port+" -a start'";
-		sys.print("will run:"+provCommand);
-
-		function puts(error, stdout, stderr) { 
-			sys.print('stdout: ' + stdout);
-			sys.print('stderr: ' + stderr);
-			if (error !== null) {
-				console.log('exec error: ' + error);
-			} else {
-
+			if (emailPayload.to != undefined &&
+				emailPayload.subject != undefined &&
+				emailPayload.text != undefined) {
+				Email.send({
+			      to: emailPayload.to,
+			      from: "FeedVenue Team <team@feedvenue.com>",
+			      subject: emailPayload.subject,
+			      text: emailPayload.text
+			    });
 			}
-		}
-		exec(provCommand, puts);
+	    }
+	},
+    provision: function (data) {
+		Customers.insert({signupDate: moment().format(), planId: data.data.planId, owner: data.user._id, username: data.data.email, customer_id: data.data.customer_id});
     },
     createCustomerFromCard: function (data) {
 		var Future = Npm.require('fibers/future');

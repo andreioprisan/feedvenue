@@ -3,9 +3,9 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-insecure
 accounts-base
-accounts-password
 force-ssl
 preserve-inputs
 ejson
+accounts-password
+email

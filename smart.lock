@@ -8,7 +8,8 @@
       "HTML5-History-API": {},
       "stripe": {},
       "spiderable-404": {},
-      "external-file-loader": {}
+      "external-file-loader": {},
+      "momentjs": {}
     },
     "packages": {
       "router": {
@@ -45,6 +46,11 @@
         "git": "https://github.com/davidd8/meteor-external-file-loader.git",
         "tag": "v0.1.2",
         "commit": "02ecaffb33b68a7ccf6d8b64693117d3fc19ae6b"
+      },
+      "momentjs": {
+        "git": "https://github.com/crapthings/meteor-momentjs.git",
+        "tag": "v2.1.0",
+        "commit": "f421f51c2cb40093374a83adb932937da2f991d3"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

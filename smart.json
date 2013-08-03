@@ -6,6 +6,7 @@
     "HTML5-History-API": {},
     "stripe": {},
     "spiderable-404": {},
-    "external-file-loader": {}
+    "external-file-loader": {},
+    "momentjs": {}
   }
 }

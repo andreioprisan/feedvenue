@@ -12,7 +12,7 @@ App.signupRules = {
 			alphanumeric: true,
 			minlength: 6
 		},
-		email: {
+		emailSignup: {
 			required: true,
 			email: true
 		},
@@ -25,12 +25,12 @@ App.signupRules = {
 			minlength: 6,
 			maxlength: 50
 		},
-		name: {
+		nameSignup: {
 			required: true,
 			minlength: 2,
 			maxlength: 100
 		},
-		creditCardNumber: {
+		ccNum: {
 			required: true,
 			minlength: 10,
 			maxlength: 30
@@ -51,7 +51,7 @@ App.signupMessages = {
 			alphanumeric: "Must be alphanumerical",
 			minlength: "must be at least 2 chars"
 		},
-		email: {
+		emailSignup: {
 			required: "Please enter your email adress",
 			email: "Your email must be in the format of name@domain.com"
 		},
@@ -61,7 +61,7 @@ App.signupMessages = {
 			minlength: "At least 3 chars!",
 			maxlength: "No longer then 12 chars!"
 		},
-		name: {
+		nameSignup: {
 			required: "What is your name?",
 			minlength: "At least 2 chars!",
 			maxlength: "no longer then 50 chars!"
@@ -75,9 +75,50 @@ App.signupMessages = {
 	}
 };
 
+
+App.loginRules = {
+	rules: {
+		usernameLogin: {
+			required: true,
+			minlength: 6,
+			email: true			
+		},
+		passwordLogin: {
+			required: true,
+			minlength: 3
+		}
+	}
+};
+
+
+App.loginMessages = {
+	messages: {
+		usernameLogin: {
+			required: "<strong>Please enter an email address!</strong>",
+			minlength: "Must be at least 6 characters long"
+		}, 
+		passwordLogin: {
+			required: "<strong>Please enter a password!</strong>",
+			minlength: "Must be at least 3 characters long"
+		}
+	}
+};
+
+App.signupForm = "#signupForm"
+App.loginForm = "#loginForm"
+
+App.loginHandleSubmit = {
+	submitHandler: function () {
+		$("#login").button('loading');
+		$("#loginForm div .alert").remove();
+		App.login();
+		return false;
+	}
+};
+
 App.createNewUserAccount = function (data) {
 	Accounts.createUser({
-		username: data.username, 
+		username: data.email, 
 		password: data.password, 
 		email: data.email, 
 		profile: {
@@ -90,23 +131,12 @@ App.createNewUserAccount = function (data) {
 			$("#createUser").button('reset');
 			$("form#signupForm").before("<div class='alert alert-error'>" + error.reason + "</div>");
 		} else {
-			var planDetails = Plans.find({id: parseInt(data.planId)}).fetch();
+			var planDetails = Plans.find({id: parseInt(data.planId)}).fetch()[0];
 			var planName = planDetails.name;
 
-		    Meteor.call('provision', dataBlob, function(err, res) {
-
-				if (customer_id != null) {
-					Customers.insert({plan: planId, owner: Meteor.user()._id, customer_id: customer_id});
-				}
-
-				Meteor.call('sendEmail',
-				            Meteor.user().username,
-				            'Welcome to FeedVenue!',
-				            'Hi '+Meteor.user().profile.name+",\n\n"+"Thank you for signing up for a FeedVenue account.\n\nThanks,\nthe feedvenue team\n"
-				            );
-
+		    Meteor.call('provision', {data: data, user: Meteor.user()}, function(err, res) {
 				Meteor.Router.to("/users/"+Meteor.user()._id+"");
-
+				Meteor.call('email', {data: data, user: Meteor.user(), type: "welcome", planName: planName});
 		    });
 		}
 	});
@@ -114,13 +144,14 @@ App.createNewUserAccount = function (data) {
 
 App.createUserAccount = function () {
 	var dataBlob = { 
-		name: $("#nameSignup").val().toLowerCase(),
+		name: $("#nameSignup").val(),
 		email: $("#emailSignup").val().toLowerCase(),
 		password: $("#passwordSignup").val(),
-		planId: $("#plan").val() 
+		planId: $("#plan").val(),
+		customer_id: null 
 	};
 
-	if (planId != 0 && $("#ccNum")) {
+	if (dataBlob.planId != 0 && $("#ccNum").val() != "") {
 		dataBlob.ccnum = $("#ccNum").val();
 		dataBlob.ccmonth = $("#ccMonth").val();
 		dataBlob.ccyear = $("#ccYear").val();
@@ -129,7 +160,7 @@ App.createUserAccount = function () {
 	    Meteor.call('createCustomerFromCard', dataBlob, function(error, stripe_response) {
 	    	if (!stripe_response.error) {
 				Session.set('cardchargesuccess', 1);
-				dataBlob.cczip.stripe_customer_id = stripe_response._id;
+				dataBlob.customer_id = stripe_response._id;
 
 	    		App.createNewUserAccount(dataBlob);
 	    	} else {
@@ -144,8 +175,6 @@ App.createUserAccount = function () {
 		App.createNewUserAccount(dataBlob );
 	}
 };
-
-App.signupForm = "#signupForm";
 
 App.messagePlacement = {
 	onkeyup: false,
@@ -191,6 +220,13 @@ App.signupHandleSubmit = {
 App.login = function () {
 	var username = $("#usernameLogin").val();
 	var password = $("#passwordLogin").val();
+	if (username == undefined ||
+		password == undefined) {
+		$("form#loginForm").before("<div class='alert alert-error'>Please enter a username and password!</div>");
+		LoginErr = 1;
+		return;		
+	}
+
 	Meteor.loginWithPassword(username, password, function (error){
 		if (error) {
 
@@ -209,54 +245,6 @@ App.login = function () {
 		}
 	});
 }
-
-
-
-App.loginRules = {
-	rules: {
-		usernameLogin: {
-			required: true,
-			alphanumeric: true,
-			minlength: 2
-		},
-		passwordLogin: {
-			required: true,
-			minlength: 2
-		}
-	}
-};
-
-
-
-
-
-App.loginMessages = {
-	messages: {
-		usernameLogin: {
-			required: "<strong>required</strong>",
-			alphanumeric: "Please use only digits and letters!",
-			minlength: "Must be at least 6 characters long"
-		}, 
-		passwordLogin: {
-			required: "<strong>required</strong>",
-			minlength: "Must be at least 6 characters long"
-		}
-	}
-};
-
-
-App.loginForm = "#loginForm"
-
-
-
-App.loginHandleSubmit = {
-	submitHandler: function () {
-		$("#login").button('loading');
-		$("#loginForm div .alert").remove();
-		App.login();
-		return false;
-	}
-};
 
 
 
