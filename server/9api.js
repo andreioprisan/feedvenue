@@ -11,39 +11,8 @@ Meteor.Router.add('/api/email', 'POST', function(id) {
 		this.request.query.user != undefined &&
 		this.request.query.domain == "feedvenue.com") {
 
-//		var rawIn = decodeURIComponent(this.request.body);
 		var rawIn = this.request.body;
 		var parsedMessage = {};
-
-/*		
-		_.each(rawIn.split("&"), function(p) {
-			var piece = p.split("=");
-
-			if (piece[0] == "message-headers" ||
-				piece[0] == "signature" ||
-				piece[0] == "X-Mailgun-Incoming" ||
-				piece[0] == "X-Gm-Message-State" ||
-				piece[0] == "Content-Type" ||
-				piece[0] == "X-Envelope-From" ||
-				piece[0] == "X-Google-Dkim-Signature" ||
-				piece[0] == "Mime-Version" ||
-				piece[0] == "X-Received" ||
-				piece[0] == "Date" ||
-				piece[0] == "Message-Id" ||
-				piece[0] == "Received" ||
-				piece[0] == "X-Originating-Ip" ||
-				piece[0] == "Subject" ||
-				piece[0] == "From" ||
-				piece[0] == "Subject") {
-				return p;
-			}
-
-			if (piece[1] != undefined) {
-				parsedMessage[piece[0]] = piece[1].replace(/\+/g, ' ');
-			}
-		});
-
-*/
 
 		_.each(rawIn, function(piece, key) {
 			if (key == "message-headers" ||
@@ -62,7 +31,12 @@ Meteor.Router.add('/api/email', 'POST', function(id) {
 				key == "X-Originating-Ip" ||
 				key == "Subject" ||
 				key == "From" ||
-				key == "Subject") {
+				key == "Subject" ||
+				key == "timestamp" ||
+				key == "X-Proofpoint-Virus-Version" ||
+				key == "X-Proofpoint-Spam-Details" ||
+				key == "X-Mailer" ||
+				key == "Content-Transfer-Encoding") {
 				return piece;
 			}
 
