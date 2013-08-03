@@ -91,6 +91,30 @@ Meteor.methods({
 
 	    return fut.wait();
 	    
+    },
+    eventCreate: function (data) {
+    	Events.insert({
+    		name: data.inputEventName, 
+    		location: data.inputLocation,
+    		description: data.inputDescription,
+    		hashtag: data.inputHashtag,
+    		startdate: data.inputStartDate,
+    		enddate: data.inputEndDate,
+    		owner: this.userId,
+    		features: {
+    			private: data.inputPrivate,
+    			anonymous: data.inputAnonymous,
+    			phone: data.inputPhone,
+    			sms: data.inputSMS,
+    			email: data.inputEmail,
+    		}
+    	});
+
+    	// slug
+    	// phone
+    	// plan
+
+    	console.log(data);
     }
   });
 

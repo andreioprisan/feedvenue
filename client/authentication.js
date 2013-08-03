@@ -4,7 +4,6 @@ var LoginErr, createUserError, recoverEmailError, passwordUpdateError;
 
 /*==========  SIGNUP  ==========*/
 
-
 App.signupRules = {
 	rules: {
 		usernameSignup: {
@@ -75,6 +74,9 @@ App.signupMessages = {
 	}
 };
 
+App.signupForm = "#signupForm"
+
+/*==========  LOGIN  ==========*/
 
 App.loginRules = {
 	rules: {
@@ -104,7 +106,6 @@ App.loginMessages = {
 	}
 };
 
-App.signupForm = "#signupForm"
 App.loginForm = "#loginForm"
 
 App.loginHandleSubmit = {
@@ -116,6 +117,109 @@ App.loginHandleSubmit = {
 	}
 };
 
+/*==========  EVENTCREATE  ==========*/
+
+App.eventCreateRules = {
+	rules: {
+		inputEventName: {
+			required: true,
+			minlength: 1
+		},
+		inputLocation: {
+			required: true,
+			minlength: 1
+		},
+		inputDescription: {
+			required: true,
+			minlength: 4
+		},
+		inputHashtag: {
+			required: false,
+			minlength: 3,
+			maxlength: 30
+		},
+		inputStartDate: {
+			required: true,
+			minlength: 8,
+			maxlength: 8
+		},
+		inputEndDate: {
+			required: true,
+			minlength: 8,
+			maxlength: 8
+		},
+	}
+};
+
+
+App.eventCreateMessages = {
+	messages: {
+		inputEventName: {
+			required: "<strong>Please enter an event name</strong>",
+			minlength: "Must be at least 1 character long."
+		},
+		inputLocation: {
+			required: "<strong>Please enter an event location</strong>",
+			minlength: "Must be at least 1 character long."
+		},
+		inputDescription: {
+			required: "<strong>Please enter an event description</strong>",
+			minlength: "Must be at least 4 characters long."
+		},
+		inputHashtag: {
+			minlength: "Must be at least 3 characters long.",
+			maxlength: "Cannot exceed 30 characters long."
+		},
+		inputStartDate: {
+			required: "<strong>Please enter an event start date</strong>",
+			minlength: "Must be of the format MM/DD/YY",
+			maxlength: "Must be of the format MM/DD/YY"
+		},
+		inputEndDate: {
+			required: "<strong>Please enter an event end date</strong>",
+			minlength: "Must be of the format MM/DD/YY",
+			maxlength: "Must be of the format MM/DD/YY"
+		},			
+	}
+};
+
+App.eventCreateForm = "#createEventForm"
+
+
+App.eventCreateHandleSubmit = {
+	submitHandler: function () {
+		$("#createEventForm #createEventFormSubmitButton").html('creating event').addClass('disabled');
+		App.eventCreateSubmit();
+		return false;
+	}
+};
+
+
+App.eventCreateSubmit = function () {
+	form={};
+    $.each($('#createEventForm').serializeArray(), function() {
+        form[this.name] = this.value;
+    });
+
+    Meteor.call('eventCreate', form, function(err, res) {
+    	if (!err) {
+			Meteor.Router.to("/event/list");
+    	} else {
+			$("#createEventForm #createEventFormSubmitButton").button('reset');
+			if (createEventFormError >= 1) {
+				$("#main div.alert:first").fadeOut(100).fadeIn(100);
+			} else {
+				$("form#createEventForm").before("<div class='alert alert-error'>" + error.reason + "</div>");
+				createEventFormError = 1;
+			}    		
+    	}
+    });
+
+    return false;
+};
+
+
+/* */
 App.createNewUserAccount = function (data) {
 	Accounts.createUser({
 		username: data.email, 

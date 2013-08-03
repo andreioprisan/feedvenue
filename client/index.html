@@ -4,8 +4,8 @@
     <title>FeedVenue - real-time event feedback</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/app/base.css">
-    <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/feedvenue.js"></script>
     <meta name="fragment" content="!">
 </head>
 
@@ -304,39 +304,182 @@
 
 
 <template name="dashboard">
-    <br>
-    {{#with user}}
-
-    <h3>Instances</h3>
-    <br>
-
-    <div class="hero-unit col-lg-6">
-        coming soon
-        <!--
-    <table class="table">
-        <tr>
-            <th>Plan: </th>
-            <td>{{ planName }}</td>
-        </tr>
-        <tr>
-            <th>Hostname: </th>
-            <td>master.feedvenue.com</td>
-        </tr>
-
-        <tr>
-            <th>Port: </th>
-            <td>{{ instance.port }}</td>
-        </tr>
-
-        <tr>
-            <th>Password: </th>
-            <td>{{ instance.password }}</td>
-        </tr>
-    </table>
--->
+    <div class="page-header">
+        <h1>events <small>all in one place</small>
+          <a class="btn btn-primary btn-large col-lg-1 pull-right" type="button" href="/event/create">New</a>
+        </h1>
     </div>
 
-    {{/with}}
+    <div class="hero-unit col-lg-12">
+        {{#if hasEventsList}}
+        <table class="table">
+            <thead>
+              <tr>
+                <th>Event Name</th>
+                <th>Location</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Hashtag</th>
+                <th>Phone #</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+
+            {{#each eventsList}}
+            <tr>
+                <td><a href="/{{slug}}">{{name}}</a></td>
+                <td>{{location}}</td>
+                <td>{{startdate}}</td>
+                <td>{{enddate}}</td>
+                <td>{{hashtag}}</td>
+                <td>{{phone}}</td>
+                <td width="5%">
+                  <button class="btn btn-danger btn-small pull-right deleteEvent"><i class="icon-remove"></i></button>
+                </td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        {{else}}
+        <div class="alert alert-info">
+            No events have been created yet. Make one by clicking the New button above!
+        </div>
+        {{/if}}
+    </div>
+</template>
+
+
+<template name="eventCreate">
+    <div class="page-header">
+        <h1>create a new event <small>in 30 seconds</small>
+    </h1>
+
+    <div class="hero-unit col-lg-12">
+    <br>
+
+        <form class="form-horizontal" id="createEventForm" onsubmit="return false;">
+
+        <div class="row">
+            <div class="col-lg-9">    
+                <div class="input-group">
+                  <span class="input-group-addon">Event Name</span>
+                  <input class="form-control col-lg-9" name="inputEventName" type="text" placeholder="">
+                </div>
+            </div>
+            <div class="col-lg-3">    
+                <span class="pull-right">
+                  <div class="input-group">
+                    <span class="input-group-addon">Where</span>
+                    <input class="form-control col-lg-3" name="inputLocation" type="text" placeholder="City, State or online">
+                  </div>    
+                </span>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-lg-9">    
+
+                <div class="input-group">
+                  <span class="input-group-addon">Description</span>
+                  <input class="form-control" name="inputDescription" type="text" placeholder="a short description of your event">
+                </div>
+            </div>
+            <div class="col-lg-3">    
+                <span class="pull-right">
+                  <div class="input-group">
+                    <span class="input-group-addon">Hashtag</span>
+                    <input class="form-control" name="inputHashtag" type="text" placeholder="to watch for on Twitter">
+                  </div>
+                </span>
+            </div>
+        </div>
+
+        <br>
+
+
+        <div class="row">
+            <div class="col-lg-2">    
+                <div class="input-group">
+                  <span class="input-group-addon">From</span>
+                  <input class="form-control datePicker" name="inputStartDate" type="text" placeholder="mm/dd/yy" value="{{startDateDefault}}">
+                </div>
+            </div>
+            <div class="col-lg-2">    
+                <div class="input-group">
+                  <span class="input-group-addon">To</span>
+                  <input class="form-control datePicker" name="inputEndDate" type="text" placeholder="mm/dd/yy"  value="{{endDateDefault}}">
+                </div>
+            </div>
+
+
+            <div class="col-lg-1">    
+                <div class="input-group" style="width:80%">
+                  <span class="input-group-addon">
+                    <input type="checkbox" id="inputPrivate">
+                  </span>
+                  <span class="input-group-addon input-group-addon-white eventCreatePrivate">
+                    Private
+                  </span>
+                </div>
+            </div>
+            <div class="col-lg-2">    
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" id="inputAnonymous" checked>
+                  </span>
+                  <span class="input-group-addon input-group-addon-white eventCreateAnonymous">
+                    Anonymous Feedback
+                  </span>
+                </div>
+            </div> 
+
+
+            <div class="col-lg-1">    
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" id="inputEmail" checked>
+                  </span>
+                  <span class="input-group-addon input-group-addon-white eventCreateEmail">
+                    Email
+                  </span>
+                </div>
+            </div> 
+
+            <div class="col-lg-1">    
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" id="inputPhone">
+                  </span>
+                  <span class="input-group-addon input-group-addon-white eventCreatePhone">
+                    Phone
+                  </span>
+                </div>
+            </div> 
+
+            <div class="col-lg-1">    
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" id="inputSMS">
+                  </span>
+                  <span class="input-group-addon input-group-addon-white eventCreateSMS">
+                    SMS
+                  </span>
+                </div>
+            </div> 
+
+        </div>
+
+    <span class="pull-right">
+        <button id="createEventFormSubmitButton" type="submit" class="btn btn-default btn-primary">Sign Up</button>
+    </span>
+    <br>
+
+    </form>
+
+    </div>
 </template>
 
 
@@ -386,6 +529,7 @@
 
 </template>
 
+
 <!-- Login -->
 <template name="login">
     <div class="text-center" style="">
@@ -410,7 +554,7 @@
                         <br>
                         <div class="input-group">
                           <span class="input-group-addon">password</span>
-                          <input type="text" class="form-control" id="passwordLogin" name="passwordLogin" type="password">
+                          <input type="password" class="form-control" id="passwordLogin" name="passwordLogin">
                         </div>
                     <br>
                         <button id="login" class="btn btn-success btn-large pull-right" type="submit" data-loading-text="Signing In">Sign In</button>

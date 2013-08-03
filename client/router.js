@@ -66,6 +66,16 @@ Meteor.Router.add({
         return 'editProfile';
     },
 
+    '/event/create': function(id) {
+        Session.set("current_page", 'eventCreate');
+        return 'eventCreate';
+    },
+
+    '/event/list': function(id) {
+        Session.set("current_page", 'dashboard');
+        return 'dashboard';
+    },
+     
 });
 
 

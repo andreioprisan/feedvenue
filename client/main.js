@@ -104,6 +104,39 @@ Template.editProfile.rendered = function() {
     App.myValidation (App.editProfileRules, App.editProfileMessages, App.editProfileForm, App.messagePlacement, App.editProfileHandleSubmit);
 };
 
+
+Template.dashboard.events({
+    "click .deleteEvent": function(){
+        event.preventDefault();    
+        var eventId = this._id;
+        if (eventId) {
+            Events.remove(eventId);
+        }
+    },
+
+});
+
+Template.eventCreate.startDateDefault = function() {
+    return moment().format("MM/DD/YY");
+}
+
+Template.eventCreate.endDateDefault = function() {
+    return moment().add('days',1).format("MM/DD/YY");    
+}
+
+Template.eventCreate.rendered = function() {
+        App.myValidation (App.eventCreateRules, App.eventCreateMessages, App.eventCreateForm, App.messagePlacement, App.eventCreateHandleSubmit);    
+};
+
+Template.dashboard.helpers({
+    eventsList: function () {
+        return Events.find({owner: Meteor.user()._id});
+    },
+    hasEventsList: function () {
+        return Events.find({owner: Meteor.user()._id}).count() > 0;
+    },
+});
+
 Template.dashboard.user = function() {
     return Meteor.user();
 };
