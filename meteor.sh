@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 # IP or URL of the server you want to deploy to
-export APP_HOST=192.241.172.104
+export APP_HOST=feedvenue.com
 
 # Uncomment this if your host is an EC2 instance
 # export EC2_PEM_FILE=path/to/your/file.pem
@@ -9,15 +9,19 @@ export APP_HOST=192.241.172.104
 # You usually don't need to change anything below this line
 
 export APP_NAME=feedvenue.com
-export ROOT_URL=http://$APP_HOST
+export ROOT_URL=https://$APP_HOST
 export APP_DIR=/var/www/$APP_NAME
-export PORT=80
+export PORT=81
 export MONGO_URL='mongodb://feedvenue:e8b19da37825a3056e84c522f05efce0@ana.mongohq.com:10097/feedvenue'
+export SSH_OPT=''
+export SSH_HOST=$APP_HOST
+
 if [ -z "$EC2_PEM_FILE" ]; then
     export SSH_HOST="root@$APP_HOST" SSH_OPT=""
   else
     export SSH_HOST="ubuntu@$APP_HOST" SSH_OPT="-i $EC2_PEM_FILE"
 fi
+
 if [ -d ".meteor/meteorite" ]; then
     export METEOR_CMD=mrt
   else
@@ -25,30 +29,31 @@ if [ -d ".meteor/meteorite" ]; then
 fi
 
 case "$1" in
-setup )
-echo Preparing the server...
-echo Get some coffee, this will take a while.
-ssh $SSH_OPT $SSH_HOST DEBIAN_FRONTEND=noninteractive 'sudo -E bash -s' > /dev/null 2>&1 <<'ENDSSH'
+  setup )
+  echo Preparing the server...
+  echo Get some coffee, this will take a while.
+  ssh $SSH_OPT $SSH_HOST DEBIAN_FRONTEND=noninteractive 'sudo -E bash -s' > /dev/null 2>&1 <<'ENDSSH'
 apt-get update
 apt-get install -y python-software-properties
 add-apt-repository ppa:chris-lea/node.js-legacy
 apt-get update
 npm install -g forever
 ENDSSH
-echo Done. You can now deploy your app.
-;;
+  echo Done. You can now deploy your app.
+  ;;
 deploy )
-echo Deploying with $METEOR_CMD
+  echo Deploying with $METEOR_CMD
 
-$METEOR_CMD bundle bundle.tgz &&
-scp $SSH_OPT bundle.tgz $SSH_HOST:/tmp/  &&
-rm bundle.tgz > /dev/null 2>&1 &&
-ssh $SSH_OPT $SSH_HOST MONGO_URL=$MONGO_URL ROOT_URL=$ROOT_URL APP_DIR=$APP_DIR 'sudo -E bash -s' > /dev/null 2>&1 <<'ENDSSH'
+  $METEOR_CMD bundle bundle.tgz &&
+  scp $SSH_OPT bundle.tgz $SSH_HOST:/tmp/  &&
+  rm bundle.tgz > /dev/null 2>&1 &&
+  ssh $SSH_OPT $SSH_HOST MONGO_URL=$MONGO_URL ROOT_URL=$ROOT_URL APP_DIR=$APP_DIR 'sudo -E bash -s' > /dev/null 2>&1 <<'ENDSSH'
 if [ ! -d "$APP_DIR" ]; then
 mkdir -p $APP_DIR
 chown -R www-data:www-data $APP_DIR
 fi
 pushd $APP_DIR
+forever stopall
 forever stop bundle/main.js
 rm -rf bundle
 tar xfz /tmp/bundle.tgz -C $APP_DIR
@@ -69,19 +74,20 @@ patch -u bundle/server/server.js <<'ENDPATCH'
  
    }).run();
 ENDPATCH
-MONGO_URL=$MONGO_URL ROOT_URL=$ROOT_URL APP_DIR=$APP_DIR PORT=$PORT forever start bundle/main.js
+MONGO_URL=$MONGO_URL ROOT_URL=$ROOT_URL APP_DIR=$APP_DIR PORT=81 forever start bundle/main.js PORT=81
 popd
 ENDSSH
-echo Your app is deployed and serving on: $ROOT_URL
-;;
+  echo Your app is deployed and serving on: $ROOT_URL
+  echo I ran MONGO_URL=$MONGO_URL ROOT_URL=$ROOT_URL APP_DIR=$APP_DIR PORT=81 forever start bundle/main.js PORT=81
+  ;;
 * )
-cat <<'ENDCAT'
-./meteor.sh [action]
+  cat <<'ENDCAT'
+  ./meteor.sh [action]
 
-Available actions:
+  Available actions:
 
   setup   - Install a meteor environment on a fresh Ubuntu server
   deploy  - Deploy the app to the server
 ENDCAT
-;;
+  ;;
 esac
