@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 # IP or URL of the server you want to deploy to
-export APP_HOST=direct.feedvenue.com
+export APP_HOST=192.241.172.104
 
 # Uncomment this if your host is an EC2 instance
 # export EC2_PEM_FILE=path/to/your/file.pem

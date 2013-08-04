@@ -129,22 +129,35 @@ Template.eventCreate.rendered = function() {
 
 Template.dashboard.helpers({
     eventsList: function () {
-        return Events.find({owner: Meteor.user()._id});
+        if (Meteor.user() != undefined)
+            return Events.find({owner: Session.get('uid')});
+        else
+            return null;
     },
     hasEventsList: function () {
-        return Events.find({owner: Meteor.user()._id}).count() > 0;
+        if (Meteor.user() != undefined)
+            return Events.find({owner: Session.get('uid')}).count() > 0;
+        else
+            return null;
     },
 });
 
-Template.eventView.eventExists = function() {
-    var slug = Session.get("slug");
-    return Events.find({slug: slug}).count() > 0;
-}
-
-Template.eventView.event = function() {
-    var slug = Session.get("slug");
-    return Events.find({slug: slug}).fetch()[0];
-}
+Template.eventView.helpers({
+    event: function () {
+        console.log("event"+Session.get("slug"));
+        var eventsStream = EventsStream.findOne({slug: Session.get("slug")});
+        return eventsStream;
+    },
+    eventExists: function () {
+        console.log("eventExists"+Session.get("slug"));
+        var eventsCount = EventsStream.find({slug: Session.get("slug")}).count();
+        if (eventsCount) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+});
 
 Template.dashboard.user = function() {
     return Meteor.user();
@@ -169,23 +182,31 @@ function getPlanName(id) {
 
 Template.loggedin_header.helpers({
     name: function() {
-        var profile = Meteor.user().profile;
-        return profile.name;
+        if (Session.get('uid')) {
+            var profile = Meteor.user().profile;
+            return profile.name;
+        } else {
+            return null;
+        }
     },
 
     id: function() {
-        return Meteor.user()._id;
+        return Session.get('uid');
     }
 });
 
 Template.header.helpers({
     name: function() {
-        var profile = Meteor.user().profile;
-        return profile.name;
+        if (Session.get('uid')) {
+            var profile = Meteor.user().profile;
+            return profile.name;
+        } else {
+            return null;
+        }
     },
 
     _id: function() {
-        return Meteor.user()._id;
+        return Session.get('uid');
     }
 });
 

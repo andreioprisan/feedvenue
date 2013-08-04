@@ -265,8 +265,9 @@ App.createNewUserAccount = function (data) {
 			var planName = planDetails.name;
 
 		    Meteor.call('provision', {data: data, user: Meteor.user()}, function(err, res) {
-				Meteor.Router.to("/users/"+Meteor.user()._id+"");
 				Meteor.call('email', {data: data, user: Meteor.user(), type: "welcome", planName: planName});
+		    	if (Meteor.user() != undefined)
+					Meteor.Router.to("/users/"+Meteor.user()._id+"");
 		    });
 		}
 	});
@@ -372,6 +373,7 @@ App.login = function () {
 			$("#login").button('reset');
 		} else {
 			Meteor.Router.to("/users/"+Meteor.user()._id+"");
+	        Session.set('uid', Meteor.user()._id);
 		}
 	});
 }

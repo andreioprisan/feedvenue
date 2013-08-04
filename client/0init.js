@@ -16,11 +16,21 @@ Meteor.subscribe("Emails");
 Events = new Meteor.Collection("Events");
 Meteor.subscribe("Events");
 
+EventsStream = Events;
+Meteor.subscribe("EventsStream");
+
 Phone = new Meteor.Collection("Phone");
 Meteor.subscribe("Phone");
 
 SMS = new Meteor.Collection("SMS");
 Meteor.subscribe("SMS");
+
+if (Meteor.userId() != null && Session.get('uid') == null) {
+	Session.set('uid', Meteor.userId());
+	console.log(Session.get('uid'));
+}
+
+thisEvent = null;
 
 if (window.location.hostname == "feedvenue.com" || 
 	window.location.hostname == "www.feedvenue.com" ||

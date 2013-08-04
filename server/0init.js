@@ -8,6 +8,7 @@ Meteor.startup(function () {
 	Customers = new Meteor.Collection("Customers");
 
 	Events = new Meteor.Collection("Events");
+
 	EmailIn = new Meteor.Collection("EmailIn");
 	Emails = new Meteor.Collection("Emails");
 	Phone = new Meteor.Collection("Phone");
@@ -21,6 +22,10 @@ Meteor.startup(function () {
 		Plans.insert({name: "enterprise", id: 2, questions: -1, events: -1, voicemail: 1, sms: 1, twitter: 1, topics: 1, sentiment: 1, email: 1, branding: 1, support: 1});
 		Plans.insert({name: "custom", id: 9, questions: -1, events: -1, voicemail: 1, sms: 1, twitter: 1, topics: 1, sentiment: 1, email: 1, branding: 1, support: 1});
 	}
+
+	Meteor.publish("EventsStream", function () {
+	  return Events.find();
+	});	
 
 	Meteor.publish("Events", function () {
 	  return Events.find({owner: this.userId});
@@ -69,7 +74,7 @@ Meteor.startup(function () {
 	  },
 	  fetch: ['owner']
 	});
-	
+
 	Meteor.publish("SMS", function () {
 	  return SMS.find({owner: this.userId});
 	});

@@ -34,6 +34,7 @@ Meteor.Router.add({
             if(error) {
                 alert("Could not logout!")
             } else {
+                Session.set('uid', null);
                 Meteor.Router.to("/");        
             }
 
@@ -77,8 +78,8 @@ Meteor.Router.add({
     },
 
     '/:id': function(id) {
-        Session.set("current_page", 'eventView');
         Session.set("slug", id);
+//        Session.set("current_page", 'eventView');
         return 'eventView';
     },
 
