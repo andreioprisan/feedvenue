@@ -7,9 +7,6 @@ Meteor.subscribe("Instances");
 Customers = new Meteor.Collection("Customers");
 Meteor.subscribe("Customers");
 
-EmailIn = new Meteor.Collection("EmailIn");
-Meteor.subscribe("EmailIn");
-
 Emails = new Meteor.Collection("Emails");
 Meteor.subscribe("Emails");
 
