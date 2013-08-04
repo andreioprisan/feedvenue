@@ -75,6 +75,13 @@ Meteor.Router.add({
         Session.set("current_page", 'dashboard');
         return 'dashboard';
     },
+
+    '/:id': function(id) {
+        Session.set("current_page", 'eventView');
+        Session.set("slug", id);
+        return 'eventView';
+    },
+
      
 });
 

@@ -16,6 +16,11 @@ Meteor.subscribe("Emails");
 Events = new Meteor.Collection("Events");
 Meteor.subscribe("Events");
 
+Phone = new Meteor.Collection("Phone");
+Meteor.subscribe("Phone");
+
+SMS = new Meteor.Collection("SMS");
+Meteor.subscribe("SMS");
 
 if (window.location.hostname == "feedvenue.com" || 
 	window.location.hostname == "www.feedvenue.com" ||
@@ -34,12 +39,6 @@ Stripe.setPublishableKey(stripe_public);
 
 if (Meteor.is_client) {
     Meteor.startup(function () {
-		$('.datePicker').datepicker({
-		    format: "mm/dd/yy",
-		    autoclose: true,
-		    todayHighlight: true
-		});
-
 
 		$('.eventCreatePrivate').popover(
 			{	animation: true, 
@@ -94,6 +93,11 @@ if (Meteor.is_client) {
 		);
 
 
+		$('.datePicker').datepicker({
+		    format: "mm/dd/yy",
+		    autoclose: true,
+		    todayHighlight: true
+		});
 
     });
 }

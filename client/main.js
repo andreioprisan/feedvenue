@@ -10,7 +10,6 @@ Handlebars.registerHelper('TabActive', function (route) {
 Template.login.events({
     "keyup #password": function (event) {
         if (event.type == "keyup" && event.which == 13) {
-            console.log("keyup identified enter was pressed");
             App.login();
         }
     },
@@ -136,6 +135,16 @@ Template.dashboard.helpers({
         return Events.find({owner: Meteor.user()._id}).count() > 0;
     },
 });
+
+Template.eventView.eventExists = function() {
+    var slug = Session.get("slug");
+    return Events.find({slug: slug}).count() > 0;
+}
+
+Template.eventView.event = function() {
+    var slug = Session.get("slug");
+    return Events.find({slug: slug}).fetch()[0];
+}
 
 Template.dashboard.user = function() {
     return Meteor.user();

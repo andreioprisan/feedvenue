@@ -7,6 +7,7 @@
     "stripe": {},
     "spiderable-404": {},
     "external-file-loader": {},
-    "momentjs": {}
+    "momentjs": {},
+    "twilio-meteor": {}
   }
 }

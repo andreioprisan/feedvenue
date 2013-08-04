@@ -316,6 +316,7 @@
             <thead>
               <tr>
                 <th>Event Name</th>
+                <th>?</th>
                 <th>Location</th>
                 <th>From</th>
                 <th>To</th>
@@ -329,6 +330,7 @@
             {{#each eventsList}}
             <tr>
                 <td><a href="/{{slug}}">{{name}}</a></td>
+                <td>{{questions}}</td>
                 <td>{{location}}</td>
                 <td>{{startdate}}</td>
                 <td>{{enddate}}</td>
@@ -349,6 +351,23 @@
     </div>
 </template>
 
+<template name="eventView">
+    {{#if eventExists}}
+        {{#with event}}
+
+        <div class="page-header">
+            <h1>{{name}} <small>in 30 seconds</small>
+        </h1>    
+        {{/with}}
+    {{else}}
+        <div class="page-header">
+            <h1>whoops! nothing here!
+                <hr>
+                <small>double-check the event web address spelling</small>
+        </h1>    
+    {{/if}}
+
+</template>
 
 <template name="eventCreate">
     <div class="page-header">

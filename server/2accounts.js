@@ -34,8 +34,6 @@ Meteor.methods({
 				    }
 
 	    	}
-			  
-			console.log(emailPayload);
 
 			if (emailPayload.to != undefined &&
 				emailPayload.subject != undefined &&
@@ -92,29 +90,100 @@ Meteor.methods({
 	    return fut.wait();
 	    
     },
+    eventCreatePhone: function (data) {
+		var Future = Npm.require('fibers/future');
+		var fut = new Future();
+
+		var error = 0;
+        var dataout = {};
+		var slug = Random.id().substr(0,4).toLowerCase();
+
+    	twilio.availablePhoneNumbers('US').local.list({ areaCode: "415"}, function(err1, numbers) 
+    	{
+			var newPhoneNumber = numbers.available_phone_numbers[0];
+			if (!err1) 
+			{
+				twilio.incomingPhoneNumbers.create({
+		            phoneNumber: newPhoneNumber.phone_number,
+	                VoiceUrl: "https://feedvenue.com/api/twiml/voice",
+					VoiceMethod: "POST",
+					SmsUrl: "https://feedvenue.com/api/twiml/sms",
+					SmsMethod: "POST"
+		        }, function(err2, purchasedNumber) {
+		        	if (!err2) 
+		        	{
+			        	purchasedNumber.owner = this.userId;
+						purchasedNumber.slug = slug;
+						delete purchasedNumber.nodeClientResponse;
+
+			            dataout.phone = purchasedNumber;
+			            dataout.phone.owner = this.userId;
+			            dataout.event = {
+				    		slug: slug,
+				    		name: data.inputEventName, 
+				    		location: data.inputLocation,
+				    		description: data.inputDescription,
+				    		hashtag: data.inputHashtag,
+				    		startdate: data.inputStartDate,
+				    		enddate: data.inputEndDate,
+				    		owner: this.userId,
+				    		questions: 0,
+				    		features: {
+				    			private: data.inputPrivate,
+				    			anonymous: data.inputAnonymous,
+				    			phone: data.inputPhone,
+				    			sms: data.inputSMS,
+				    			email: data.inputEmail,
+				    		},
+				    		phone: purchasedNumber.friendly_name
+				    	};
+
+				    } else {
+				    	error = 1;
+				    }
+
+					fut.ret(dataout);
+		        });
+			} else {
+				error = 2;
+			}
+		});
+
+		return fut.wait();
+    },
+    eventCreatePhoneSave: function (data) {
+    	data.event.owner = this.userId;
+    	data.phone.owner = this.userId;
+
+		if (data.event) {
+			Events.insert(data.event);
+		}
+		if (data.phone) {
+			Phone.insert(data.phone);
+		}
+    },
     eventCreate: function (data) {
-    	Events.insert({
-    		name: data.inputEventName, 
-    		location: data.inputLocation,
-    		description: data.inputDescription,
-    		hashtag: data.inputHashtag,
-    		startdate: data.inputStartDate,
-    		enddate: data.inputEndDate,
-    		owner: this.userId,
-    		features: {
-    			private: data.inputPrivate,
-    			anonymous: data.inputAnonymous,
-    			phone: data.inputPhone,
-    			sms: data.inputSMS,
-    			email: data.inputEmail,
-    		}
-    	});
-
-    	// slug
-    	// phone
-    	// plan
-
-    	console.log(data);
-    }
+		var slug = Random.id().substr(0,4).toLowerCase();
+	    var eventDetails = {
+				slug: slug,
+	    		name: data.inputEventName, 
+	    		location: data.inputLocation,
+	    		description: data.inputDescription,
+	    		hashtag: data.inputHashtag,
+	    		startdate: data.inputStartDate,
+	    		enddate: data.inputEndDate,
+	    		owner: this.userId,
+	    		questions: 0,
+	    		features: {
+	    			private: data.inputPrivate,
+	    			anonymous: data.inputAnonymous,
+	    			phone: data.inputPhone,
+	    			sms: data.inputSMS,
+	    			email: data.inputEmail,
+	    		},
+	    		phone: "not available"
+	    	};
+		Events.insert(eventDetails);
+    }    
   });
 

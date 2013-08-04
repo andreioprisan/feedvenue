@@ -188,7 +188,7 @@ App.eventCreateForm = "#createEventForm"
 
 App.eventCreateHandleSubmit = {
 	submitHandler: function () {
-		$("#createEventForm #createEventFormSubmitButton").html('creating event').addClass('disabled');
+		$("#createEventForm #createEventFormSubmitButton").html('creating event, please wait!').addClass('disabled');
 		App.eventCreateSubmit();
 		return false;
 	}
@@ -200,20 +200,46 @@ App.eventCreateSubmit = function () {
     $.each($('#createEventForm').serializeArray(), function() {
         form[this.name] = this.value;
     });
+	form.inputPrivate = $('#createEventForm #inputPrivate').is(':checked');
+	form.inputAnonymous = $('#createEventForm #inputAnonymous').is(':checked');
+	form.inputPhone = $('#createEventForm #inputPhone').is(':checked');
+	form.inputSMS = $('#createEventForm #inputSMS').is(':checked');
+	form.inputEmail = $('#createEventForm #inputEmail').is(':checked');
+	createEventFormError = 0;
 
-    Meteor.call('eventCreate', form, function(err, res) {
-    	if (!err) {
-			Meteor.Router.to("/event/list");
-    	} else {
-			$("#createEventForm #createEventFormSubmitButton").button('reset');
-			if (createEventFormError >= 1) {
-				$("#main div.alert:first").fadeOut(100).fadeIn(100);
-			} else {
-				$("form#createEventForm").before("<div class='alert alert-error'>" + error.reason + "</div>");
-				createEventFormError = 1;
-			}    		
-    	}
-    });
+	if (form.inputPhone || form.inputSMS) {
+	    Meteor.call('eventCreatePhone', form, function(error, eventCreatePhoneRes) {
+	    	if (!error) {
+			    Meteor.call('eventCreatePhoneSave', eventCreatePhoneRes, function(error, res) {
+			    	if (!error) {
+						Meteor.Router.to("/event/list");
+			    	}
+			    });
+	    	} else {
+				$("#createEventForm #createEventFormSubmitButton").button('reset');
+				if (createEventFormError >= 1) {
+					$("#main div.alert:first").fadeOut(100).fadeIn(100);
+				} else {
+					$("form#createEventForm").before("<div class='alert alert-error'>" + error.reason + "</div>");
+					createEventFormError = 1;
+				}    		
+	    	}
+	    });
+	} else {
+	    Meteor.call('eventCreate', form, function(error, res) {
+	    	if (!error) {
+				Meteor.Router.to("/event/list");
+	    	} else {
+				$("#createEventForm #createEventFormSubmitButton").button('reset');
+				if (createEventFormError >= 1) {
+					$("#main div.alert:first").fadeOut(100).fadeIn(100);
+				} else {
+					$("form#createEventForm").before("<div class='alert alert-error'>" + error.reason + "</div>");
+					createEventFormError = 1;
+				}    		
+	    	}
+	    });
+	}
 
     return false;
 };

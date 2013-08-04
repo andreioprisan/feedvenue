@@ -1,4 +1,6 @@
 Meteor.startup(function () {
+	twilio = Twilio('ACfb2eee13019a12826319cf09bba4d700','129da8b9d79d701ff9d5eb72ca7cac41');
+//	twilio = Twilio('AC4b1d1e9f4dc6d4e216fa1033009dcc02','91a8ca8271fd58bb54dcf56f26dd2e76');
 
     process.env.MAIL_URL = "smtp://postmaster%40feedvenue.com:562jnvpdtdj9@smtp.mailgun.org:587";
 
@@ -6,14 +8,10 @@ Meteor.startup(function () {
 	Customers = new Meteor.Collection("Customers");
 
 	Events = new Meteor.Collection("Events");
-
 	EmailIn = new Meteor.Collection("EmailIn");
 	Emails = new Meteor.Collection("Emails");
 	Phone = new Meteor.Collection("Phone");
 	SMS = new Meteor.Collection("SMS");
-
-	Instances = new Meteor.Collection("Instances");
-	Keys = new Meteor.Collection("Keys");
 
 	if (Plans.find().count() == 0) {
 		//Plans.remove({});
@@ -56,6 +54,22 @@ Meteor.startup(function () {
 	  return Phone.find({owner: this.userId});
 	});
 
+	Phone.allow({
+	  insert: function (userId, doc) {
+	    // the user must be logged in, and the document must be owned by the user
+	    return (userId && doc.owner === userId);
+	  },
+	  update: function (userId, doc, fields, modifier) {
+	    // can only change your own documents
+	    return doc.owner === userId;
+	  },
+	  remove: function (userId, doc) {
+	    // can only remove your own documents
+	    return doc.owner === userId;
+	  },
+	  fetch: ['owner']
+	});
+	
 	Meteor.publish("SMS", function () {
 	  return SMS.find({owner: this.userId});
 	});
@@ -64,15 +78,7 @@ Meteor.startup(function () {
 	  return Plans.find();
 	});
 
-	Meteor.publish("Instances", function () {
-	  return Instances.find({owner: this.userId});
-	});
-
 	Meteor.publish("Customers", function () {
-	  return Customers.find({owner: this.userId});
-	});
-
-	Meteor.publish("Keys", function () {
 	  return Customers.find({owner: this.userId});
 	});
 
