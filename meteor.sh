@@ -44,7 +44,7 @@ ENDSSH
 deploy )
   echo Deploying with $METEOR_CMD
 
-  $METEOR_CMD bundle bundle.tgz &&
+  $METEOR_CMD bundle bundle.tgz --production &&
   scp $SSH_OPT bundle.tgz $SSH_HOST:/tmp/  &&
   rm bundle.tgz > /dev/null 2>&1 &&
   ssh $SSH_OPT $SSH_HOST MONGO_URL=$MONGO_URL ROOT_URL=$ROOT_URL APP_DIR=$APP_DIR 'sudo -E bash -s' > /dev/null 2>&1 <<'ENDSSH'

@@ -22,6 +22,9 @@ Meteor.subscribe("Phone");
 SMS = new Meteor.Collection("SMS");
 Meteor.subscribe("SMS");
 
+Questions = new Meteor.Collection("Questions");
+Meteor.subscribe("Questions");
+
 if (Meteor.userId() != null && Session.get('uid') == null) {
 	Session.set('uid', Meteor.userId());
 	console.log(Session.get('uid'));
@@ -46,6 +49,9 @@ Stripe.setPublishableKey(stripe_public);
 
 if (Meteor.is_client) {
     Meteor.startup(function () {
+
+		haveUpvoted = {};
+		haveDownvoted = {};
 
 		$('.eventCreatePrivate').popover(
 			{	animation: true, 

@@ -14,6 +14,8 @@ Meteor.startup(function () {
 	Phone = new Meteor.Collection("Phone");
 	SMS = new Meteor.Collection("SMS");
 
+	Questions = new Meteor.Collection("Questions");
+
 	if (Plans.find().count() == 0) {
 		//Plans.remove({});
 		Plans.insert({name: "free", id: 0, questions: -1, events: 5, voicemail: 0, sms: 0, twitter: 0, topics: 0, sentiment: 0, email: 0, branding: 0, support: 0});
@@ -86,6 +88,24 @@ Meteor.startup(function () {
 	Meteor.publish("Customers", function () {
 	  return Customers.find({owner: this.userId});
 	});
+
+	Meteor.publish("Questions", function () {
+	  return Questions.find();
+	});	
+
+	Questions.allow({
+	  insert: function (userId, doc) {
+	    // the user must be logged in, and the document must be owned by the user
+	    return (userId && doc.owner === userId);
+	  },
+	  update: function (userId, doc, fields, modifier) {
+	  	return true;
+	  },
+	  remove: function (userId, doc) {
+	    return true;
+	  },
+	  fetch: ['owner']
+	});	
 
 	var os = Npm.require("os");
 	if (os.hostname() == "direct.feedvenue.com" ||

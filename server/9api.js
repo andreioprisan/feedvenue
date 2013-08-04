@@ -38,16 +38,26 @@ Meteor.Router.add('/api/email', 'POST', function(id) {
 			}
 
 			if (piece != undefined) {
-				parsedMessage[key] = piece.replace(/\+/g, ' ');
+				parsedMessage[key.replace(/\-/g, '')] = piece.replace(/\+/g, ' ');
 			}
 		});		
 		
-		parsedMessage.receivedAt = moment(parseInt(parsedMessage.timestamp)*1000).format()
+		parsedMessage.receivedAt = moment().format();
 		parsedMessage.raw = rawIn;
 		parsedMessage.mailbox = this.request.query.user;
 		parsedMessage.domain = this.request.query.domain;
 
 		EmailIn.insert(parsedMessage);
+		
+		var question = {};
+		question.inputQuestion = parsedMessage.strippedtext.replace(/\r/g, ' ').replace(/\n/g, ' ');
+		question.inputName = parsedMessage.from;
+		question.slug = parsedMessage.mailbox;
+		question.source = "email";
+
+		Meteor.call('questionCreate', question, function(error, res) {
+			
+		});
 	}
 
   	return [200, 'ok'];

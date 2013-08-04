@@ -184,6 +184,10 @@ Meteor.methods({
 	    		phone: "not available"
 	    	};
 		Events.insert(eventDetails);
-    }    
+    },
+    questionCreate: function (data) {
+    	Questions.insert({q: data.inputQuestion, a: data.inputName, d: moment().format('MM/DD/YY h:mm A'), st: 'active', s: data.source, r: 0, slug: data.slug});
+        Events.update({slug: data.slug}, {$inc: {questions: 1}});
+    }   
   });
 

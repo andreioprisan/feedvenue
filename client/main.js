@@ -105,7 +105,7 @@ Template.editProfile.rendered = function() {
 
 
 Template.dashboard.events({
-    "click .deleteEvent": function(){
+    "click .deleteEvent": function(event){
         event.preventDefault();    
         var eventId = this._id;
         if (eventId) {
@@ -142,14 +142,49 @@ Template.dashboard.helpers({
     },
 });
 
+Template.eventView.events({
+    "click .deleteQuestion": function(event){
+        event.preventDefault();
+        var id = this._id;
+        if (id) {
+            Questions.remove(id);
+            Events.update(Session.get("eventId"), {$inc: {questions: -1}});
+        }
+    },
+    "click .upvote": function(event){
+        event.preventDefault();
+        var id = this._id;
+
+        if (id && haveUpvoted[id] != true) {
+            Questions.update(id, {$inc: {r: 1}});
+            haveUpvoted[id] = true;
+        }
+    },
+    "click .downvote": function(event){
+        event.preventDefault();
+        var id = this._id;
+
+        if (id && haveDownvoted[id] != true) {
+            Questions.update(id, {$inc: {r: -1}});
+            haveDownvoted[id] = true;
+        }
+    }    
+});
+
+
 Template.eventView.helpers({
     event: function () {
-        console.log("event"+Session.get("slug"));
         var eventsStream = EventsStream.findOne({slug: Session.get("slug")});
+        Session.set("eventId", eventsStream._id);
+        if (eventsStream.phone == "not available") {
+            eventsStream.showPhone = false;
+        } else {
+            eventsStream.showPhone = true;
+        }
+
         return eventsStream;
     },
     eventExists: function () {
-        console.log("eventExists"+Session.get("slug"));
         var eventsCount = EventsStream.find({slug: Session.get("slug")}).count();
         if (eventsCount) {
             return true;
@@ -157,6 +192,30 @@ Template.eventView.helpers({
             return false;
         }
     },
+    questions: function() {
+        var questions = Questions.find({slug: Session.get("slug")}, {sort: {r: -1, d: -1}});
+        Session.set('votes', questions.count()*2);
+        return questions;
+    },
+    questionsExist: function() {
+        var questionsCount = Questions.find({slug: Session.get("slug")}).count();
+        if (questionsCount) {
+            return questionsCount;
+        } else {
+            return false;
+        }
+    },
+    isAdministrator: function() {
+        if (Session.get('uid') == Meteor.userId()) {
+            if (EventsStream.findOne({slug: Session.get("slug")}).owner == Session.get('uid')) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 });
 
 Template.dashboard.user = function() {

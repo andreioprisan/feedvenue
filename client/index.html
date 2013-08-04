@@ -365,17 +365,107 @@
         {{#with event}}
 
         <div class="page-header">
-            <h1>{{name}} <small>in 30 seconds</small>
-        </h1>    
+            <h1>{{name}} 
+                <span class="pull-right">
+                    <small>in {{location}} from <b>{{startdate}}</b> to <b>{{enddate}}</b></small>
+                </span>
+            </h1>  
+
+            {{#if description}} {{description}} {{/if}}
+
+            <span class="pull-right" style="font-size: 23px">
+            {{#if hashtag}}
+                <small>twitter: <b>#{{hashtag}} #ask</b></small>
+                {{/if}}
+
+                <small>email: <b><a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a></b></small>
+
+                {{#if showPhone}}
+                <small>phone: <b>{{phone}}</b></small>
+                {{/if}}
+            </span>
+        </div>
+
+        {{> questionCreate}}
+
         {{/with}}
+
+        {{#if questionsExist}}
+        <table class="table">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="mainList">
+
+            {{#each questions}}
+
+            <tr>
+              <td style="width: 5%; text-align: center;">
+                <span class="icon-chevron-up upvote" style="color: gray; font-size: 24px;" id="{{_id}}_up"></span><br>
+                <span class="questionScore" style="font-weight: bold;">{{r}}</span><br>
+                <span class="icon-chevron-down downvote" style="color: gray; font-size: 24px;" id="{{_id}}_down"></span>
+              </td>
+              <td><p style="font-size: 24px">{{q}}</p>
+                  asked by {{#if a}}<b>{{a}}</b>{{else}}<b>anonymous</b>{{/if}}  at <b>{{d}}</b> via <b>{{s}}</b>
+              </td>
+              {{#if isAdministrator}}
+              <td style="width: 5%">
+                  <button class="btn btn-danger btn-small pull-right deleteQuestion"><i class="icon-remove"></i></button>
+              </td>
+              {{/if}}
+            </tr>
+            {{/each}}
+
+            </tbody>
+        </table>
+        {{else}}
+        <hr>        
+        <div class="alert alert-info">
+            No questions have been created yet. Make one by clicking the New button above!
+        </div>
+        {{/if}}
+
+
     {{else}}
         <div class="page-header">
-            <h1>whoops! nothing here!
+            <h1>hmm, let's see what you've got there
                 <hr>
-                <small>double-check the event web address spelling</small>
-        </h1>    
+                <small>we dispatched the elves to get your event details, hold tight</small>
+            </h1>    
+        </div>
     {{/if}}
 
+
+
+</template>
+
+<template name="questionCreate">
+<form class="form-search" id="createQuestionForm" onsubmit="return false;">
+<div class="row">
+    <div class="col-lg-8">    
+        <div class="input-group">
+          <span class="input-group-addon">Question</span>
+          <input class="form-control" name="inputQuestion" type="text" placeholder="just enter it here">
+        </div>
+    </div>
+    <div class="col-lg-3">    
+        <span class="pull-right">
+          <div class="input-group">
+            <span class="input-group-addon">Your Name</span>
+            <input class="form-control" name="inputName" type="text" placeholder="it's optional">
+          </div>
+        </span>
+    </div>
+    <div class="col-lg-1">    
+        <span class="pull-right">
+            <button id="createQuestionFormSubmitButton" type="submit" class="btn btn-default btn-primary">Ask!</button>
+        </span>
+    </div>
+</div>
+</form>
 </template>
 
 <template name="eventCreate">
