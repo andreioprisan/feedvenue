@@ -23,7 +23,6 @@ body {
     margin-top: 15px;
 }
 
-
 #footer {
     background-color: #fff;    
     min-height: 3em;
@@ -73,4 +72,8 @@ text-align: center;
 
 .popover-content {
   min-width: 280px;
+}
+
+.navbar .nav > li.active > a, .navbar .nav > li.active {
+  background-color: transparent;
 }

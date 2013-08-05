@@ -41,6 +41,25 @@ npm install -g forever
 ENDSSH
   echo Done. You can now deploy your app.
   ;;
+build-run )
+  #v0.10.10 is possible
+  #v0.8.14 is safe
+  rm -fr demeteorized &&
+  demeteorizer -n v0.8.14 -o demeteorized &&
+  cd demeteorized &&
+  sed 's/-meteor",/",/g' package.json > package.json.new &&
+  mv package.json package.json.orig &&
+  mv package.json.new package.json &&
+  npm install &&
+  npm shrinkwrap &&
+  echo "demeteorized node package is set up" &&
+  export ROOT_URL=http://localhost &&
+  node main.js &&
+  echo "application running on $ROOT_URL:$PORT"
+  ;;
+build-clean )
+  rm -fr demeteorized
+  ;;
 deploy )
   echo Deploying with $METEOR_CMD
 

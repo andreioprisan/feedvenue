@@ -31,7 +31,7 @@
             <div id="footer">
                 <footer>
                     <div class="container">
-                        <p class="muted credit">
+                        <p class="muted credit pull-left">
                             &copy; <strong>feedvenue LLC</strong> 2013 <a href="mailto:contact@feedvenue.com">contact us</a>
                         </p>
                     </div>
@@ -90,7 +90,7 @@
             {{else}}
             <ul class="nav navbar-nav pull-right">
                 <li class="{{ TabActive 'login'}}"><a href="/login">login</a></li>
-                <li class="{{ TabActive 'signup'}}"><a href="/signup">signup</a></li>
+                <li class="{{ TabActive 'signup'}}"><a href="/signup">sign up</a></li>
             </ul>
             {{/if}}
         </div><!--/.nav-collapse -->
@@ -172,67 +172,58 @@
 
 <!-- Static Pages -->
 <template name="home">
-    <div class="content">
-        <div class="row">
-            <div class="col-lg-8">
-                <h1>the <span class="label">real-time</span> <span class="label label-danger">feedback</span> platform</h1>
-                <br><br>
-                <h1><span class="label label-success">social</span> &
-                    <span class="label label-warning">anonymous</span> on the  
-                    web and mobile.
-                </h1>
-            </div>
-            <div class="col-lg-1">
-            </div>
-            <div class="col-lg-2 pull-right">
-                <a class="btn btn-large btn-success" href="/signup">sign up for free</a>
-            </div>
-        </div>
+    <div class="content col-lg-12">
+        <a class="pull-right btn btn-large btn-success" href="/signup">sign up for free</a>
+        <center>
+
+        <h1>the <span class="label">real-time</span> <span class="label label-success">social</span> <span class="label label-danger">feedback</span> platform</h1>
+        <br><br>
+            <h2>don't wonder what the audience wants to know, act on it</h2>
+            <br>
+            <h2>crowd-source questions for events from the web, social networks and mobile</h2>
+        </center>
+        <br /><br />
 
     </div>
     
-    <br />
-    <br />
-    <br />
-    <br />
     
       <div class="row">
         <div class="col-lg-3">
-            <div class="panel">
-                <div class="panel-heading">
-                <h3 class="panel-title">social</h3>
-                </div>
-                <p>We watch social networks for your event questions and let peers vote.</p>
-            </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="panel">
-                <div class="panel-heading">
-                <h3 class="panel-title">anonymous</h3>
-                </div>
-                  <p>Let people ask anonymously, via phone, sms, web and mobile apps.</p>
-            </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="panel">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                 <h3 class="panel-title">real-time</h3>
                 </div>
-                  <p>You get instant feedback and insights.<br> No more waiting, more deciding.</p>
+                  <p>You get instant feedback and insights.<br>All questions appear instantly.<br> No more waiting, more deciding.</p>
             </div>
         </div>
         <div class="col-lg-3">
-            <div class="panel">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                <h3 class="panel-title">social</h3>
+                </div>
+                <p>We watch social networks for your event questions and let peers vote. <br>The important questions filter to the top.</p>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                <h3 class="panel-title">anonymous</h3>
+                </div>
+                  <p>Let people ask questions via email, phone, sms, web and mobile apps.<br>Enabling anonymity increases feedback!</p>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="panel panel-warning">
                 <div class="panel-heading">
                 <h3 class="panel-title">analytic</h3>
                 </div>
-                  <p>Understand event sentiment and question topics. Address the things that matter.</p>
+                  <p>Understand feedback sentiment and question topics. <br>Address more of the things that matter.</p>
             </div>
         </div>
       </div>
 
     <center>        <p class="lead"><a href="/page/features/">and more</a></center></p>
-<hr>
 </template>
 
 <template name="what">
@@ -246,51 +237,24 @@
 
 <template name="features">
   <div class="content">
-       <h2>features. see all the things we can do for you</h2>
+        <h2>features. see all the things we can do for you</h2>
+        
+        <hr>
+        <h3>social</h3>
+        <p>We watch Facebook and Twitter for your event questions and help peers decide how valid questions are, in real-time.</p>
 
+        <hr>
+        <h3>anonymous</h3>
+        <p>Let people ask questions via email, phone, sms, web and mobile apps.<br>Enabling anonymity increases feedback!</p>
 
-      <div class="row">
-        <div class="col-lg-8">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                <h2 class="panel-title">social</h2>
-                </div>
-                <p>We watch Facebook and Twitter for your event questions and help peers decide how valid questions are, in real-time.</p>
-            </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-8">
-            <div class="panel panel-warning">
-                <div class="panel-heading">
-                <h3 class="panel-title">anonymous</h3>
-                </div>
-                  <p>Let people ask anonymously, via phone, sms, web and mobile apps.</p>
-            </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-8">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                <h3 class="panel-title">real-time</h3>
-                </div>
-                  <p>You get instant feedback and insights. No more waiting, more deciding.</p>
-            </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-8">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                <h3 class="panel-title">analytic</h3>
-                </div>
-                  <p>Understand event sentiment and question topics. Address the things that matter.</p>
-            </div>
-        </div>
-      </div>
+        <hr>
+        <h3>real-time</h3>
+        <p>You get instant feedback and insights. All questions appear instantly. No more waiting, more deciding.</p>
 
-    </div>
+        <hr>
+        <h3>analytic</h3>
+        <p>Understand feedback sentiment and question topics. Address more of the things that matter.</p>
+
   </div>
 </template>
 
@@ -650,49 +614,43 @@
 
 <!-- Login -->
 <template name="login">
-    <div class="text-center" style="">
-
+<div class="col-lg-12">
     <h3>
-        <p class=""><small>New user? <a href="/signup">Sign up now!</a></small></p>
+        Login to your account
+        <p class="pull-right"><small>New user? <a href="/signup">Sign up now!</a></small></p>
     </h3>
-    <br>
-    <br>
 
-        <div class="panel col-lg-5">
+    <hr>
 
-            <div class="panel-heading"><h3 class="panel-title">login to your account</h3></div>
-            <p>
-                <form id="loginForm" name="loginForm" method="post">
-                <div class="row">
-                    <div class="col-lg-12">    
-                        <div class="input-group">
-                          <span class="input-group-addon">email</span>
-                          <input type="text" class="form-control" id="usernameLogin" name="usernameLogin" placeholder="something@something.com">
-                        </div>
-                        <br>
-                        <div class="input-group">
-                          <span class="input-group-addon">password</span>
-                          <input type="password" class="form-control" id="passwordLogin" name="passwordLogin">
-                        </div>
-                    <br>
-                        <button id="login" class="btn btn-success btn-large pull-right" type="submit" data-loading-text="Signing In">Sign In</button>
-                    </div>
-                </div>
-                </form>
-            </p>
-        </div>
+    <form id="loginForm" name="loginForm" method="post">
+
+    <div class="panel col-lg-12">
+        <div class="panel-heading"><h3 class="panel-title">What are your login credentials?</h3></div>
+        <p>
+            <div class="input-group col-lg-4">
+              <span class="input-group-addon">email</span>
+              <input type="text" class="form-control" id="usernameLogin" name="usernameLogin" placeholder="something@something.com">
+            </div>
+            <div class="input-group col-lg-4">
+              <span class="input-group-addon">password</span>
+              <input type="password" class="form-control" id="passwordLogin" name="passwordLogin">
+            </div>
+            <button id="login" class="btn btn-success btn-large pull-right  col-lg-1" type="submit" data-loading-text="Signing In">Login</button>
+        </p>
     </div>
+
+    </form>
+
+</div>
 </template>
 
 
 
 <!-- Signup -->
 <template name="signup">
-<div class="col-lg-10">
-
-    <br>
+<div class="col-lg-12">
     <h3>
-        Signup for a new account
+        Sign up for a new account
         <p class="pull-right"><small>Already have an account? <a href="/login">Login</a></small></p>
     </h3>
     
