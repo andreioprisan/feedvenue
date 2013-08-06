@@ -150,6 +150,10 @@ Template.eventCreate.endDateDefault = function() {
     return moment().add('days',1).format("MM/DD/YY");    
 }
 
+Template.questionCreate.onWeb = function() {
+    return ((!SessionAmplify.get('oniPhone') && !SessionAmplify.get('oniPad')) || Session.get("current_page") != "eventView");
+}
+
 Template.eventCreate.rendered = function() {
         App.myValidation (App.eventCreateRules, App.eventCreateMessages, App.eventCreateForm, App.messagePlacement, App.eventCreateHandleSubmit);
         $('.eventCreatePrivate').popover(
@@ -311,15 +315,16 @@ Template.eventView.helpers({
         return SessionAmplify.get('oniPad');
     },
     onWeb: function() {
-        return (!SessionAmplify.get('oniPhone') && !SessionAmplify.get('oniPad'));
+        return ((!SessionAmplify.get('oniPhone') && !SessionAmplify.get('oniPad')) || Session.get("current_page") != "eventView");
     }
 });
 
 Template.footer.helpers({
     onWeb: function() {
-        return (!SessionAmplify.get('oniPhone') && !SessionAmplify.get('oniPad'));
+        return ((!SessionAmplify.get('oniPhone') && !SessionAmplify.get('oniPad')) || Session.get("current_page") != "eventView");
     }
 });
+
 Template.dashboard.user = function() {
     return Meteor.user();
 };
@@ -366,7 +371,7 @@ Template.header.helpers({
         return Meteor.userId();
     },
     onWeb: function() {
-        return (!SessionAmplify.get('oniPhone') && !SessionAmplify.get('oniPad'));
+        return ((!SessionAmplify.get('oniPhone') && !SessionAmplify.get('oniPad')) || Session.get("current_page") != "eventView");
     }
 });
 

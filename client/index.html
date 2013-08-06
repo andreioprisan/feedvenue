@@ -426,9 +426,11 @@
 
     .jumbotron {
         padding: 1px 0px 45px 0px;
-        font-size: 15px;
+        font-size: 13px;
         margin-bottom: 5px;
         font-weight: 100;
+        background-color: white;
+        border-bottom: 0px;
     }
 
     .page-header {
@@ -554,24 +556,17 @@
 <template name="questionCreate">
 <form class="form-search" id="createQuestionForm" onsubmit="return false;">
 <div class="row col-lg-12 col-12">
-    <div class="col-lg-7 col-7" {{#if onWeb}} {{else}}style="padding:0px 0px 0px 0px"{{/if}}>    
-        <div class="input-group" {{#if onWeb}} {{else}}style="width:100%"{{/if}}>
-            {{#if onWeb}}            
+    {{#if onWeb}}
+    <div class="col-lg-7 col-7">    
+        <div class="input-group">
             <span class="input-group-addon">Question</span>
             <input class="form-control" name="inputQuestion" type="text" placeholder="just enter it here">
-            {{else}}
-            <input class="form-control" name="inputQuestion" type="text" placeholder="question">
-            {{/if}}
         </div>
     </div>
-    <div class="col-lg-3 col-3" {{#if onWeb}} {{else}}style="padding:0px 0px 0px 0px"{{/if}}>    
-      <div class="input-group" {{#if onWeb}} {{else}}style="width:125%"{{/if}}>
-            {{#if onWeb}}
+    <div class="col-lg-3 col-3">    
+      <div class="input-group">
             <span class="input-group-addon">Your Name</span>
             <input class="form-control" name="inputName" type="text" placeholder="completely optional">
-            {{else}}
-            <input class="form-control" name="inputName" type="text" placeholder="name (optional)">
-            {{/if}}
       </div>
     </div>
     <div class="col-lg-2 col-2" {{#if onWeb}} {{else}}style="padding:0px 0px 0px 0px"{{/if}}>    
@@ -579,6 +574,23 @@
             <button id="createQuestionFormSubmitButton" type="submit" class="btn btn-default btn-primary">Ask!</button>
         </span>
     </div>
+
+    {{else}}
+
+    <div class=" col-12" style="padding:0px 0px 0px 0px">    
+        <div class="input-group col-12" style="width:100%">
+            <input class="form-control" name="inputQuestion" type="text" placeholder="question">
+        </div>
+    </div>
+    <div class=" col-12" style="padding:0px 0px 0px 0px">    
+      <div class="input-group col-9">
+            <input class="form-control" name="inputName" type="text" placeholder="name (optional)">
+      </div>
+    <button id="createQuestionFormSubmitButton" type="submit" class="btn btn-default btn-primary col-3" style="width: 22%">Ask!</button>
+    </div>
+
+    {{/if}}
+
 </div>
 </form>
 </template>
