@@ -1,17 +1,3 @@
-Meteor.subscribe(
-  'server_sessions',
-  amplify.store('session'), // Read from local storage / cookies
-  function() {    
-    // The server returns only one record, so findOne will return that record
-    var serverSession = new Meteor.Collection('server_sessions').findOne();
-    // Stores into client session all data contained in server session;
-    // supports reactivity when server changes the serverSession
-    Session.set('serverSession', serverSession);
-    // Stores the server session id into local storage / cookies
-    amplify.store('feedvenue.session', serverSession._id);
-  }
-);
-
 SessionAmplify = _.extend({}, Session, {
   keys: _.object(_.map(amplify.store(), function(value, key) {
     return [key, JSON.stringify(value)]

@@ -196,7 +196,12 @@ Meteor.methods({
 		return  planDetails.events - currentEventsCreated;		
     },
     questionCreate: function (data) {
-    	var ownerId = Events.find({slug: data.slug}).fetch()[0].owner;
+    	var eventDetails = Events.find({slug: data.slug}).fetch()[0];
+    	if (eventDetails.features.anonymous == true &&
+    		(data.source == "email" || data.source == "voicemail" || data.source == "sms")) {
+    		data.inputName = "anonymous";
+    	}
+    	var ownerId = eventDetails.owner;
     	if (ownerId) {
 	    	Questions.insert({
 	    		q: data.inputQuestion, 

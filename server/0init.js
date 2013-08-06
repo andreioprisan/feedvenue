@@ -1,41 +1,27 @@
 Meteor.startup(function () {
 	twilio = Twilio('ACfb2eee13019a12826319cf09bba4d700','129da8b9d79d701ff9d5eb72ca7cac41');
-//	twilio = Twilio('AC4b1d1e9f4dc6d4e216fa1033009dcc02','91a8ca8271fd58bb54dcf56f26dd2e76');
-
     process.env.MAIL_URL = "smtp://postmaster%40feedvenue.com:562jnvpdtdj9@smtp.mailgun.org:587";
 
-	ServerSessions = new Meteor.Collection('server_sessions');
-	 
-	Meteor.publish('server_sessions', function(id) {
-	  var created = new Date().getTime();
-	 
-	  // If no id is passed we create a new session
-	  if(!id) {    
-	    id = ServerSessions.insert({created: created});
-	  }
-	  
-	  // Load the session
-	  var serverSession = ServerSessions.find(id);
-	 
-	  // If no session is loaded, creates a new one;
-	  // id no longer valid
-	  if(serverSession.count() === 0) {
-	    id = ServerSessions.insert({created: created});
-	    serverSession = ServerSessions.find(id);
-	  }
-	 
-	  return serverSession;
+	Twit = new TwitMaker({
+	    consumer_key:         "ePyFlWIUz7gRBpfF5kFbEA"
+	  , consumer_secret:      "GZn1ex9LVWnhWkTeHsXXPoCSW3s95dfbo81Llghk3k"
+	  , access_token:         "1639391858-EtMgrDFWpXN9ilPyUpHAXT9Fv08IfkAgLZJFUe7"
+	  , access_token_secret:  "XLSFb1USOnpb05uzU0g3y5bkUHReuXvRVSrUBsDY"
 	});
 
 	Plans = new Meteor.Collection("Plans");
 	Customers = new Meteor.Collection("Customers");
 
 	Events = new Meteor.Collection("Events");
-
 	EmailIn = new Meteor.Collection("EmailIn");
 	Emails = new Meteor.Collection("Emails");
 	Phone = new Meteor.Collection("Phone");
 	SMS = new Meteor.Collection("SMS");
+	//raw tweets
+	Tweets = new Meteor.Collection("Tweets");
+	Meteor.publish("Tweets", function () {
+	  return Tweets.find();
+	});	
 
 	Questions = new Meteor.Collection("Questions");
 
@@ -86,6 +72,11 @@ Meteor.startup(function () {
 
 	Meteor.publish("EmailIn", function () {
 	  return EmailIn.find({owner: this.userId});
+	});
+
+	twilioRawIn = new Meteor.Collection("​TwilioIn");
+	Meteor.publish("TwilioIn", function () {
+	  return TwilioIn.find();
 	});
 
 	Meteor.publish("Phone", function () {
