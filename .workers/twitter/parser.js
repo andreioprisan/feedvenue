@@ -1,5 +1,6 @@
 var consumerKey = 'ePyFlWIUz7gRBpfF5kFbEA',
     consumerSec = 'GZn1ex9LVWnhWkTeHsXXPoCSW3s95dfbo81Llghk3k';
+process.env.MONGO_URL = 'mongodb://feedvenue:e8b19da37825a3056e84c522f05efce0@ana.mongohq.com:10097/feedvenue';
 
 var sys = require('sys'),
     client = require('./lib/twitter').createClient();
