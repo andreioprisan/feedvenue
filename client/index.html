@@ -301,11 +301,11 @@
                 <th>Event Name</th>
                 <th>URL</th>
                 <th>Questions</th>
-                <th>Location</th>
                 <th>From</th>
                 <th>To</th>
                 <th>Hashtag</th>
                 <th>Phone #</th>
+                <th>Location</th>
                 <th></th>
               </tr>
             </thead>
@@ -314,13 +314,13 @@
             {{#each eventsList}}
             <tr>
                 <td><a href="/{{slug}}">{{name}}</a></td>
-                <td><a href="http://feedvenue.com/{{slug}}">http://feedvenue.com/{{slug}}</a></td>
+                <td><a href="https://feedvenue.com/{{slug}}">https://feedvenue.com/{{slug}}</a></td>
                 <td>{{questions}}</td>
-                <td>{{location}}</td>
                 <td>{{startdate}}</td>
                 <td>{{enddate}}</td>
                 <td>{{hashtag}}</td>
                 <td>{{phone}}</td>
+                <td>{{location}}</td>
                 <td width="5%">
                   <button class="btn btn-danger btn-small pull-right deleteEvent"><i class="icon-remove"></i></button>
                 </td>
@@ -513,7 +513,7 @@
 
             {{#with planFeatures}}
 
-            {{#if private}}
+            {{#if eventCreatePrivate}}
             <div class="col-lg-1">    
                 <div class="input-group" style="width:80%">
                   <span class="input-group-addon">
@@ -548,7 +548,7 @@
                 </div>
             </div> 
 
-            {{#if voicemail}}
+            {{#if eventCreatePhone}}
             <div class="col-lg-1">    
                 <div class="input-group">
                   <span class="input-group-addon">
@@ -561,7 +561,7 @@
             </div> 
             {{/if}}
 
-            {{#if sms}}            
+            {{#if eventCreateSMS}}            
             <div class="col-lg-1">    
                 <div class="input-group">
                   <span class="input-group-addon">
@@ -590,7 +590,6 @@
         <div>
         {{/if}}
         {{/with}}
-
     </form>
 
     </div>

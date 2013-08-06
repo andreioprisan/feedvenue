@@ -458,7 +458,19 @@ App.login = function () {
 	                Session.set('exceededEvents', false);                   
 	            }
 
-				Meteor.Router.to("/users/"+Meteor.user()._id+"");
+		        Meteor.call('getCurrentPlan', function(error, res) {
+				    SessionAmplify.set('eventCreatePrivate', res.private);
+				    SessionAmplify.set('eventCreateEmail', res.email);
+				    SessionAmplify.set('eventCreatePhone', res.voicemail);
+				    SessionAmplify.set('eventCreateSMS', res.sms);
+				    SessionAmplify.set('eventCreateEventsLimit', res.events);
+				    SessionAmplify.set('planName', res.name);
+				    SessionAmplify.set('planId', res.name);
+				    SessionAmplify.set('planBranding', res.branding);
+				    SessionAmplify.set('planSupport', res.support);
+
+					Meteor.Router.to("/users/"+Meteor.user()._id+"");
+				});
 	        });
 		}
 	});

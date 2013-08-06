@@ -129,11 +129,12 @@ Template.dashboard.events({
 });
 
 Template.eventCreate.planFeatures = function() {
-    if (Meteor.userId() && Meteor.hasOwnProperty('user') && Meteor.user().hasOwnProperty('profile')) {
-        return Plans.findOne({id: parseInt(Meteor.user().profile.plan)});
-    } else {
-        return Plans.findOne({id: 0});
-    }
+    var planFeatures = {};
+    planFeatures.eventCreatePrivate = SessionAmplify.get('eventCreatePrivate');
+    planFeatures.eventCreateEmail = SessionAmplify.get('eventCreateEmail');
+    planFeatures.eventCreatePhone = SessionAmplify.get('eventCreatePhone');
+    planFeatures.eventCreateSMS = SessionAmplify.get('eventCreateSMS');
+    return planFeatures;
 }
 
 Template.eventCreate.startDateDefault = function() {
