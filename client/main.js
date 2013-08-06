@@ -303,9 +303,23 @@ Template.eventView.helpers({
         } else {
             return false;
         }
+    },
+    oniPhone: function() {
+        return SessionAmplify.get('oniPhone');
+    },
+    oniPad: function() {
+        return SessionAmplify.get('oniPad');
+    },
+    onWeb: function() {
+        return (!SessionAmplify.get('oniPhone') && !SessionAmplify.get('oniPad'));
     }
 });
 
+Template.footer.helpers({
+    onWeb: function() {
+        return (!SessionAmplify.get('oniPhone') && !SessionAmplify.get('oniPad'));
+    }
+});
 Template.dashboard.user = function() {
     return Meteor.user();
 };
@@ -348,9 +362,11 @@ Template.header.helpers({
             return null;
         }
     },
-
     _id: function() {
         return Meteor.userId();
+    },
+    onWeb: function() {
+        return (!SessionAmplify.get('oniPhone') && !SessionAmplify.get('oniPad'));
     }
 });
 

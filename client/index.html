@@ -17,13 +17,12 @@
 <body>
     <div class="container">
         <div class="row-fluid">
-
             {{> header}}
 
             <div id="wrap">
                 <div class="container-fluid">
                     <div class="row-fluid">
-                        <div id="main" class="col-lg-12">
+                        <div id="main" class="col-lg-12 col-12">
                             {{renderPage}}
                         </div>
                     </div>
@@ -31,29 +30,7 @@
                 <div id="spacer"></div>
             </div>
 
-
-            <div id="footer">
-                <footer>
-                    <div class="container">
-                        <span class="pull-right">
-                            <a href="mailto:contact@feedvenue.com">contact us</a>
-                        </span>
-                        <span class="pull-left">
-                            <center>
-                                <h5>
-                                <a href="/page/what">what</a> |
-                                <a href="/page/features">features</a> |
-                                <a href="/page/plans">plans</a> |
-                                <a href="/page/publicevents">public events</a>
-                                </h5>
-                            </center>
-                            &copy; <strong>feedvenue LLC</strong> 2013
-                            
-                        </span>
-                    </div>
-                </footer>
-
-            </div>
+            {{> footer}}
 
         </div>
     </div>
@@ -69,10 +46,40 @@
     </script>
 </body>
 
+<template name="footer">
+    <div id="footer">
+        <footer>
+            <div class="container">
+                {{#if onWeb}}
+                    <span class="pull-right">
+                        <a href="mailto:contact@feedvenue.com">contact us</a>
+                    </span>
+                    <span class="pull-left">
+                        <center>
+                            <h5>
+                            <a href="/page/what">what</a> |
+                            <a href="/page/features">features</a> |
+                            <a href="/page/plans">plans</a> |
+                            <a href="/page/publicevents">public events</a>
+                            </h5>
+                        </center>
+                        &copy; <strong><a href="https://feedvenue.com">feedvenue</a> LLC</strong> 2013
+                    </span>
+                {{else}}
+                <span class="">
+                    <center>
+                    &copy; <strong><a href="https://feedvenue.com">feedvenue</a> LLC</strong> 2013
+                    </center>
+                </span>
+                {{/if}}
+            </div>
+        </footer>
+    </div>
+</template>
 
 
 <template name="header">
-
+    {{#if onWeb}}
     <div class="navbar navbar-fixed-top">
       <div class="container">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
@@ -114,7 +121,9 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
+    {{else}}
 
+    {{/if}}
 </template>
 
 
@@ -134,7 +143,6 @@
                     <p><strong>Web</strong> Enabled</p>
                     <p><strong>Mobile</strong> Enabled</p>
                     <p><strong>Email</strong> Enabled</p>
-                    <p><strong>Twitter</strong> Sync</p>
                 </div>
                 <div class="pricing-table-signup-pro">
                   <p><a href="/signup">Sign Up</a></p>
@@ -152,7 +160,7 @@
                     <p><strong>Phone & SMS</strong> Enabled</p>
                     <p><strong>Email</strong> Enabled</p>
                     <p><strong>Twitter</strong> Sync</p>
-                    <p><strong>Topic</strong> Analytics</p>
+                    <p><strong>Presenter</strong> Mode</p>
                     <p><strong>Custom</strong> Branding</p>
                 </div>
                 <div class="pricing-table-signup-small">
@@ -175,6 +183,7 @@
                     <p><strong>Twitter</strong> Sync</p>
                     <p><strong>Topic</strong> Analytics</p>
                     <p><strong>Sentiment</strong> Analytics</p>
+                    <p><strong>Presenter</strong> Mode</p>
                     <p><strong>Custom</strong> Branding</p>
                     <p><strong>Premium</strong> Support</p>
                 </div>
@@ -403,35 +412,88 @@
 </template>
 
 <template name="eventView">
+    {{#if oniPhone}}
+    <style>
+    .container {
+        max-width: 100%;
+        width: 100%;
+        padding: 0px 0px 0px 0px;
+    }
+
+    #wrap {
+        padding-top: 1px;
+    }
+
+    .jumbotron {
+        padding: 1px 0px 45px 0px;
+        font-size: 15px;
+        margin-bottom: 5px;
+        font-weight: 100;
+    }
+
+    .page-header {
+        margin-top: 0px;
+    }
+
+    h1, h2, h3 {
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+
+    </style>
+    <div class="container">
+    {{/if}}
+
     {{#if eventExists}}
+
         {{#with event}}
 
-        <div class="page-header">
-            <span class="pull-right" style="font-size: 23px">
-            {{#if hashtag}}
-            <small>twitter: <b>#{{hashtag}} #ask</b></small><br>
-            {{/if}}
+        {{#if oniPhone}}
+            <div class="page-header jumbotron">
+                <h2>{{name}} </h2>
+                <p>
+                    {{#if hashtag}}
+                    <span class="badge">twitter</span> #{{hashtag}} #ask
+                    {{/if}}
 
-            <small>email: <b><a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a></b></small><br>
+                    <span class="badge">email</span> <a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a>
 
-            {{#if showPhone}}
-            <small>phone: <b>{{phone}}</b></small>
-            <br>
-            {{/if}}
-            </span>
+                    {{#if showPhone}}
+                    <span class="badge">phone</span> {{phone}}
+                    {{/if}}
 
-            <h1>{{name}} </h1>
-            <span class="pull-left">
-                in {{location}} from <b>{{startdate}}</b> to <b>{{enddate}}</b>
-            </span>
-            <br>
+                </p>
 
-            {{#if description}} {{description}} {{/if}}
+                {{> questionCreate}}
+            </div>
+        {{else}}
+            <div class="page-header">
+                <h1>{{name}} </h1>
+                <span class="pull-left">
+                    in {{location}} from <b>{{startdate}}</b> to <b>{{enddate}}</b>
+                </span>
+                <br>
+                {{#if description}} {{description}} {{/if}}
+                <p>
+                    {{#if hashtag}}
+                    <span class="badge">twitter</span> #{{hashtag}} #ask
+                    {{/if}}
 
+                    <span class="badge">email</span> <a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a>
 
-        </div>
+                    {{#if showPhone}}
+                    <span class="badge">phone</span> {{phone}}
+                    {{/if}}
 
-        {{> questionCreate}}
+                </p>                
+            </div>
+        {{/if}}
+
+        {{#if oniPhone}}
+
+        {{else}}
+            {{> questionCreate}}
+        {{/if}}
 
         {{/with}}
 
@@ -473,7 +535,6 @@
         </div>
         {{/if}}
 
-
     {{else}}
         <div class="page-header">
             <h1>hmm, let's see what you've got there
@@ -483,28 +544,37 @@
         </div>
     {{/if}}
 
+    {{#if oniPhone}}
+    </div>
+    {{/if}}
 
 
 </template>
 
 <template name="questionCreate">
 <form class="form-search" id="createQuestionForm" onsubmit="return false;">
-<div class="row">
-    <div class="col-lg-8">    
-        <div class="input-group">
-          <span class="input-group-addon">Question</span>
-          <input class="form-control" name="inputQuestion" type="text" placeholder="just enter it here">
+<div class="row col-lg-12 col-12">
+    <div class="col-lg-7 col-7" {{#if onWeb}} {{else}}style="padding:0px 0px 0px 0px"{{/if}}>    
+        <div class="input-group" {{#if onWeb}} {{else}}style="width:100%"{{/if}}>
+            {{#if onWeb}}            
+            <span class="input-group-addon">Question</span>
+            <input class="form-control" name="inputQuestion" type="text" placeholder="just enter it here">
+            {{else}}
+            <input class="form-control" name="inputQuestion" type="text" placeholder="question">
+            {{/if}}
         </div>
     </div>
-    <div class="col-lg-3">    
-        <span class="pull-right">
-          <div class="input-group">
+    <div class="col-lg-3 col-3" {{#if onWeb}} {{else}}style="padding:0px 0px 0px 0px"{{/if}}>    
+      <div class="input-group" {{#if onWeb}} {{else}}style="width:125%"{{/if}}>
+            {{#if onWeb}}
             <span class="input-group-addon">Your Name</span>
-            <input class="form-control" name="inputName" type="text" placeholder="it's optional">
-          </div>
-        </span>
+            <input class="form-control" name="inputName" type="text" placeholder="completely optional">
+            {{else}}
+            <input class="form-control" name="inputName" type="text" placeholder="name (optional)">
+            {{/if}}
+      </div>
     </div>
-    <div class="col-lg-1">    
+    <div class="col-lg-2 col-2" {{#if onWeb}} {{else}}style="padding:0px 0px 0px 0px"{{/if}}>    
         <span class="pull-right">
             <button id="createQuestionFormSubmitButton" type="submit" class="btn btn-default btn-primary">Ask!</button>
         </span>

@@ -93,8 +93,20 @@ Meteor.Router.add({
     },
 
     '/:id': function(id) {
+        var useragent = navigator.userAgent;
+        var oniPhone = false;
+        var oniPad = false;
+        if (useragent.match(/iPhone/) != null) {
+            oniPhone = true;
+        } else if (useragent.match(/iPad/) != null) {
+            oniPad = true;
+        } 
+
+        SessionAmplify.set('oniPhone', oniPhone);
+        SessionAmplify.set('oniPad', oniPad);
+                
         Session.set("slug", id);
-//        Session.set("current_page", 'eventView');
+        Session.set("current_page", 'eventView');
         return 'eventView';
     },
 

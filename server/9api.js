@@ -3,6 +3,10 @@ Meteor.Router.add('/robots.txt', 'GET', function(id) {
   return [200, 'User-agent: *'];
 });
 
+Meteor.Router.add('/api', 'GET', function() {
+	return [200, 'User-agent: *'];
+});
+
 Meteor.Router.add('/api/twiml/voice', 'POST', function() {
 	var rawIn = this.request.body;
 	console.log(rawIn);
