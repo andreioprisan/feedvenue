@@ -199,6 +199,10 @@ App.eventCreateSubmit = function () {
     $.each($('#createEventForm').serializeArray(), function() {
         form[this.name] = this.value;
     });
+    if (!form.inputHashtag) {
+    	form.inputHashtag = null;
+    }
+    
 	form.inputPrivate = $('#createEventForm #inputPrivate').is(':checked');
 	form.inputAnonymous = $('#createEventForm #inputAnonymous').is(':checked');
 	form.inputPhone = $('#createEventForm #inputPhone').is(':checked');
@@ -466,8 +470,11 @@ App.login = function () {
 				    SessionAmplify.set('eventCreateEventsLimit', res.events);
 				    SessionAmplify.set('planName', res.name);
 				    SessionAmplify.set('planId', res.name);
+
 				    SessionAmplify.set('planBranding', res.branding);
 				    SessionAmplify.set('planSupport', res.support);
+				    SessionAmplify.set('planTwitter', res.twitter);
+				    SessionAmplify.set('planSentiment', res.sentiment);
 
 					Meteor.Router.to("/users/"+Meteor.user()._id+"");
 				});

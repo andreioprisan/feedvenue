@@ -2,13 +2,6 @@ Meteor.startup(function () {
 	twilio = Twilio('ACfb2eee13019a12826319cf09bba4d700','129da8b9d79d701ff9d5eb72ca7cac41');
     process.env.MAIL_URL = "smtp://postmaster%40feedvenue.com:562jnvpdtdj9@smtp.mailgun.org:587";
 
-	Twit = new TwitMaker({
-	    consumer_key:         "ePyFlWIUz7gRBpfF5kFbEA"
-	  , consumer_secret:      "GZn1ex9LVWnhWkTeHsXXPoCSW3s95dfbo81Llghk3k"
-	  , access_token:         "1639391858-EtMgrDFWpXN9ilPyUpHAXT9Fv08IfkAgLZJFUe7"
-	  , access_token_secret:  "XLSFb1USOnpb05uzU0g3y5bkUHReuXvRVSrUBsDY"
-	});
-
 	Plans = new Meteor.Collection("Plans");
 	Customers = new Meteor.Collection("Customers");
 

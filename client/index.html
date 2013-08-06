@@ -35,9 +35,20 @@
             <div id="footer">
                 <footer>
                     <div class="container">
-                        <span class="pull-right"><a href="mailto:contact@feedvenue.com">contact us</a></span>
+                        <span class="pull-right">
+                            <a href="mailto:contact@feedvenue.com">contact us</a>
+                        </span>
                         <span class="pull-left">
+                            <center>
+                                <h5>
+                                <a href="/page/what">what</a> |
+                                <a href="/page/features">features</a> |
+                                <a href="/page/plans">plans</a> |
+                                <a href="/page/publicevents">public events</a>
+                                </h5>
+                            </center>
                             &copy; <strong>feedvenue LLC</strong> 2013
+                            
                         </span>
                     </div>
                 </footer>
@@ -75,7 +86,7 @@
 
             {{#if currentUser }}
 
-            <li class="{{ TabActive 'dashboard'}}"><a href="/users/{{_id}}">Dashboard</a></li>
+            <li class="pull-right {{ TabActive 'dashboard'}}"><a href="/users/{{_id}}">Dashboard</a></li>
 
             {{else}}
 
@@ -295,7 +306,7 @@
     <ul class="nav pull-right">
         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, {{ name }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <li><a href="/users/{{ id }}/edit"><i class="icon-cog"></i> Edit Contact Info</a></li>
+                <li><a href="/users/{{ id }}/edit"><i class="icon-cog"></i> Account</a></li>
                 <li class="divider"></li>
                 <li><a href="/logout"><i class="icon-off"></i> Logout</a></li>
             </ul>
@@ -540,29 +551,35 @@
                 </div>
             </div>
             <div class="col-lg-3">    
+                {{#with planFeatures}}
+
+                {{#if eventCreateTwitter}}
+
                 <span class="pull-right">
                   <div class="input-group">
                     <span class="input-group-addon">Hashtag</span>
                     <input class="form-control" name="inputHashtag" type="text" placeholder="to watch for on Twitter">
                   </div>
                 </span>
+                {{/if}}
+
+                {{/with}}
             </div>
         </div>
 
         <br>
 
-
         <div class="row">
             <div class="col-lg-2">    
                 <div class="input-group">
                   <span class="input-group-addon">From</span>
-                  <input class="form-control datePicker" name="inputStartDate" type="text" placeholder="mm/dd/yy" value="{{startDateDefault}}">
+                  <input class="form-control datePicker" name="inputStartDate" type="text" placeholder="mm/dd/yy" value="{{startDateDefault}}" style="width: 60%">
                 </div>
             </div>
             <div class="col-lg-2">    
                 <div class="input-group">
                   <span class="input-group-addon">To</span>
-                  <input class="form-control datePicker" name="inputEndDate" type="text" placeholder="mm/dd/yy"  value="{{endDateDefault}}">
+                  <input class="form-control datePicker" name="inputEndDate" type="text" placeholder="mm/dd/yy"  value="{{endDateDefault}}" style="width: 60%">
                 </div>
             </div>
 
@@ -652,21 +669,12 @@
 
 
 <template name="editProfile">
-    <br>
     {{#with user}}
 
-    <div class="row-fluid">
-        <div class="col-lg-10">
-            <h3>Edit Contact Info</h3>
-        </div>
-        <div class="col-lg-2 pull-right action">
-            <a href="/users/{{_id}}" class='btn btn-primary btn-block'>Back to Dashboard</a>
-        </div>
-    </div>
-
-    <div class="spacer"></div>
+    <div class="page-header">
+        <h1>account <small>personal information and settings</small>
+    </h1>
     <hr>
-
 
     <form id="editProfileForm" name="editProfileForm">
         <div class="control-group">
@@ -732,19 +740,7 @@
 </template>
 
 
-
-<!-- Signup -->
-<template name="signup">
-<div class="col-lg-12">
-    <h3>
-        Sign up for a new account
-        <p class="pull-right"><small>Already have an account? <a href="/login">Login</a></small></p>
-    </h3>
-    
-    <hr>
-
-    <form id="signupForm" name="signupForm" method="post">
-
+<template name="personalInfoForm">
     <div class="panel">
         <div class="panel-heading"><h3 class="panel-title">Personal Information</h3></div>
         <p>
@@ -779,22 +775,24 @@
                     </div>
                 </div>
             </div>
-
-    </p>
+        </p>
     </div>
+</template>
 
+<template name="planSelect">
     <div class="panel">
         <div class="panel-heading"><h3 class="panel-title">Select your Plan</h3></div>
         <p>
             <select class="form-control" name="plan" id="plan" class="col-lg-3">
-              <option value="0" {{ signup_plan "0"}}>free</option>
-              <option value="1" {{ signup_plan "1"}}>growth</option>
-              <option value="2" {{ signup_plan "2"}}>enterprise</option>
+              <option value="0" {{ signup_plan "0"}}>free - $0/month (no credit card required)</option>
+              <option value="1" {{ signup_plan "1"}}>growth - $25/month</option>
+              <option value="2" {{ signup_plan "2"}}>enterprise - $100/month</option>
             </select>
         </p>
     </div>
+</template>
 
-
+<template name="planPaymentInfo">
 
     <div class="panel {{ show_signup_plan_payment_section }}" id="paymentInfo">
         <div class="panel-heading"><h3 class="panel-title">Payment Information</h3></div>
@@ -836,8 +834,23 @@
 
         </p>
     </div>
+</template>
 
-    <button class="btn btn-success btn-large pull-right" type="submit" id="createUser" data-loading-text="Creating your account">create account</button>
+<!-- Signup -->
+<template name="signup">
+<div class="col-lg-12">
+    <h3>
+        Sign up for a new account
+        <p class="pull-right"><small>Already have an account? <a href="/login">Login</a></small></p>
+    </h3>
+    
+    <hr>
+
+    <form id="signupForm" name="signupForm" method="post">
+        {{> personalInfoForm}}
+        {{> planSelect}}
+        {{> planPaymentInfo}}
+        <button class="btn btn-success btn-large pull-right" type="submit" id="createUser" data-loading-text="Creating your account">create account</button>
     </form>
 
 </div>

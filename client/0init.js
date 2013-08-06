@@ -54,64 +54,6 @@ Stripe.setPublishableKey(stripe_public);
 
 if (Meteor.is_client) {
     Meteor.startup(function () {
-		$('.eventCreatePrivate').popover(
-			{	animation: true, 
-				html: true, 
-				placement: 'top', 
-				trigger: "hover", 
-				title: "Private", 
-				content: "Only those with the event web address can access the event. <br>Do not include this event in the searchable event roster on feedvenue.com."
-			}
-		);
-
-
-		$('.eventCreateAnonymous').popover(
-			{	animation: true, 
-				html: true, 
-				placement: 'top', 
-				trigger: "hover", 
-				title: "Anonymous", 
-				content: "Ensure 100% anonymity for all web, mobile, email, phone and SMS question submissions. <br>No user origin data will be stored nor exposed in any way."
-			}
-		);
-
-
-		$('.eventCreateEmail').popover(
-			{	animation: true, 
-				html: true, 
-				placement: 'top', 
-				trigger: "hover", 
-				title: "Email Input", 
-				content: "Allow participants to submit multiple questions at the same time through one email.<br>You will get a dedicated event email address."
-			}
-		);
-
-		$('.eventCreatePhone').popover(
-			{	animation: true, 
-				html: true, 
-				placement: 'top', 
-				trigger: "hover", 
-				title: "Phone (Voicemail)", 
-				content: "Allow participants to call in with their questions. <br>FeedVenue with automatically transcribe from voice to text and submit the question to your event.<br>You will get a dedicated event phone number."
-			}
-		);
-
-		$('.eventCreateSMS').popover(
-			{	animation: true, 
-				html: true, 
-				placement: 'top', 
-				trigger: "hover", 
-				title: "SMS (Text Messages)", 
-				content: "Allow participants to quickly provide their input through text message. <br>Expand your event feedback pool to those with traditional phones.<br>You will get a dedicated event phone number."
-			}
-		);
-
-
-		$('.datePicker').datepicker({
-		    format: "mm/dd/yy",
-		    autoclose: true,
-		    todayHighlight: true
-		});
-
+		
     });
 }

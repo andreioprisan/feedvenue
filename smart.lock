@@ -10,8 +10,7 @@
       "spiderable-404": {},
       "external-file-loader": {},
       "momentjs": {},
-      "twilio-meteor": {},
-      "twit": {}
+      "twilio-meteor": {}
     },
     "packages": {
       "router": {
@@ -58,11 +57,6 @@
         "git": "http://github.com/andreioprisan/twilio-meteor.git",
         "tag": "v1.0.1",
         "commit": "fcf6349618c204105cd058ed1fb793f169d1505c"
-      },
-      "twit": {
-        "git": "https://github.com/subhog/meteor-twit.git",
-        "tag": "v0.1.0",
-        "commit": "02ac07c43ac66e5c07e77a579b38d4595ff7bf9d"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

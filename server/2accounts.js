@@ -133,7 +133,7 @@ Meteor.methods({
 				    			anonymous: data.inputAnonymous,
 				    			phone: data.inputPhone,
 				    			sms: data.inputSMS,
-				    			email: data.inputEmail,
+				    			email: data.inputEmail
 				    		},
 				    		phone: purchasedNumber.friendly_name
 				    	};
