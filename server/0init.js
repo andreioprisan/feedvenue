@@ -25,6 +25,14 @@ Meteor.startup(function () {
 		Plans.insert({name: "custom", id: 9, questions: -1, events: -1, voicemail: 1, sms: 1, twitter: 1, topics: 1, sentiment: 1, email: 1, branding: 1, support: 1});
 	}
 
+	Meteor.publish("myPlanData", function () {
+		var planId = parseInt(Customers.findOne({owner: this.userId}).planId);
+		return Plans.find({id: planId});
+		console.log(a);
+		console.log(a.fetch());
+		return a.fetch();
+	});
+
 	Meteor.publish("EventsStream", function () {
 	  return Events.find();
 	});	
@@ -90,7 +98,7 @@ Meteor.startup(function () {
 	});
 
 	Meteor.publish("Questions", function () {
-	  return Questions.find();
+	  return Questions.find({}, {fields: {a: 1, d: 1, q: 1, r: 1, s: 1, slug: 1}});
 	});	
 
 	Questions.allow({
@@ -99,10 +107,10 @@ Meteor.startup(function () {
 	    return (userId && doc.owner === userId);
 	  },
 	  update: function (userId, doc, fields, modifier) {
-	  	return true;
+	  	return (userId && doc.owner === userId);
 	  },
 	  remove: function (userId, doc) {
-	    return true;
+	    return (userId && doc.owner === userId);
 	  },
 	  fetch: ['owner']
 	});	

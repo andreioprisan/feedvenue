@@ -211,6 +211,12 @@ App.eventCreateSubmit = function () {
 	    	if (!error) {
 			    Meteor.call('eventCreatePhoneSave', eventCreatePhoneRes, function(error, res) {
 			    	if (!error) {
+					    Session.set('eventsLeft', res);
+			            if (res <= 0) {
+			                Session.set('exceededEvents', true);
+			            } else {
+			                Session.set('exceededEvents', false);                   
+			            }
 						Meteor.Router.to("/event/list");
 			    	}
 			    });
@@ -227,6 +233,12 @@ App.eventCreateSubmit = function () {
 	} else {
 	    Meteor.call('eventCreate', form, function(error, res) {
 	    	if (!error) {
+	            Session.set('eventsLeft', res);
+	            if (res <= 0) {
+	                Session.set('exceededEvents', true);
+	            } else {
+	                Session.set('exceededEvents', false);                   
+	            }
 				Meteor.Router.to("/event/list");
 	    	} else {
 				$("#createEventForm #createEventFormSubmitButton").button('reset');
@@ -413,7 +425,7 @@ App.signupHandleSubmit = {
 
 
 /*==========  LOGIN  ==========*/
-
+var getPlanDetails = null;
 App.login = function () {
 	var username = $("#usernameLogin").val();
 	var password = $("#passwordLogin").val();
@@ -438,8 +450,16 @@ App.login = function () {
 
 			$("#login").button('reset');
 		} else {
-			Meteor.Router.to("/users/"+Meteor.user()._id+"");
-	        Session.set('uid', Meteor.user()._id);
+	        Meteor.call('getLeftoverEventsCount', function(error, res) {
+			    Session.set('eventsLeft', res);
+	            if (res <= 0) {
+	                Session.set('exceededEvents', true);
+	            } else {
+	                Session.set('exceededEvents', false);                   
+	            }
+
+				Meteor.Router.to("/users/"+Meteor.user()._id+"");
+	        });
 		}
 	});
 }

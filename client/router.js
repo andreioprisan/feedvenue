@@ -34,7 +34,6 @@ Meteor.Router.add({
             if(error) {
                 alert("Could not logout!")
             } else {
-                Session.set('uid', null);
                 Meteor.Router.to("/");        
             }
 

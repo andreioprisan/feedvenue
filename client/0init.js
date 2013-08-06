@@ -11,9 +11,8 @@ Emails = new Meteor.Collection("Emails");
 Meteor.subscribe("Emails");
 
 Events = new Meteor.Collection("Events");
-Meteor.subscribe("Events");
-
 EventsStream = Events;
+Meteor.subscribe("Events");
 Meteor.subscribe("EventsStream");
 
 Phone = new Meteor.Collection("Phone");
@@ -24,13 +23,6 @@ Meteor.subscribe("SMS");
 
 Questions = new Meteor.Collection("Questions");
 Meteor.subscribe("Questions");
-
-if (Meteor.userId() != null && Session.get('uid') == null) {
-	Session.set('uid', Meteor.userId());
-	console.log(Session.get('uid'));
-}
-
-thisEvent = null;
 
 if (window.location.hostname == "feedvenue.com" || 
 	window.location.hostname == "www.feedvenue.com" ||
@@ -49,10 +41,6 @@ Stripe.setPublishableKey(stripe_public);
 
 if (Meteor.is_client) {
     Meteor.startup(function () {
-
-		haveUpvoted = {};
-		haveDownvoted = {};
-
 		$('.eventCreatePrivate').popover(
 			{	animation: true, 
 				html: true, 

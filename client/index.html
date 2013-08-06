@@ -1,11 +1,15 @@
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />    
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />    
+
     <title>FeedVenue - real-time event feedback</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/app/base.css">
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/feedvenue.js"></script>
+    <script type="text/javascript" src="/js/feedvenue.js"></script>    
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/app/base.css" />
     <meta name="fragment" content="!">
 </head>
 
@@ -31,9 +35,10 @@
             <div id="footer">
                 <footer>
                     <div class="container">
-                        <p class="muted credit pull-left">
-                            &copy; <strong>feedvenue LLC</strong> 2013 <a href="mailto:contact@feedvenue.com">contact us</a>
-                        </p>
+                        <span class="pull-right"><a href="mailto:contact@feedvenue.com">contact us</a></span>
+                        <span class="pull-left">
+                            &copy; <strong>feedvenue LLC</strong> 2013
+                        </span>
                     </div>
                 </footer>
 
@@ -279,7 +284,12 @@
 <template name="dashboard">
     <div class="page-header">
         <h1>events <small>all in one place</small>
-          <a class="btn btn-primary btn-large col-lg-1 pull-right" type="button" href="/event/create">New</a>
+            {{#if hasExceededEventsLimit}}
+            <a class="btn btn-primary btn-large col-lg-1 pull-right disabled exceededEventsLimitTooltip" type="button" href="/event/create">New</a>
+            {{else}}
+            <a class="btn btn-primary btn-large col-lg-1 pull-right" type="button" href="/event/create">New</a>
+            {{/if}}
+
         </h1>
     </div>
 
@@ -289,7 +299,8 @@
             <thead>
               <tr>
                 <th>Event Name</th>
-                <th>?</th>
+                <th>URL</th>
+                <th>Questions</th>
                 <th>Location</th>
                 <th>From</th>
                 <th>To</th>
@@ -303,6 +314,7 @@
             {{#each eventsList}}
             <tr>
                 <td><a href="/{{slug}}">{{name}}</a></td>
+                <td><a href="http://feedvenue.com/{{slug}}">http://feedvenue.com/{{slug}}</a></td>
                 <td>{{questions}}</td>
                 <td>{{location}}</td>
                 <td>{{startdate}}</td>
@@ -329,25 +341,28 @@
         {{#with event}}
 
         <div class="page-header">
-            <h1>{{name}} 
-                <span class="pull-right">
-                    <small>in {{location}} from <b>{{startdate}}</b> to <b>{{enddate}}</b></small>
-                </span>
-            </h1>  
+            <span class="pull-right" style="font-size: 23px">
+            {{#if hashtag}}
+            <small>twitter: <b>#{{hashtag}} #ask</b></small><br>
+            {{/if}}
+
+            <small>email: <b><a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a></b></small>
+
+            {{#if showPhone}}
+            <small>phone: <b>{{phone}}</b></small>
+            <br>
+            {{/if}}
+            </span>
+
+            <h1>{{name}} </h1>
+            <span class="pull-left">
+                in {{location}} from <b>{{startdate}}</b> to <b>{{enddate}}</b>
+            </span>
+            <br>
 
             {{#if description}} {{description}} {{/if}}
 
-            <span class="pull-right" style="font-size: 23px">
-            {{#if hashtag}}
-                <small>twitter: <b>#{{hashtag}} #ask</b></small>
-                {{/if}}
 
-                <small>email: <b><a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a></b></small>
-
-                {{#if showPhone}}
-                <small>phone: <b>{{phone}}</b></small>
-                {{/if}}
-            </span>
         </div>
 
         {{> questionCreate}}
@@ -496,7 +511,9 @@
                 </div>
             </div>
 
+            {{#with planFeatures}}
 
+            {{#if private}}
             <div class="col-lg-1">    
                 <div class="input-group" style="width:80%">
                   <span class="input-group-addon">
@@ -507,6 +524,8 @@
                   </span>
                 </div>
             </div>
+            {{/if}}
+
             <div class="col-lg-2">    
                 <div class="input-group">
                   <span class="input-group-addon">
@@ -517,7 +536,6 @@
                   </span>
                 </div>
             </div> 
-
 
             <div class="col-lg-1">    
                 <div class="input-group">
@@ -530,6 +548,7 @@
                 </div>
             </div> 
 
+            {{#if voicemail}}
             <div class="col-lg-1">    
                 <div class="input-group">
                   <span class="input-group-addon">
@@ -540,7 +559,9 @@
                   </span>
                 </div>
             </div> 
+            {{/if}}
 
+            {{#if sms}}            
             <div class="col-lg-1">    
                 <div class="input-group">
                   <span class="input-group-addon">
@@ -551,13 +572,24 @@
                   </span>
                 </div>
             </div> 
+            {{/if}}
 
+            {{/with}}
         </div>
+    
+        <span class="pull-right">
+            <button id="createEventFormSubmitButton" type="submit" class="btn btn-default btn-primary">create</button>
+        </span>
+        <br>
 
-    <span class="pull-right">
-        <button id="createEventFormSubmitButton" type="submit" class="btn btn-default btn-primary">Sign Up</button>
-    </span>
-    <br>
+        {{#with planFeatures}}
+        {{#if private}}
+        {{else}}
+        <div class="alert alert-info col-lg-8">
+        Note: this event will be included in the public event catalog. If you wish to create private events, upgrade your plan.
+        <div>
+        {{/if}}
+        {{/with}}
 
     </form>
 

@@ -103,17 +103,38 @@ Template.editProfile.rendered = function() {
     App.myValidation (App.editProfileRules, App.editProfileMessages, App.editProfileForm, App.messagePlacement, App.editProfileHandleSubmit);
 };
 
+function setLefteventCount() {
+    Meteor.call('getLeftoverEventsCount', this._id, function(error, res) {
+        Session.set('eventsLeft', res);
+        if (res <= 0) {
+            Session.set('exceededEvents', true);
+        } else {
+            Session.set('exceededEvents', false);                   
+        }
+    });    
+}
 
 Template.dashboard.events({
     "click .deleteEvent": function(event){
         event.preventDefault();    
-        var eventId = this._id;
-        if (eventId) {
-            Events.remove(eventId);
-        }
+        Meteor.call('eventDelete', this._id, function(error, res) {
+            Session.set('eventsLeft', res);
+            if (res <= 0) {
+                Session.set('exceededEvents', true);
+            } else {
+                Session.set('exceededEvents', false);                   
+            }
+        });
     },
-
 });
+
+Template.eventCreate.planFeatures = function() {
+    if (Meteor.userId() && Meteor.hasOwnProperty('user') && Meteor.user().hasOwnProperty('profile')) {
+        return Plans.findOne({id: parseInt(Meteor.user().profile.plan)});
+    } else {
+        return Plans.findOne({id: 0});
+    }
+}
 
 Template.eventCreate.startDateDefault = function() {
     return moment().format("MM/DD/YY");
@@ -129,44 +150,45 @@ Template.eventCreate.rendered = function() {
 
 Template.dashboard.helpers({
     eventsList: function () {
+        setLefteventCount();
         if (Meteor.user() != undefined)
-            return Events.find({owner: Session.get('uid')});
+            return Events.find({owner: Meteor.userId()});
         else
             return null;
     },
     hasEventsList: function () {
         if (Meteor.user() != undefined)
-            return Events.find({owner: Session.get('uid')}).count() > 0;
+            return Events.find({owner: Meteor.userId()}).count() > 0;
         else
             return null;
     },
+    planDetails: function() {
+        Meteor.call('getPlanDetails', function(error, res) {
+            return res;
+        });
+    },    
+    hasExceededEventsLimit: function () {
+        return Session.get('exceededEvents');
+    }
 });
 
 Template.eventView.events({
     "click .deleteQuestion": function(event){
         event.preventDefault();
-        var id = this._id;
-        if (id) {
-            Questions.remove(id);
-            Events.update(Session.get("eventId"), {$inc: {questions: -1}});
-        }
+        Meteor.call('questionDelete', this._id, Session.get("eventId"));
     },
     "click .upvote": function(event){
         event.preventDefault();
-        var id = this._id;
-
-        if (id && haveUpvoted[id] != true) {
-            Questions.update(id, {$inc: {r: 1}});
-            haveUpvoted[id] = true;
+        if (!Session.get("up"+this._id)) {
+            Session.set("up"+this._id, true);
+            Meteor.call('questionUpvote', this._id);
         }
     },
     "click .downvote": function(event){
         event.preventDefault();
-        var id = this._id;
-
-        if (id && haveDownvoted[id] != true) {
-            Questions.update(id, {$inc: {r: -1}});
-            haveDownvoted[id] = true;
+        if (!Session.get("down"+this._id)) {
+            Session.set("down"+this._id, true);
+            Meteor.call('questionDownvote', this._id);
         }
     }    
 });
@@ -194,7 +216,6 @@ Template.eventView.helpers({
     },
     questions: function() {
         var questions = Questions.find({slug: Session.get("slug")}, {sort: {r: -1, d: -1}});
-        Session.set('votes', questions.count()*2);
         return questions;
     },
     questionsExist: function() {
@@ -206,12 +227,8 @@ Template.eventView.helpers({
         }
     },
     isAdministrator: function() {
-        if (Session.get('uid') == Meteor.userId()) {
-            if (EventsStream.findOne({slug: Session.get("slug")}).owner == Session.get('uid')) {
-                return true;
-            } else {
-                return false;
-            }
+        if (EventsStream.findOne({slug: Session.get("slug")}).owner == Meteor.userId()) {
+            return true;
         } else {
             return false;
         }
@@ -231,32 +248,29 @@ Template.dashboard.planName = function() {
 };
 
 function getPlanName(id) {
-    var plan = Plans.find({id: parseInt(id)}).fetch();
-    if (plan.length == 0) {
+    var plan = Plans.find({id: parseInt(id)});
+    if (plan.count() == 0) {
         return "free";
     } else {
-        return plan[0].name+" at $"+plan[0].cost+"/month";
+        return plan.name;
     }
 }
 
 Template.loggedin_header.helpers({
     name: function() {
-        if (Session.get('uid')) {
-            var profile = Meteor.user().profile;
-            return profile.name;
-        } else {
-            return null;
-        }
+        var profile = Meteor.user().profile;
+        return profile.name;
     },
 
     id: function() {
-        return Session.get('uid');
+        return Meteor.userId();
     }
+
 });
 
 Template.header.helpers({
     name: function() {
-        if (Session.get('uid')) {
+        if (Meteor.userId()) {
             var profile = Meteor.user().profile;
             return profile.name;
         } else {
@@ -265,7 +279,7 @@ Template.header.helpers({
     },
 
     _id: function() {
-        return Session.get('uid');
+        return Meteor.userId();
     }
 });
 

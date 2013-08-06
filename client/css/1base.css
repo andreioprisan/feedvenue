@@ -77,3 +77,7 @@ text-align: center;
 .navbar .nav > li.active > a, .navbar .nav > li.active {
   background-color: transparent;
 }
+
+.exceededEventsLimitTooltip {
+  
+}

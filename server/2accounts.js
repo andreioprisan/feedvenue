@@ -161,6 +161,11 @@ Meteor.methods({
 		if (data.phone) {
 			Phone.insert(data.phone);
 		}
+
+		var currentEventsCreated = Events.find({owner: this.userId}).count();
+		var userDetails = Customers.findOne({owner: this.userId});
+		var planDetails = Plans.findOne({id: parseInt(userDetails.planId)});
+		return  planDetails.events - currentEventsCreated;
     },
     eventCreate: function (data) {
 		var slug = Random.id().substr(0,4).toLowerCase();
@@ -184,10 +189,66 @@ Meteor.methods({
 	    		phone: "not available"
 	    	};
 		Events.insert(eventDetails);
+
+        var currentEventsCreated = Events.find({owner: this.userId}).count();
+    	var userDetails = Customers.findOne({owner: this.userId});
+        var planDetails = Plans.findOne({id: parseInt(userDetails.planId)});
+		return  planDetails.events - currentEventsCreated;		
     },
     questionCreate: function (data) {
-    	Questions.insert({q: data.inputQuestion, a: data.inputName, d: moment().format('MM/DD/YY h:mm A'), st: 'active', s: data.source, r: 0, slug: data.slug});
-        Events.update({slug: data.slug}, {$inc: {questions: 1}});
-    }   
+    	var ownerId = Events.find({slug: data.slug}).fetch()[0].owner;
+    	if (ownerId) {
+	    	Questions.insert({
+	    		q: data.inputQuestion, 
+	    		a: data.inputName, 
+	    		owner: ownerId, 
+	    		d: moment().format('MM/DD/YY h:mm A'), 
+	    		st: 'active', 
+	    		s: data.source, 
+	    		r: 0, 
+	    		slug: data.slug
+	    	});
+	        Events.update({slug: data.slug}, {$inc: {questions: 1}});
+    	}
+    },
+	questionUpvote: function (questionId) {
+        Questions.update(questionId, {$inc: {r: 1}});
+    },
+	questionDownvote: function (questionId) {
+        Questions.update(questionId, {$inc: {r: -1}});
+    },
+	questionDelete: function (questionId, eventId) {
+        Questions.remove(questionId);
+        Events.update(eventId, {$inc: {questions: -1}});
+    },
+    hasExceededEventsLimit: function() {
+    	var userDetails = Customers.findOne({owner: this.userId});
+        var planDetails = Plans.findOne({id: parseInt(userDetails.planId)});
+        var eventsLimit = planDetails.events;
+    	
+    	if (Events.find({owner: this.userId}).count() >= eventsLimit)
+    		return true;
+    	else 
+    		return false;
+	},
+	getCurrentPlan: function() {
+    	var userDetails = Customers.findOne({owner: this.userId});
+        var planDetails = Plans.findOne({id: parseInt(userDetails.planId)});
+        return planDetails;
+	},
+	eventDelete: function(eventId) {
+        Events.remove(eventId);
+
+        var currentEventsCreated = Events.find({owner: this.userId}).count();
+    	var userDetails = Customers.findOne({owner: this.userId});
+        var planDetails = Plans.findOne({id: parseInt(userDetails.planId)});
+		return  planDetails.events - currentEventsCreated;
+	},
+	getLeftoverEventsCount: function() {
+        var currentEventsCreated = Events.find({owner: this.userId}).count();
+    	var userDetails = Customers.findOne({owner: this.userId});
+        var planDetails = Plans.findOne({id: parseInt(userDetails.planId)});
+		return  planDetails.events - currentEventsCreated;		
+	}
   });
 
