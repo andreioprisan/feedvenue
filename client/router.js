@@ -52,26 +52,42 @@ Meteor.Router.add({
     },
 
     '/dashboard': function(id) {
+        console.log(id);
+        if (Meteor.userId() == null) {
+            Meteor.Router.to("/");
+        }
         Session.set("current_page", 'dashboard');
         return 'dashboard';
     },
 
     '/users/:id': function(id) {
+        if (Meteor.userId() == null) {
+            Meteor.Router.to("/");
+        }
         Session.set("current_page", 'dashboard');
         return 'dashboard';
     },
 
     '/users/:id/edit': function(id) {
+        if (Meteor.userId() == null) {
+            Meteor.Router.to("/");
+        }
         Session.set("current_page", 'editProfile');
         return 'editProfile';
     },
 
     '/event/create': function(id) {
+        if (Meteor.userId() == null) {
+            Meteor.Router.to("/");
+        }
         Session.set("current_page", 'eventCreate');
         return 'eventCreate';
     },
 
     '/event/list': function(id) {
+        if (Meteor.userId() == null) {
+            Meteor.Router.to("/");
+        }
         Session.set("current_page", 'dashboard');
         return 'dashboard';
     },
@@ -97,5 +113,7 @@ Meteor.Router.filters({
 });
 
 
+//Meteor.Router.filter('checkLoggedIn', {only: ['dashboard']});
 
-// Meteor.Router.filter('requireLogin', {except: ['home', 'signin', 'signup', 'about', 'terms']});
+
+//Meteor.Router.filter('requireLogin', {except: ['page/what', 'page/fea', 'signup', 'about', 'terms']});

@@ -8,6 +8,9 @@ SessionAmplify = _.extend({}, Session, {
   },
 });
 
+Session.set('exceededEvents', true);
+Session.set('eventsLeft', 0);
+
 Plans = new Meteor.Collection("Plans");
 Meteor.subscribe("Plans");
 

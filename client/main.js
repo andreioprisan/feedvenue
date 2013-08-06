@@ -149,6 +149,12 @@ Template.eventCreate.rendered = function() {
         App.myValidation (App.eventCreateRules, App.eventCreateMessages, App.eventCreateForm, App.messagePlacement, App.eventCreateHandleSubmit);    
 };
 
+Template.publicevents.helpers({
+    events: function () {
+        return Events.find({"features.private": false});
+    },
+});
+
 Template.dashboard.helpers({
     eventsList: function () {
         setLefteventCount();
