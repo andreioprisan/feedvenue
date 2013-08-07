@@ -36,7 +36,7 @@ Meteor.startup(function () {
 	});
 
 	Meteor.publish("EventsStream", function () {
-	  return Events.find();
+	  return Events.find({"features.private": false});
 	});	
 
 	Meteor.publish("Events", function () {
@@ -72,10 +72,6 @@ Meteor.startup(function () {
 	  return TwilioIn.find();
 	});
 
-	Meteor.publish("Phone", function () {
-	  return Phone.find({owner: this.userId});
-	});
-
 	Phone.allow({
 	  insert: function (userId, doc) {
 	    // the user must be logged in, and the document must be owned by the user
@@ -90,10 +86,6 @@ Meteor.startup(function () {
 	    return doc.owner === userId;
 	  },
 	  fetch: ['owner']
-	});
-
-	Meteor.publish("SMS", function () {
-	  return SMS.find({owner: this.userId});
 	});
 
 	Meteor.publish("Plans", function () {

@@ -28,12 +28,6 @@ EventsStream = Events;
 Meteor.subscribe("Events");
 Meteor.subscribe("EventsStream");
 
-Phone = new Meteor.Collection("Phone");
-Meteor.subscribe("Phone");
-
-SMS = new Meteor.Collection("SMS");
-Meteor.subscribe("SMS");
-
 Questions = new Meteor.Collection("Questions");
 Meteor.subscribe("Questions");
 
