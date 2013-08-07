@@ -30,13 +30,12 @@ Meteor.startup(function () {
 	Meteor.publish("myPlanData", function () {
 		var planId = parseInt(Customers.findOne({owner: this.userId}).planId);
 		return Plans.find({id: planId});
-		console.log(a);
-		console.log(a.fetch());
-		return a.fetch();
 	});
 
 	Meteor.publish("EventsStream", function () {
-	  return Events.find({"features.private": false});
+		// this won't work, need better solution
+//	  return Events.find({"features.private": false});
+	  return Events.find();
 	});	
 
 	Meteor.publish("Events", function () {
