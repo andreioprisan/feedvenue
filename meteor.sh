@@ -94,6 +94,7 @@ patch -u bundle/server/server.js <<'ENDPATCH'
    }).run();
 ENDPATCH
 MONGO_URL=$MONGO_URL ROOT_URL=$ROOT_URL APP_DIR=$APP_DIR PORT=81 forever start bundle/main.js PORT=81
+MONGO_URL=$MONGO_URL ROOT_URL=$ROOT_URL APP_DIR=$APP_DIR PORT=82 forever start bundle/main.js PORT=82
 popd
 ENDSSH
   echo Your app is deployed and serving on: $ROOT_URL
