@@ -1,6 +1,30 @@
 Meteor.startup(function () {
 	twilio = Twilio('ACfb2eee13019a12826319cf09bba4d700','129da8b9d79d701ff9d5eb72ca7cac41');
     process.env.MAIL_URL = "smtp://postmaster%40feedvenue.com:562jnvpdtdj9@smtp.mailgun.org:587";
+	
+	/*
+	nlp = Nlp;
+	var a = "How should web sockets be best secured";
+	var b = "What are security best practices with web sockets";
+	var NGrams = nlp.NGrams;
+
+	nlp.PorterStemmer.attach();
+
+	console.log(a.tokenizeAndStem())
+	console.log(b.tokenizeAndStem())
+
+	sentiment = Sentiment;
+	sentiment(a.tokenizeAndStem().toString(), function (err, result) {
+		console.log(result);
+	});
+	sentiment(b.tokenizeAndStem().toString(), function (err, result) {
+		console.log(result);
+	});
+
+	console.log(nlp.JaroWinklerDistance(a, b));
+	console.log(nlp.JaroWinklerDistance(b, a));
+	*/
+
 
 	Plans = new Meteor.Collection("Plans");
 	Customers = new Meteor.Collection("Customers");

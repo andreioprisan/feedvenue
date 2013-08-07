@@ -8,6 +8,8 @@
     "spiderable-404": {},
     "external-file-loader": {},
     "momentjs": {},
-    "twilio-meteor": {}
+    "twilio-meteor": {},
+    "nlp": {},
+    "sentiment": {}
   }
 }
