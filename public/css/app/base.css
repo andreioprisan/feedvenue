@@ -278,3 +278,12 @@ data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQIW2
   display: none;
 }
 
+
+.navbar-brand {
+  float: left;
+  margin-right: 5px;
+  margin-left: -15px;
+  margin-top: 0px;
+  padding-top: 9px;
+}
+
