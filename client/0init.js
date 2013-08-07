@@ -49,5 +49,6 @@ Stripe.setPublishableKey(stripe_public);
 if (Meteor.is_client) {
     Meteor.startup(function () {
 		
+
     });
 }
