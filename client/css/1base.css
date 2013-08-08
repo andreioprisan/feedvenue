@@ -35,8 +35,7 @@ body {
 }
 
 .jumbotron {
-margin: 10px 0;
-text-align: center;
+margin: 0px 0;
 }
 
 .navbar-inner {
@@ -77,4 +76,37 @@ text-align: center;
 .navbar .nav > li.active > a, .navbar .nav > li.active {
   background-color: transparent;
 }
+
+
+.bs-callout {
+margin: 0px 0;
+padding: 3px 0px 3px 15px;
+border-left: 5px solid #eee;
+}
+.bs-callout h4 {
+  margin-top: 0;
+}
+.bs-callout p:last-child {
+  margin-bottom: 0;
+}
+.bs-callout code,
+.bs-callout .highlight {
+  background-color: #fff;
+}
+
+/* Themes for different contexts */
+.bs-callout-danger {
+  background-color: #fcf2f2;
+  border-color: #dFb5b4;
+}
+.bs-callout-warning {
+  background-color: #fefbed;
+  border-color: #f1e7bc;
+}
+.bs-callout-info {
+  background-color: #f0f7fd;
+  border-color: #d0e3f0;
+}
+
+
 

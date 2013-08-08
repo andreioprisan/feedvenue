@@ -123,7 +123,17 @@
       </div>
     </div>
     {{else}}
-
+    <style>
+    #main {
+        padding: 2px 4px 2px 4px;
+    }
+    .input-group {
+        padding: 0px 0px 0px 0px;
+    }
+    .row {
+        padding: 0px 0px 0px 0px;        
+    }
+    </style>
     {{/if}}
 </template>
 
@@ -204,20 +214,29 @@
 <!-- Static Pages -->
 <template name="home">
     <div class="content col-lg-12">
-        <a class="pull-right btn btn-large btn-success" href="/signup">sign up for free</a>
-        <center>
-
-        <h1>the <span class="label">real-time</span> <span class="label label-success">social</span> <span class="label label-danger">feedback</span> platform</h1>
-        <br><br>
-            <h2>don't wonder what the audience wants to know, act on it</h2>
-            <br>
-            <h2>crowd-source questions for events from the web, social networks and mobile</h2>
-        </center>
-        <br /><br />
-
+      <div class="row">
+        <div class="col-lg-11">
+           <center>
+            <h1>the <span class="label">real-time</span> <span class="label label-success">social</span> <span class="label label-danger">feedback</span> platform</h1>
+            </center>
+        </div>
+        <div class="col-lg-1">
+            <a class="pull-right btn btn-large btn-success" href="/signup">sign up for free</a>
+        </div>
+       </div>
     </div>
     
-    
+      <div class="row">
+        <div class="col-lg-12">
+            <br><br>
+            <center>
+                    <h2>crowd-source questions for events from the web, social networks and mobile</h2>
+                    <br>
+                    <h2>don't wonder what the audience wants to know, act on it</h2>
+            </center>
+            <br><br>
+        </div>
+      </div>    
       <div class="row">
         <div class="col-lg-3">
             <div class="panel panel-info">
@@ -330,30 +349,40 @@
     <h2>public events. see what others free users are doing</h2>    
     <hr>
     {{#each events}}
-        <div class="page-header">
-            <span class="pull-right" style="font-size: 23px">
-            {{#if hashtag}}
-            <small>twitter: <b>#{{hashtag}} #ask</b></small><br>
-            {{/if}}
+        <p class="lead" style="font-size: 250%"><a href="/{{slug}}">{{name}}</a></p>
+    
+        <div class="row">
+            <div class="col-lg-8 col-8">
+                <div class="bs-callout">
+                  <h4>{{#if description}} {{description}} {{/if}}</h4>
+                  <p>in {{location}} from <b>{{startdate}}</b> to <b>{{enddate}}</b></p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-3">
+                <div class="bs-callout">
+                    <p>
 
-            <small>email: <b><a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a></b></small><br>
+                    <span class="badge">url</span> <b><a href="https://feedvenue.com/{{slug}}">https://feedvenue.com/{{slug}}</a></b>
+                    <br>
 
-            {{#if showPhone}}
-            <small>phone: <b>{{phone}}</b></small>
-            <br>
-            {{/if}}
-            </span>
+                    <span class="badge">email</span> <b><a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a></b>
+                    <br>
 
-            <h1><a href="/{{slug}}">{{name}}</a></h1>
-            <span class="pull-left">
-                in {{location}} from <b>{{startdate}}</b> to <b>{{enddate}}</b>
-            </span>
-            <br>
+                    {{#if hashtag}}
+                    <span class="badge">twitter</span> <b>#{{hashtag}} #ask</b>
+                    <br>
+                    {{/if}}
 
-            {{#if description}} {{description}} {{/if}}
+                    {{#if showPhone}}
+                    <span class="badge">phone</span> <b>{{phone}}</b>
+                    {{/if}}
+                    </p>
+                </div>
+            </div>
         </div>
+        <hr>
     {{/each}}
-    <hr>
+
     <div class="alert alert-info">Didn't mean to make your event public but are on a paying plan? Make your event private with one click in the dashboard. </div>
 </template>
 
@@ -426,9 +455,9 @@
     }
 
     .jumbotron {
-        padding: 1px 0px 45px 0px;
+        padding: 1px 0px 0px 0px;
         font-size: 13px;
-        margin-bottom: 5px;
+        margin-bottom: 2px;
         font-weight: 100;
         background-color: white;
         border-bottom: 0px;
@@ -451,49 +480,73 @@
 
         {{#with event}}
 
+
         {{#if oniPhone}}
-            <div class="page-header jumbotron">
-                <h2>{{name}} </h2>
-                <p>
-                    {{#if hashtag}}
-                    <span class="badge">twitter</span> #{{hashtag}} #ask
-                    {{/if}}
-                    <br>
-                    <span class="badge">email</span> <a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a>
-                    {{#if showPhone}}
-                    <br>
-                    <span class="badge">phone</span> {{phone}}
-                    {{/if}}
-
-                </p>
-
-                {{> questionCreate}}
-            </div>
+        <div class="navbar" style="margin-bottom: 0px;padding-left: 0px;margin-left: 0px; font-size:26px;">
+            <a href="/{{slug}}" class="navbar-brand" style="padding-top: 2px;"><img src="/img/32.png" style="height: 32px"> <a href="/{{slug}}" style="margin-left:-10px;">{{name}}</a></a>
+        </div>
         {{else}}
-            <div class="page-header">
-                <h1>{{name}} </h1>
-                <span class="pull-left">
-                    in {{location}} from <b>{{startdate}}</b> to <b>{{enddate}}</b>
-                </span>
-                <br>
-                {{#if description}} {{description}} {{/if}}
-                <p>
-                    {{#if hashtag}}
-                    <span class="badge">twitter</span> #{{hashtag}} #ask
-                    {{/if}}
+        <p class="lead" style="font-size: 250%"><a href="/{{slug}}">{{name}}</a></p>
+        {{/if}}
+    
+        <div class="row">
+            {{#if oniPhone}}
+            <div class="col-lg-12 col-12 jumbotron">
+                <div class="bs-callout" style="padding: 3px 0px 3px 5px; border-left: 0px solid #eee;">
+                  <h4>{{#if description}} {{description}} {{/if}}</h4>
+                  <p>in {{location}} from <b>{{startdate}}</b> to <b>{{enddate}}</b></p>
+                    <p>
+                    <span class="badge">url</span> <b><a href="https://feedvenue.com/{{slug}}">https://feedvenue.com/{{slug}}</a></b>
+                    <br>
 
-                    <span class="badge">email</span> <a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a>
+                    <span class="badge">email</span> <b><a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a></b>
+                    <br>
+
+                    {{#if hashtag}}
+                    <span class="badge">twitter</span> <b>#{{hashtag}} #ask</b>
+                    <br>
+                    {{/if}}
 
                     {{#if showPhone}}
-                    <span class="badge">phone</span> {{phone}}
+                    <span class="badge">phone</span> <b>{{phone}}</b>
+                    {{/if}}
+                    </p>
+                </div>
+            </div>
+
+            {{else}}
+            <div class="col-lg-8 col-8">
+                <div class="bs-callout">
+                  <h4>{{#if description}} {{description}} {{/if}}</h4>
+                  <p>in {{location}} from <b>{{startdate}}</b> to <b>{{enddate}}</b></p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-3">
+                <div class="bs-callout">
+                    <p>
+                    <span class="badge">url</span> <b><a href="https://feedvenue.com/{{slug}}">https://feedvenue.com/{{slug}}</a></b>
+                    <br>
+
+                    <span class="badge">email</span> <b><a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a></b>
+                    <br>
+
+                    {{#if hashtag}}
+                    <span class="badge">twitter</span> <b>#{{hashtag}} #ask</b>
+                    <br>
                     {{/if}}
 
-                </p>                
+                    {{#if showPhone}}
+                    <span class="badge">phone</span> <b>{{phone}}</b>
+                    {{/if}}
+                    </p>
+                </div>
             </div>
-        {{/if}}
+            {{/if}}
+        </div>
+        <br>
 
         {{#if oniPhone}}
-
+            {{> questionCreate}}
         {{else}}
             {{> questionCreate}}
         {{/if}}
@@ -513,13 +566,13 @@
             {{#each questions}}
 
             <tr>
-              <td style="width: 5%; text-align: center;">
+              <td style="width: 5%; text-align: center; {{#if oniPhone}} font-size: 170%; {{/if}}">
                 <span class="icon-chevron-up upvote" style="color: gray; font-size: 24px;" id="{{_id}}_up"></span><br>
                 <span class="questionScore" style="font-weight: bold;">{{r}}</span><br>
                 <span class="icon-chevron-down downvote" style="color: gray; font-size: 24px;" id="{{_id}}_down"></span>
               </td>
               <td><p style="font-size: 24px">{{q}}</p>
-                  asked by {{#if a}}<b>{{a}}</b>{{else}}<b>anonymous</b>{{/if}}  at <b>{{d}}</b> via <b>{{s}}</b>
+                  from {{#if a}}<b>{{a}}</b>{{else}}<b>anonymous</b>{{/if}}  at <b>{{d}}</b> via <b>{{s}}</b>
               </td>
               {{#if isAdministrator}}
               <td style="width: 5%">
@@ -566,8 +619,8 @@
     </div>
     <div class="col-lg-3 col-3">    
       <div class="input-group">
-            <span class="input-group-addon">Your Name</span>
-            <input class="form-control" name="inputName" type="text" placeholder="completely optional">
+            <span class="input-group-addon">Name</span>
+            <input class="form-control" name="inputName" type="text" placeholder="(optional)">
       </div>
     </div>
     <div class="col-lg-2 col-2" {{#if onWeb}} {{else}}style="padding:0px 0px 0px 0px"{{/if}}>    
@@ -584,10 +637,13 @@
         </div>
     </div>
     <div class=" col-12" style="padding:0px 0px 0px 0px">    
-      <div class="input-group col-9">
+      <div class="input-group col-12">
             <input class="form-control" name="inputName" type="text" placeholder="name (optional)">
+          <span class="input-group-btn">
+            <button id="createQuestionFormSubmitButton" type="button" class="btn btn-default" style="background-color: black;">Ask!</button>              
+          </span>
+
       </div>
-    <button id="createQuestionFormSubmitButton" type="submit" class="btn btn-default btn-primary col-3" style="width: 22%">Ask!</button>
     </div>
 
     {{/if}}
