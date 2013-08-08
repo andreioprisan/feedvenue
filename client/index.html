@@ -81,7 +81,7 @@
 
 <template name="header">
     {{#if onWeb}}
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-fixed-top" id="mainNavBar">
       <div class="container">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
           <col-lg- class="icon-bar"></col-lg->
@@ -339,7 +339,7 @@
     {{#if loggingIn}}
     <p class="pull-right"><strong>Logging In!</strong></p>
     {{else}}
-    <ul class="nav pull-right">
+    <ul class="nav nopadding pull-right ">
         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="/users/{{ id }}/edit"><i class="icon-cog"></i> Account</a></li>
@@ -838,6 +838,9 @@
     </h1>
     <hr>
 
+    work in progress
+
+<!--
     <form id="editProfileForm" name="editProfileForm">
         <div class="control-group">
             
@@ -862,7 +865,7 @@
             </div>
         </div>
     </form>
-
+-->
     {{/with}}
 
 </template>

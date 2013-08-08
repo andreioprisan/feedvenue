@@ -5,13 +5,28 @@
 }
 
 .navbar .nav > li {
-padding-top: 7px;
+  padding-top: 7px;
+}
+
+.nopadding{
+  padding-top: 0px;
+}
+
+.navbar .nav.nopadding > li {
+  padding-top: 0px;
 }
 
 .navbar .nav > li > a:hover {
 color: red;
 text-decoration: none;
 background-color: transparent;
+}
+
+#mainNavBar {
+  -webkit-box-shadow: 0 1px 10px rgba(0,0,0,.1);
+  -moz-box-shadow: 0 1px 10px rgba(0,0,0,.1);
+  box-shadow: 0 1px 10px rgba(0,0,0,.1);
+  max-height: 63px;
 }
 
 .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
