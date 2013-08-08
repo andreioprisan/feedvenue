@@ -96,14 +96,18 @@ Meteor.Router.add({
         var useragent = navigator.userAgent;
         var oniPhone = false;
         var oniPad = false;
+        var onAndroid = false;
         if (useragent.match(/iPhone/) != null) {
             oniPhone = true;
         } else if (useragent.match(/iPad/) != null) {
             oniPad = true;
+        } else if (useragent.match(/droid/) != null) {
+            onAndroid = true;
         } 
 
         SessionAmplify.set('oniPhone', oniPhone);
         SessionAmplify.set('oniPad', oniPad);
+        SessionAmplify.set('onAndroid', onAndroid);
                 
         Session.set("slug", id);
         Session.set("current_page", 'eventView');

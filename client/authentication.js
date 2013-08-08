@@ -297,7 +297,15 @@ App.questionCreateSubmit = function () {
         form[this.name] = this.value;
     });
     form.slug = Session.get('slug');
-    form.source = "web";
+    if (SessionAmplify.get('oniPhone')) {
+	    form.source = "iPhone";
+    } else if (SessionAmplify.get('oniPad')) {
+	    form.source = "iPad";
+    } else if (SessionAmplify.get('onAndroid')) {
+	    form.source = "iPad";
+    } else {
+	    form.source = "web";
+    }
 
 	createQuestionFormError = 0;
 
