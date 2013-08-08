@@ -377,6 +377,7 @@ App.createUserAccount = function () {
 		dataBlob.ccmonth = $("#ccMonth").val();
 		dataBlob.ccyear = $("#ccYear").val();
 		dataBlob.cczip = $("#zipCode").val();
+		dataBlob.coupon = $("#couponCode").val();
 		
 	    Meteor.call('createCustomerFromCard', dataBlob, function(error, stripe_response) {
 	    	if (!stripe_response.error) {

@@ -61,6 +61,7 @@ Meteor.methods({
     	var ccyear = data.ccyear;
     	var cczip = data.cczip;
     	var planId = data.planId;
+    	var coupon = data.coupon;
 
     	if (!planId) {
 			planId = 0;
@@ -75,6 +76,7 @@ Meteor.methods({
 		        name: name,
 		        address_zip: cczip		        
 		    },
+		    coupon: coupon,
 		    email: email,
 		    description: email,
 		    plan: planId
