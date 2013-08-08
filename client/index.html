@@ -483,7 +483,7 @@
 
         {{#if oniPhone}}
         <div class="navbar" style="margin-bottom: 0px;padding-left: 0px;margin-left: 0px; font-size:26px;">
-            <a href="/{{slug}}" class="navbar-brand" style="padding-top: 2px;"><img src="/img/32.png" style="height: 32px"> <a href="/{{slug}}" style="margin-left:-10px;">{{name}}</a></a>
+            <a href="/{{slug}}" class="navbar-brand" style="padding-top: 2px;"><img src="/img/256.png" style="height: 32px"> <a href="/{{slug}}" style="margin-left:-10px;">{{name}}</a></a>
         </div>
         {{else}}
         <p class="lead" style="font-size: 250%"><a href="/{{slug}}">{{name}}</a></p>
@@ -611,22 +611,19 @@
 <form class="form-search" id="createQuestionForm" onsubmit="return false;">
 <div class="row col-lg-12 col-12">
     {{#if onWeb}}
-    <div class="col-lg-7 col-7">    
+    <div class="col-lg-7 col-7">
         <div class="input-group">
-            <span class="input-group-addon">Question</span>
+            <span class="input-group-addon">question</span>
             <input class="form-control" name="inputQuestion" type="text" placeholder="just enter it here">
         </div>
     </div>
-    <div class="col-lg-3 col-3">    
+    <div class="col-lg-2 col-2">    
       <div class="input-group">
-            <span class="input-group-addon">Name</span>
-            <input class="form-control" name="inputName" type="text" placeholder="(optional)">
+          <input class="form-control" name="inputName" type="text" placeholder="name (optional)">
+          <span class="input-group-btn">
+            <button id="createQuestionFormSubmitButton" type="submit" class="btn btn-default" style="background-color: black;">Ask!</button>              
+          </span>
       </div>
-    </div>
-    <div class="col-lg-2 col-2" {{#if onWeb}} {{else}}style="padding:0px 0px 0px 0px"{{/if}}>    
-        <span class="pull-right">
-            <button id="createQuestionFormSubmitButton" type="submit" class="btn btn-default btn-primary">Ask!</button>
-        </span>
     </div>
 
     {{else}}
@@ -638,11 +635,10 @@
     </div>
     <div class=" col-12" style="padding:0px 0px 0px 0px">    
       <div class="input-group col-12">
-            <input class="form-control" name="inputName" type="text" placeholder="name (optional)">
+          <input class="form-control" name="inputName" type="text" placeholder="name (optional)">
           <span class="input-group-btn">
-            <button id="createQuestionFormSubmitButton" type="button" class="btn btn-default" style="background-color: black;">Ask!</button>              
+            <button id="createQuestionFormSubmitButton" type="submit" class="btn btn-default" style="background-color: black;">Ask!</button>              
           </span>
-
       </div>
     </div>
 
