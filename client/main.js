@@ -114,7 +114,7 @@ function setLefteventCount() {
     });    
 }
 
-Template.dashboard.events({
+Template.eventlist.events({
     "click .deleteEvent": function(event){
         event.preventDefault();    
         Meteor.call('eventDelete', this._id, function(error, res) {
@@ -126,6 +126,10 @@ Template.dashboard.events({
             }
         });
     },
+});
+
+Template.dashboard.events({
+
 });
 
 Template.eventCreate.planFeatures = function() {
@@ -241,6 +245,34 @@ Template.dashboard.helpers({
         Meteor.call('getPlanDetails', function(error, res) {
             return res;
         });
+    },
+    getEventsCount: function() {
+        return Events.find({owner: Meteor.userId()}).count();        
+    },
+    hasExceededEventsLimit: function () {
+        return Session.get('exceededEvents');
+    }
+});
+
+
+Template.eventlist.helpers({
+    eventsList: function () {
+        setLefteventCount();
+        if (Meteor.user() != undefined)
+            return Events.find({owner: Meteor.userId()});
+        else
+            return null;
+    },
+    hasEventsList: function () {
+        if (Meteor.user() != undefined)
+            return Events.find({owner: Meteor.userId()}).count() > 0;
+        else
+            return null;
+    },
+    planDetails: function() {
+        Meteor.call('getPlanDetails', function(error, res) {
+            return res;
+        });
     },    
     hasExceededEventsLimit: function () {
         return Session.get('exceededEvents');
@@ -339,6 +371,11 @@ Template.footer.events({
       }]);
     },
 });
+
+
+Template.eventlist.user = function() {
+    return Meteor.user();
+};
 
 Template.dashboard.user = function() {
     return Meteor.user();

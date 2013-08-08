@@ -94,7 +94,8 @@
 
             {{#if currentUser }}
 
-            <li class="pull-right {{ TabActive 'dashboard'}}"><a href="/users/{{_id}}">Dashboard</a></li>
+            <li class=" {{ TabActive 'dashboard'}}"><a href="/dashboard">Dashboard</a></li>
+            <li class=" {{ TabActive 'eventslist'}}"><a href="/event/list">Events</a></li>
 
             {{else}}
 
@@ -143,7 +144,7 @@
     <h2>plans. we have one just for you</h2><hr>
     <div class="row col-lg-12">
         <center>
-            <div class="col-lg-4 pro ">
+            <div class="col-lg-4 col-4 pro ">
                 <div class="pricing-table-header-pro">
                     <h2>free</h2>
                     <h3>Starter</h3>
@@ -159,7 +160,7 @@
                   <p><a href="/signup">Sign Up</a></p>
                 </div>
             </div>
- <div class="col-lg-4 small">
+            <div class="col-lg-4 col-4 small">
                 <div class="pricing-table-header-small">
                     <h2>$25/mo</h2>
                     <h3>Growth</h3>
@@ -178,9 +179,7 @@
                   <p><a href="/signup/1">Sign Up</a></p>
                 </div>
             </div>
-
-
-            <div class="col-lg-4 medium">
+            <div class="col-lg-4 col-4 medium">
                 <div class="pricing-table-header-medium">
                     <h2>$100/mo</h2>
                     <h3>Enterprise</h3>
@@ -204,9 +203,17 @@
             </div>
 
         </center>
-        <p>
-            <center>Need more features? <a href="mailto: contact@feedvenue.com">Contact us</a> for custom plans.</center>
-        </p>
+    </div>
+    <div class="row col-lg-12">    
+        <center>
+            <div class="alert alert-success">
+                Are you a professor or university event coordinator? 
+                <a href="mailto: contact@feedvenue.com">Contact us</a> for a free Enterprise Plan.
+            </div>
+            <div class="alert alert-info">            
+            Need more features? <a href="mailto: contact@feedvenue.com">Contact us</a> for custom plans.
+            </div>
+        </center>
     </div>
 </div>
 </template>
@@ -333,7 +340,7 @@
     <p class="pull-right"><strong>Logging In!</strong></p>
     {{else}}
     <ul class="nav pull-right">
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, {{ name }} <b class="caret"></b></a>
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="/users/{{ id }}/edit"><i class="icon-cog"></i> Account</a></li>
                 <li class="divider"></li>
@@ -388,6 +395,23 @@
 
 <template name="dashboard">
     <div class="page-header">
+        <a class="btn btn-primary btn-large col-lg-1 pull-right" type="button" href="/event/list">Manage</a>        
+        <h1><b>{{getEventsCount}}</b> event{{#if getEventsCount}}s{{/if}} <small>created so far</small></h1>
+    </div>
+
+    <div class="page-header">
+        <h1>analytics & insights <small>coming soon</small></h1>
+    </div>
+
+    <div class="page-header">
+        <h1>reports <small>coming soon</small></h1>
+    </div>
+
+
+</template>
+
+<template name="eventlist">
+    <div class="page-header">
         <h1>events <small>all in one place</small>
             {{#if hasExceededEventsLimit}}
             <a class="btn btn-primary btn-large col-lg-1 pull-right disabled exceededEventsLimitTooltip" type="button" href="/event/create">New</a>
@@ -434,6 +458,7 @@
             </tbody>
         </table>
         {{else}}
+        <br>
         <div class="alert alert-info">
             No events have been created yet. Make one by clicking the New button above!
         </div>
@@ -585,9 +610,11 @@
             </tbody>
         </table>
         {{else}}
+        <br>        
+        <br>        
         <hr>        
         <div class="alert alert-info">
-            No questions have been created yet. Make one by clicking the New button above!
+            No questions have been asked yet. Submit yours by filling out the information above!
         </div>
         {{/if}}
 
@@ -611,7 +638,7 @@
 <form class="form-search" id="createQuestionForm" onsubmit="return false;">
 <div class="row col-lg-12 col-12">
     {{#if onWeb}}
-    <div class="col-lg-7 col-7">
+    <div class="col-lg-7 col-7" style="padding: 0px 0px 0px 0px;">
         <div class="input-group">
             <span class="input-group-addon">question</span>
             <input class="form-control" name="inputQuestion" type="text" placeholder="just enter it here">

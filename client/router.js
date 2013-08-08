@@ -10,8 +10,14 @@ Meteor.Router.add({
     },
 
     '/login': function() {
-        Session.set("current_page", 'login');
-        return 'login';
+        if (Meteor.userId() != null) {
+            Meteor.Router.to("/dashboard");
+            Session.set("current_page", 'dashboard');
+            return 'dashboard';
+        } else {
+            Session.set("current_page", 'login');
+            return 'login';
+        }
     },
 
     '/signup/:plan': function(plan) {
@@ -19,14 +25,28 @@ Meteor.Router.add({
             plan = 0;
         }
         Session.set("signup_plan", plan);
-        Session.set("current_page", 'signup');
-        return 'signup';
+
+        if (Meteor.userId() != null) {
+            Meteor.Router.to("/dashboard");
+            Session.set("current_page", 'dashboard');
+            return 'dashboard';
+        } else {
+            Session.set("current_page", 'signup');
+            return 'signup';
+        }
     },
 
     '/signup': function(plan) {
         Session.set("signup_plan", 0);
-        Session.set("current_page", 'signup');
-        return 'signup';
+
+        if (Meteor.userId() != null) {
+            Meteor.Router.to("/dashboard");
+            Session.set("current_page", 'dashboard');
+            return 'dashboard';
+        } else {
+            Session.set("current_page", 'signup');
+            return 'signup';
+        }
     },
 
     '/logout': function() {
@@ -52,7 +72,6 @@ Meteor.Router.add({
     },
 
     '/dashboard': function(id) {
-        console.log(id);
         if (Meteor.userId() == null) {
             Meteor.Router.to("/");
         }
@@ -88,8 +107,8 @@ Meteor.Router.add({
         if (Meteor.userId() == null) {
             Meteor.Router.to("/");
         }
-        Session.set("current_page", 'dashboard');
-        return 'dashboard';
+        Session.set("current_page", 'eventlist');
+        return 'eventlist';
     },
 
     '/:id': function(id) {
