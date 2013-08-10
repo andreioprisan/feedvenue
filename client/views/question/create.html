@@ -1,0 +1,40 @@
+<template name="questionCreate">
+<form class="form-search" id="createQuestionForm" onsubmit="return false;">
+<div class="row col-lg-12 col-12">
+    {{#if onWeb}}
+    <div class="col-lg-7 col-7" style="padding: 0px 0px 0px 0px;">
+        <div class="input-group">
+            <span class="input-group-addon">question</span>
+            <input class="form-control" name="inputQuestion" type="text" placeholder="just enter it here">
+        </div>
+    </div>
+    <div class="col-lg-2 col-2">    
+      <div class="input-group">
+          <input class="form-control" name="inputName" type="text" placeholder="name (optional)">
+          <span class="input-group-btn">
+            <button id="createQuestionFormSubmitButton" type="submit" class="btn btn-default" style="background-color: black;">Ask!</button>              
+          </span>
+      </div>
+    </div>
+
+    {{else}}
+
+    <div class=" col-12" style="padding:0px 0px 0px 0px">    
+        <div class="input-group col-12" style="width:100%">
+            <input class="form-control" name="inputQuestion" type="text" placeholder="question">
+        </div>
+    </div>
+    <div class=" col-12" style="padding:0px 0px 0px 0px">    
+      <div class="input-group col-12">
+          <input class="form-control" name="inputName" type="text" placeholder="name (optional)">
+          <span class="input-group-btn">
+            <button id="createQuestionFormSubmitButton" type="submit" class="btn btn-default" style="background-color: black;">Ask!</button>              
+          </span>
+      </div>
+    </div>
+
+    {{/if}}
+
+</div>
+</form>
+</template>

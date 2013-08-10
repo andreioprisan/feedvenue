@@ -1,0 +1,30 @@
+<template name="login">
+<div class="col-lg-12">
+    <h3>
+        Login to your account
+        <p class="pull-right"><small>New user? <a href="/signup">Sign up now!</a></small></p>
+    </h3>
+
+    <hr>
+
+    <form id="loginForm" name="loginForm" method="post">
+
+    <div class="panel col-lg-12">
+        <div class="panel-heading"><h3 class="panel-title">What are your login credentials?</h3></div>
+        <p>
+            <div class="input-group col-lg-1"></div>
+            <div class="input-group col-lg-4">
+              <span class="input-group-addon">email</span>
+              <input type="text" class="form-control" id="usernameLogin" name="usernameLogin" placeholder="something@something.com">
+            </div>
+            <div class="input-group col-lg-4">
+              <span class="input-group-addon">password</span>
+              <input type="password" class="form-control" id="passwordLogin" name="passwordLogin">
+            </div>
+            <button id="login" class="btn btn-success btn-large pull-right  col-lg-1" type="submit" data-loading-text="Signing In">login</button>
+        </p>
+    </div>
+
+    </form>
+</div>
+</template>

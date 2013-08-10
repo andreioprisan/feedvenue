@@ -1,0 +1,75 @@
+<template name="header">
+    {{#if onWeb}}
+    <div class="navbar navbar-fixed-top" id="mainNavBar">
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <col-lg- class="icon-bar"></col-lg->
+          <col-lg- class="icon-bar"></col-lg->
+          <col-lg- class="icon-bar"></col-lg->
+        </button>
+        <a class="navbar-brand" href="/"><img src="/img/head.png" style="height: 43px"></a>
+        <div class="nav-collapse collapse">
+          <ul class="nav navbar-nav">
+
+            {{#if currentUser }}
+
+            <li class=" {{ TabActive 'dashboard'}}"><a href="/dashboard">Dashboard</a></li>
+            <li class=" {{ TabActive 'eventlist'}}"><a href="/event/list">Events</a></li>
+
+            {{else}}
+
+            <li class="{{ TabActive 'what'}}"><a href="/page/what">what</a></li>
+            <li class="{{ TabActive 'features'}}"><a href="/page/features">features</a></li>
+            <li class="{{ TabActive 'plans'}}"><a href="/page/plans">plans</a></li>
+
+            <li class="{{ TabActive 'publicevents'}}"><a href="/page/publicevents">public events</a></li>
+
+            {{/if}}
+
+          </ul>
+
+
+            {{#if currentUser }}
+
+            {{> loggedin_header}}
+
+            {{else}}
+            <ul class="nav navbar-nav pull-right">
+                <li class="{{ TabActive 'login'}}"><a href="/login">login</a></li>
+                <li class="{{ TabActive 'signup'}}"><a href="/signup">sign up</a></li>
+            </ul>
+            {{/if}}
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    {{else}}
+    <style>
+    #main {
+        padding: 2px 4px 2px 4px;
+    }
+    .input-group {
+        padding: 0px 0px 0px 0px;
+    }
+    .row {
+        padding: 0px 0px 0px 0px;        
+    }
+    </style>
+    {{/if}}
+</template>
+
+<template name="loggedin_header">
+    {{#if loggingIn}}
+    <p class="pull-right"><strong>Logging In!</strong></p>
+    {{else}}
+    <ul class="nav nopadding pull-right ">
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="/users/{{ id }}/edit"><i class="icon-cog"></i> Account</a></li>
+                <li class="divider"></li>
+                <li><a href="/logout"><i class="icon-off"></i> Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+    {{/if}}
+</template>
+

@@ -1,0 +1,12 @@
+<template name="planSelect">
+    <div class="panel">
+        <div class="panel-heading"><h3 class="panel-title">Select your Plan</h3></div>
+        <p>
+            <select class="form-control" name="plan" id="plan" class="col-lg-3">
+              <option value="0" {{ signup_plan "0"}}>free - $0/month (no credit card required)</option>
+              <option value="1" {{ signup_plan "1"}}>growth - $25/month</option>
+              <option value="2" {{ signup_plan "2"}}>enterprise - $100/month</option>
+            </select>
+        </p>
+    </div>
+</template>

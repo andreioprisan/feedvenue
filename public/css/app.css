@@ -302,3 +302,6 @@ data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQIW2
   padding-top: 9px;
 }
 
+.iphonenopaddings {
+  padding: 0px 0px 0px 0px;
+}

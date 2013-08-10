@@ -1,0 +1,30 @@
+<template name="footer">
+    <div id="footer">
+        <footer>
+            <div class="container">
+                {{#if onWeb}}
+                    <span class="pull-right">
+                        <a href="javascript:void(0)" class="showClassicWidget">Feedback &amp; Support</a>
+                    </span>
+                    <span class="pull-left">
+                        <center>
+                            <h5>
+                            <a href="/page/what">what</a> |
+                            <a href="/page/features">features</a> |
+                            <a href="/page/plans">plans</a> |
+                            <a href="/page/publicevents">public events</a>
+                            </h5>
+                        </center>
+                        &copy; <strong><a href="https://feedvenue.com">feedvenue</a> LLC</strong> 2013
+                    </span>
+                {{else}}
+                <span class="">
+                    <center>
+                    &copy; <strong><a href="https://feedvenue.com">feedvenue</a> LLC</strong> 2013
+                    </center>
+                </span>
+                {{/if}}
+            </div>
+        </footer>
+    </div>
+</template>

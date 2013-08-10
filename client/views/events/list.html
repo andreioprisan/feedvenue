@@ -1,0 +1,56 @@
+<template name="eventlist">
+    <div class="page-header">
+        <h1>events <small>all in one place</small>
+            {{#if hasExceededEventsLimit}}
+            <a class="btn btn-primary btn-large col-lg-1 pull-right disabled exceededEventsLimitTooltip" type="button" href="/event/create">New</a>
+            {{else}}
+            <a class="btn btn-primary btn-large col-lg-1 pull-right" type="button" href="/event/create">New</a>
+            {{/if}}
+
+        </h1>
+    </div>
+
+    <div class="hero-unit col-lg-12">
+        {{#if hasEventsList}}
+        <table class="table">
+            <thead>
+              <tr>
+                <th>Event Name</th>
+                <th>URL</th>
+                <th>Questions</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Hashtag</th>
+                <th>Phone #</th>
+                <th>Location</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+
+            {{#each eventsList}}
+            <tr>
+                <td><a href="/{{slug}}">{{name}}</a></td>
+                <td><a href="https://feedvenue.com/{{slug}}">https://feedvenue.com/{{slug}}</a></td>
+                <td>{{questions}}</td>
+                <td>{{startdate}}</td>
+                <td>{{enddate}}</td>
+                <td>{{hashtag}}</td>
+                <td>{{phone}}</td>
+                <td>{{location}}</td>
+                <td width="5%">
+                  <button class="btn btn-danger btn-small pull-right deleteEvent"><i class="icon-remove"></i></button>
+                </td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        {{else}}
+        <br>
+        <div class="alert alert-info">
+            No events have been created yet. Make one by clicking the New button above!
+        </div>
+        {{/if}}
+    </div>
+</template>
+

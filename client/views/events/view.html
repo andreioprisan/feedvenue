@@ -1,0 +1,189 @@
+<template name="eventView">
+    {{#if oniPhone}}
+    <style>
+    .container {
+        max-width: 100%;
+        width: 100%;
+        padding: 0px 0px 0px 0px;
+    }
+
+    #wrap {
+        padding-top: 1px;
+    }
+
+    .jumbotron {
+        padding: 1px 0px 0px 0px;
+        font-size: 13px;
+        margin-bottom: 2px;
+        font-weight: 100;
+        background-color: white;
+        border-bottom: 0px;
+    }
+
+    .page-header {
+        margin-top: 0px;
+    }
+
+    h1, h2, h3 {
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+    .badge {
+        width: 55px;
+    }
+    </style>
+    <div class="container">
+    {{/if}}
+
+    {{#if eventExists}}
+
+        {{#with event}}
+
+
+        {{#if oniPhone}}
+        <div class="navbar" style="margin-bottom: 0px;padding-left: 0px;margin-left: 0px; font-size:26px;">
+            <a href="/{{slug}}" class="navbar-brand" style="padding-top: 2px;"><img src="/img/256.png" style="height: 32px"> <a href="/{{slug}}" style="margin-left:-10px;">{{name}}</a></a>
+        </div>
+        {{else}}
+        <p class="lead" style="font-size: 250%"><a href="/{{slug}}">{{name}}</a></p>
+        {{/if}}
+
+        <div class="row">
+            {{#if oniPhone}}
+            <div class="col-lg-12 col-12 iphonenopaddings">
+
+
+                <ul class="nav nav-pills" id="mobileSet1" style="display: inline-block; width: 50%">
+                  <li class="{{toggle_mobileViewAsk}}"><a href="#" id="mobileViewAsk">Ask</a></li>
+                  <li class="{{toggle_mobileViewInfo}}"><a href="#" id="mobileViewInfo">Event Info</a></li>
+                </ul>
+
+                <ul class="nav nav-pills" id="mobileSet2" style="display: inline-block">
+                  <li class="{{toggle_mobileSortNew}}"><a href="#" id="mobileSortNew">New</a></li>
+                  <li class="{{toggle_mobileSortPopular}}"><a href="#" id="mobileSortPopular">Popular</a></li>
+                </ul>
+
+                {{#if show_mobileViewInfo}}
+                <div class="jumbotron">
+                    <div class="bs-callout" style="padding: 3px 0px 3px 5px; border-left: 0px solid #eee;">
+                        {{#if description}} <span class="badge">what</span> {{description}} {{/if}}
+                        <br>
+
+                        <span class="badge">where</span> in {{location}} from <b>{{startdate}}</b> to <b>{{enddate}}</b>
+                        <br>
+
+                        <span class="badge">url</span> <b><a href="https://feedvenue.com/{{slug}}">https://feedvenue.com/{{slug}}</a></b>
+                        <br>
+
+                        <span class="badge">email</span> <b><a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a></b>
+                        <br>
+
+                        {{#if hashtag}}
+                        <span class="badge">twitter</span> <b>#{{hashtag}} #ask</b>
+                        <br>
+                        {{/if}}
+
+                        {{#if showPhone}}
+                        <span class="badge">phone</span> <b>{{phone}}</b>
+                        {{/if}}
+                        </p>
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+
+            {{else}}
+            <div class="col-lg-8 col-8">
+                <div class="bs-callout">
+                  <h4>{{#if description}} {{description}} {{/if}}</h4>
+                  <p>in {{location}} from <b>{{startdate}}</b> to <b>{{enddate}}</b></p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-3">
+                <div class="bs-callout">
+                    <p>
+                    <span class="badge">url</span> <b><a href="https://feedvenue.com/{{slug}}">https://feedvenue.com/{{slug}}</a></b>
+                    <br>
+
+                    <span class="badge">email</span> <b><a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a></b>
+                    <br>
+
+                    {{#if hashtag}}
+                    <span class="badge">twitter</span> <b>#{{hashtag}} #ask</b>
+                    <br>
+                    {{/if}}
+
+                    {{#if showPhone}}
+                    <span class="badge">phone</span> <b>{{phone}}</b>
+                    {{/if}}
+                    </p>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+        <br>
+
+        {{#if oniPhone}}
+            {{#if show_mobileViewAsk}}
+                {{> questionCreate}}
+            {{/if}}
+        {{else}}
+            {{> questionCreate}}
+        {{/if}}
+
+        {{/with}}
+
+        {{#if questionsExist}}
+        <table class="table">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="mainList">
+
+            {{#each questions}}
+
+            <tr>
+              <td style="width: 5%; text-align: center; {{#if oniPhone}} font-size: 170%; {{/if}}">
+                <span class="icon-chevron-up upvote" style="color: gray; font-size: 24px;" id="{{_id}}_up"></span><br>
+                <span class="questionScore" style="font-weight: bold;">{{r}}</span><br>
+                <span class="icon-chevron-down downvote" style="color: gray; font-size: 24px;" id="{{_id}}_down"></span>
+              </td>
+              <td><p style="font-size: 24px">{{q}}</p>
+                  from {{#if a}}<b>{{a}}</b>{{else}}<b>anonymous</b>{{/if}}  at <b>{{d}}</b> via <b>{{s}}</b>
+              </td>
+              {{#if isAdministrator}}
+              <td style="width: 5%">
+                  <button class="btn btn-danger btn-small pull-right deleteQuestion"><i class="icon-remove"></i></button>
+              </td>
+              {{/if}}
+            </tr>
+            {{/each}}
+
+            </tbody>
+        </table>
+        {{else}}
+        <br>        
+        <br>        
+        <hr>        
+        <div class="alert alert-info">
+            No questions have been asked yet. Submit yours by filling out the information above!
+        </div>
+        {{/if}}
+
+    {{else}}
+        <div class="page-header">
+            <h1>hmm, let's see what you've got there
+                <hr>
+                <small>we dispatched the elves to get your event details, hold tight</small>
+            </h1>    
+        </div>
+    {{/if}}
+
+    {{#if oniPhone}}
+    </div>
+    {{/if}}
+</template>
+

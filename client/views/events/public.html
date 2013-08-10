@@ -1,0 +1,40 @@
+<template name="publicevents">
+    <h2>public events. see what others free users are doing</h2>    
+    <hr>
+    {{#each events}}
+        <p class="lead" style="font-size: 250%"><a href="/{{slug}}">{{name}}</a></p>
+    
+        <div class="row">
+            <div class="col-lg-8 col-8">
+                <div class="bs-callout">
+                  <h4>{{#if description}} {{description}} {{/if}}</h4>
+                  <p>in {{location}} from <b>{{startdate}}</b> to <b>{{enddate}}</b></p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-3">
+                <div class="bs-callout">
+                    <p>
+
+                    <span class="badge">url</span> <b><a href="https://feedvenue.com/{{slug}}">https://feedvenue.com/{{slug}}</a></b>
+                    <br>
+
+                    <span class="badge">email</span> <b><a href="mailto: {{slug}}@feedvenue.com">{{slug}}@feedvenue.com</a></b>
+                    <br>
+
+                    {{#if hashtag}}
+                    <span class="badge">twitter</span> <b>#{{hashtag}} #ask</b>
+                    <br>
+                    {{/if}}
+
+                    {{#if showPhone}}
+                    <span class="badge">phone</span> <b>{{phone}}</b>
+                    {{/if}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <hr>
+    {{/each}}
+
+    <div class="alert alert-info">Didn't mean to make your event public but are on a paying plan? Make your event private with one click in the dashboard. </div>
+</template>

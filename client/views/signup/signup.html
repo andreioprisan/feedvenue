@@ -1,0 +1,18 @@
+<template name="signup">
+<div class="col-lg-12">
+    <h3>
+        Sign up for a new account
+        <p class="pull-right"><small>Already have an account? <a href="/login">Login</a></small></p>
+    </h3>
+    
+    <hr>
+
+    <form id="signupForm" name="signupForm" method="post">
+        {{> personalInfoForm}}
+        {{> planSelect}}
+        {{> planPaymentInfo}}
+        <button class="btn btn-success btn-large pull-right" type="submit" id="createUser" data-loading-text="Creating your account">create account</button>
+    </form>
+
+</div>
+</template>

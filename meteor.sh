@@ -29,6 +29,10 @@ if [ -d ".meteor/meteorite" ]; then
 fi
 
 case "$1" in
+  run )
+  echo launching meteor
+  MONGO_URL='mongodb://feedvenue:e8b19da37825a3056e84c522f05efce0@ana.mongohq.com:10097/feedvenue' mrt
+  ;;
   setup )
   echo Preparing the server...
   echo Get some coffee, this will take a while.

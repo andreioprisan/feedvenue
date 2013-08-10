@@ -12,7 +12,8 @@
       "momentjs": {},
       "twilio-meteor": {},
       "nlp": {},
-      "sentiment": {}
+      "sentiment": {},
+      "filepicker": {}
     },
     "packages": {
       "router": {
@@ -69,6 +70,11 @@
         "git": "https://github.com/andreioprisan/meteor-sentiment.git",
         "tag": "v0.2.1",
         "commit": "a1901bd59d3a048f6df2e6484c08e46b506b5447"
+      },
+      "filepicker": {
+        "git": "https://github.com/Filepicker/meteor.git",
+        "tag": "v0.3.0",
+        "commit": "dcb6f3779e5fc105520ba06b0392e3a79c73a7e6"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

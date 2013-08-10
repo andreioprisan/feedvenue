@@ -17,7 +17,7 @@ Meteor.Router.add({
         } else {
             Session.set("current_page", 'login');
             return 'login';
-        }
+        }        
     },
 
     '/signup/:plan': function(plan) {
@@ -136,7 +136,6 @@ Meteor.Router.add({
      
 });
 
-
 Meteor.Router.filters({
     requireLogin: function(page) {
         if (Meteor.user()) {
@@ -147,8 +146,5 @@ Meteor.Router.filters({
     }
 });
 
-
 //Meteor.Router.filter('checkLoggedIn', {only: ['dashboard']});
-
-
 //Meteor.Router.filter('requireLogin', {except: ['page/what', 'page/fea', 'signup', 'about', 'terms']});

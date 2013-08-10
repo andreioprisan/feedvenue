@@ -1,0 +1,153 @@
+<template name="eventCreate">
+    <div class="page-header">
+        <h1>create a new event <small>in 30 seconds</small>
+    </h1>
+
+    <div class="hero-unit col-lg-12">
+    <br>
+
+        <form class="form-horizontal" id="createEventForm" onsubmit="return false;">
+
+        <div class="row">
+            <div class="col-lg-9">    
+                <div class="input-group">
+                  <span class="input-group-addon">Event Name</span>
+                  <input class="form-control col-lg-9" name="inputEventName" type="text" placeholder="">
+                </div>
+            </div>
+            <div class="col-lg-3">    
+                <span class="pull-right">
+                  <div class="input-group">
+                    <span class="input-group-addon">Where</span>
+                    <input class="form-control col-lg-3" name="inputLocation" type="text" placeholder="City, State or online">
+                  </div>    
+                </span>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-lg-9">    
+
+                <div class="input-group">
+                  <span class="input-group-addon">Description</span>
+                  <input class="form-control" name="inputDescription" type="text" placeholder="a short description of your event">
+                </div>
+            </div>
+            <div class="col-lg-3">    
+                {{#with planFeatures}}
+
+                {{#if eventCreateTwitter}}
+
+                <span class="pull-right">
+                  <div class="input-group">
+                    <span class="input-group-addon">Hashtag</span>
+                    <input class="form-control" name="inputHashtag" type="text" placeholder="to watch for on Twitter">
+                  </div>
+                </span>
+                {{/if}}
+
+                {{/with}}
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-lg-2">    
+                <div class="input-group">
+                  <span class="input-group-addon">From</span>
+                  <input class="form-control datePicker" name="inputStartDate" type="text" placeholder="mm/dd/yy" value="{{startDateDefault}}" style="width: 60%">
+                </div>
+            </div>
+            <div class="col-lg-2">    
+                <div class="input-group">
+                  <span class="input-group-addon">To</span>
+                  <input class="form-control datePicker" name="inputEndDate" type="text" placeholder="mm/dd/yy"  value="{{endDateDefault}}" style="width: 60%">
+                </div>
+            </div>
+
+            {{#with planFeatures}}
+
+            {{#if eventCreatePrivate}}
+            <div class="col-lg-1">    
+                <div class="input-group" style="width:80%">
+                  <span class="input-group-addon">
+                    <input type="checkbox" id="inputPrivate">
+                  </span>
+                  <span class="input-group-addon input-group-addon-white eventCreatePrivate">
+                    Private
+                  </span>
+                </div>
+            </div>
+            {{/if}}
+
+            <div class="col-lg-2">    
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" id="inputAnonymous" checked>
+                  </span>
+                  <span class="input-group-addon input-group-addon-white eventCreateAnonymous">
+                    Anonymous Feedback
+                  </span>
+                </div>
+            </div> 
+
+            <div class="col-lg-1">    
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" id="inputEmail" checked>
+                  </span>
+                  <span class="input-group-addon input-group-addon-white eventCreateEmail">
+                    Email
+                  </span>
+                </div>
+            </div> 
+
+            {{#if eventCreatePhone}}
+            <div class="col-lg-1">    
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" id="inputPhone">
+                  </span>
+                  <span class="input-group-addon input-group-addon-white eventCreatePhone">
+                    Phone
+                  </span>
+                </div>
+            </div> 
+            {{/if}}
+
+            {{#if eventCreateSMS}}            
+            <div class="col-lg-1">    
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" id="inputSMS">
+                  </span>
+                  <span class="input-group-addon input-group-addon-white eventCreateSMS">
+                    SMS
+                  </span>
+                </div>
+            </div> 
+            {{/if}}
+
+            {{/with}}
+        </div>
+    
+        <span class="pull-right">
+            <button id="createEventFormSubmitButton" type="submit" class="btn btn-default btn-primary">create</button>
+        </span>
+        <br>
+
+        {{#with planFeatures}}
+        {{#if private}}
+        {{else}}
+        <div class="alert alert-info col-lg-8">
+        Note: this event will be included in the public event catalog. If you wish to create private events, upgrade your plan.
+        <div>
+        {{/if}}
+        {{/with}}
+    </form>
+
+    </div>
+</template>
