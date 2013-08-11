@@ -10,7 +10,6 @@
     "momentjs": {},
     "twilio-meteor": {},
     "nlp": {},
-    "sentiment": {},
-    "filepicker": {}
+    "sentiment": {}
   }
 }

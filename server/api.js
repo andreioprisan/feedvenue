@@ -7,6 +7,48 @@ Meteor.Router.add('/api', 'GET', function() {
 	return [200, 'User-agent: *'];
 });
 
+Meteor.Router.add('/api/event', 'GET', function() {
+	var rawIn = this.request.query;
+	console.log(rawIn);
+	if (rawIn) {
+		var eventDetails = Events.findOne({slug: rawIn.slug});
+		if (eventDetails) {
+			var questionsList = Questions.find({slug: rawIn.slug}).fetch();
+			eventDetails.questions = questionsList;
+			obj = { error: 0, event: eventDetails };
+			var errcode = 200;
+		} else {
+			obj = { error: 1, event: {} };
+			var errcode = 404;			
+		}
+		return [errcode, {"Content-Type": "application/json"}, JSON.stringify(obj)];
+	} else {
+		obj = { error: 1, event: {} };
+		return [404, {"Content-Type": "application/json"}, JSON.stringify(obj)];
+	}
+});
+
+Meteor.Router.add('/api/login', 'POST', function() {
+	var rawIn = this.request.body;
+	if (rawIn) {
+		logger.log(rawIn);
+		var user = Meteor.users.findOne({username: rawIn.username});
+		logger.log(user);
+  		console.log(user);
+  		console.log(user.services.password);
+
+  		/*
+		Meteor.loginWithPassword(rawIn.username, rawIn.password, function(a,b) {
+			logger.log(a);
+			logger.log(b);
+		});
+		*/
+		return [200, 'false2'];
+	} else {
+		return [200, 'false'];
+	}
+});
+
 Meteor.Router.add('/api/twiml/voice', 'POST', function() {
 	var rawIn = this.request.body;
 	console.log(rawIn);
