@@ -1,14 +1,26 @@
-var consumerKey = 'ePyFlWIUz7gRBpfF5kFbEA',
-    consumerSec = 'GZn1ex9LVWnhWkTeHsXXPoCSW3s95dfbo81Llghk3k';
-process.env.MONGO_URL = 'mongodb://feedvenue:e8b19da37825a3056e84c522f05efce0@ana.mongohq.com:10097/feedvenue';
-
 var sys = require('sys'),
     client = require('./lib/twitter').createClient();
 var MongoClient = require('mongodb').MongoClient
-    , format = require('util').format;    
+    , format = require('util').format;
 var moment = require('moment');
 var _ = require('lodash');
 var sleep = require('sleep');
+
+function getRandomInt (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var authkeys = [ ['ePyFlWIUz7gRBpfF5kFbEA','GZn1ex9LVWnhWkTeHsXXPoCSW3s95dfbo81Llghk3k'],
+		 ['3CUj6AzrpHl1kVQOtVTZSA','RBgYjlG2JNx7Ak60IvwgEDzN2vAoWpBnoWgavmAo'],
+		 ['ECI9Nd3zUhYfaE3I6U8JDg','6civ9MFa0u03kmakOWRyhneYUM9nnBRnvq6zSuTQ8E'],
+		 ['2VbT6FzdPN1YuEpoC9Q','XYmhoPCcEu4Km0EKPQp9M1Glz7jHksDiMiRxm7OrYI'] ];
+
+var thisauthselect = getRandomInt(0,_.size(authkeys)-1);
+var consumerKey = authkeys[thisauthselect][0],
+    consumerSec = authkeys[thisauthselect][1];
+
+console.log("using twitter auth tokens: "+consumerKey+" "+consumerSec+"");
+process.env.MONGO_URL = 'mongodb://feedvenue:e8b19da37825a3056e84c522f05efce0@ana.mongohq.com:10097/feedvenue';
 
 client.setAuth ( consumerKey, consumerSec );
 
@@ -51,14 +63,28 @@ MongoClient.connect(process.env.MONGO_URL, function(err, db) {
 
         eventsCollection.toArray(function(err, eventsList) {
             _.each(eventsList, function(eventItem) {
+		console.log("calling twitter search for "+'#'+eventItem.hashtag+' #ask');
                 client._rest('get', 'search/tweets', { 
-                    q: '#'+eventItem.hashtag+' #ask', 
+//                    q: '#'+eventItem.hashtag+' #ask', 
+			q: "ask #"+eventItem.hashtag,
                     count: 500, 
                     result_type: "mixed",
-                    include_entities: false,
+                    include_entities: true,
                     until: moment(eventItem.enddate).format('YYYY-MM-DD') 
                 }, function( reply, error, status )
                 {
+			if (error) {
+				console.log("error:");
+				console.log(error);
+			}
+
+			if (status) {
+				console.log("status:");
+				console.log(status);
+			}
+
+//			console.log("got from twitter:");
+//			console.log(reply);
                     var thisTweetsSaved = _.size(reply.statuses);
                     var newCount = 0;
                     tweetsSaved += thisTweetsSaved;
@@ -90,6 +116,9 @@ MongoClient.connect(process.env.MONGO_URL, function(err, db) {
                         newQuestion.q = rawTweet.text;
                         newQuestion.a = rawTweet.user.name+" (@"+rawTweet.user.screen_name+")";
                         
+			console.log("question:");
+			console.log(newQuestion);
+
                         questions.insert(newQuestion, {safe: true}, function(errSavingQuestion, docsQ) { 
                             /*
                             if (!errSavingQuestion) {
