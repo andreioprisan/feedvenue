@@ -8,6 +8,7 @@
 ## Install
 
 Make sure you have the right db connection variables exported in your local
+```
 export APP_NAME=feedvenue.com
 export ROOT_URL=https://$APP_HOST
 export APP_DIR=/var/www/$APP_NAME
@@ -15,15 +16,22 @@ export PORT=81
 export MONGO_URL='mongodb://feedvenue:e8b19da37825a3056e84c522f05efce0@ana.mongohq.com:10097/feedvenue'
 export SSH_OPT=''
 export SSH_HOST=$APP_HOST
+```
 
 To run, 
+```
 $ ./meteor run
+```
 
 To deploy:
+```
 $ ./meteor deploy
+```
 
 To bundle for a regular node.js environment:
+```
 $ ./meteor build-run
+```
 
 ## Processes
 
@@ -36,7 +44,9 @@ Phone & SMS:
 /api/twiml/transcribe - processed voice input stream
 
 Crontabs:
+```
 * * * * * ( cd /var/git/feedvenue && git pull )
 */3 * * * * ( cd /var/git/feedvenue/.workers/twitter && node parser.js )
+```
 
 Copyright 2013 by Andrei Oprisan
