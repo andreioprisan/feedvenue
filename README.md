@@ -49,4 +49,4 @@ Crontabs:
 */3 * * * * ( cd /var/git/feedvenue/.workers/twitter && node parser.js )
 ```
 
-Copyright 2013 by Andrei Oprisan
+Copyright 2013 by Andrei Oprisan. Licensed under the GPL license v3: https://www.gnu.org/copyleft/gpl.html
